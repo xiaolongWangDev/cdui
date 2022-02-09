@@ -1,8 +1,17 @@
 import {ConfigurationDrivenComponent} from "./configuration-driven-component";
 import {AnyComponentConfiguration, AnyConfigurationDrivenComponent} from "../types";
-import {AfterViewInit, ComponentFactoryResolver, ComponentRef, OnDestroy, QueryList, ViewChildren} from "@angular/core";
-import {DynamicDirective} from "../../directive/DynamicDirective";
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  OnDestroy,
+  QueryList,
+  ViewChildren
+} from "@angular/core";
+import {DynamicDirective} from "../../directive/dynamic-directive";
 
+@Component({template: ``})
 export abstract class DynamicHostComponent<CONF_TYPE extends AnyComponentConfiguration>
   extends ConfigurationDrivenComponent<CONF_TYPE>
   implements AfterViewInit, OnDestroy {

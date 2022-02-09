@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
-import { ConfigurationDrivenCoreComponent } from './configuration-driven-core.component';
 import {MiniStoreComponent} from "./component/mini-store/mini-store.component";
 import {PageComponent} from "./component/page/page.component";
-import {DynamicDirective} from "./directive/DynamicDirective";
 import {CommonModule} from "@angular/common";
 import {BarComponent} from "./component/dummy/bar/bar.component";
 import {FooComponent} from "./component/dummy/foo/foo.component";
+import {DynamicDirective} from "./directive/dynamic-directive";
 
 
 
 @NgModule({
   declarations: [
     DynamicDirective,
-    ConfigurationDrivenCoreComponent,
     MiniStoreComponent,
     PageComponent,
     FooComponent,
@@ -22,7 +20,11 @@ import {FooComponent} from "./component/dummy/foo/foo.component";
         CommonModule
     ],
   exports: [
-    ConfigurationDrivenCoreComponent
+    DynamicDirective,
+    MiniStoreComponent,
+    PageComponent,
+    FooComponent,
+    BarComponent
   ]
 })
 export class ConfigurationDrivenCoreModule { }
