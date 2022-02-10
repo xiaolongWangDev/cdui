@@ -1,5 +1,5 @@
 import {ConfigurationDrivenComponent} from "./configuration-driven-component";
-import {AnyComponentConfiguration, AnyConfigurationDrivenComponent} from "../types";
+import {AnyComponentConfiguration, AnyConfigurationDrivenComponent} from "../../model/types";
 import {
   AfterViewInit,
   Component,

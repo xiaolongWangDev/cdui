@@ -2,19 +2,24 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {
-  ConfigurationDrivenCoreModule
-} from "../../../configuration-driven-core/src/lib/configuration-driven-core.module";
+import {FooComponent} from "./components/foo/foo.component";
+import {BarComponent} from "./components/bar/bar.component";
+import {ConfigurationDrivenCoreModule, TrackedObjectOrchestrationService} from "configuration-driven-core";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooComponent,
+    BarComponent
   ],
   imports: [
     BrowserModule,
-    ConfigurationDrivenCoreModule
+    ConfigurationDrivenCoreModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    TrackedObjectOrchestrationService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,7 +1,7 @@
 import {Component, ComponentFactoryResolver} from "@angular/core";
 import {PageConfiguration} from "./page.config";
 import {DynamicHostComponent} from "../base/dynamic-host-component";
-import {AnyComponentConfiguration} from "../types";
+import {AnyComponentConfiguration} from "../../model/types";
 
 
 @Component({

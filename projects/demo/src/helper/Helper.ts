@@ -1,11 +1,21 @@
-import {AppConfiguration} from "../../../configuration-driven-core/src/lib/component/app/app-configuration";
-import {PageConfiguration} from "../../../configuration-driven-core/src/lib/component/page/page.config";
-import {FooConfiguration} from "../../../configuration-driven-core/src/lib/component/dummy/foo/foo.config";
-import {BarConfiguration} from "../../../configuration-driven-core/src/lib/component/dummy/bar/bar.config";
+import {AppConfiguration} from "../app/app-configuration";
+import {PageConfiguration} from "configuration-driven-core";
+import {FooConfiguration} from "../app/components/foo/foo.config";
+import {BarConfiguration} from "../app/components/bar/bar.config";
 
-export const mock_config = new AppConfiguration("page_1", {
-  "page_1": new PageConfiguration("First Page", [
-    new FooConfiguration("hello"),
-    new BarConfiguration("world"),
-  ])
-});
+export const mock_config = new AppConfiguration({
+    defaultLanding: "page_1",
+    pages: {
+      "page_1":
+        new PageConfiguration({
+          title: "First Page",
+          components: [
+            new FooConfiguration({
+              text: "hello", yieldingObservables: {userInput: "foo_user_input"}
+            }),
+            new BarConfiguration({text: "world", consumingObservables: {dynamic_text: "foo_user_input"}}),
+          ]
+        })
+    }
+  })
+;
