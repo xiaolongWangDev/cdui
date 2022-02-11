@@ -2,15 +2,15 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {FooComponent} from "./components/foo/foo.component";
-import {BarComponent} from "./components/bar/bar.component";
+import {TeacherComponent} from "./components/teacher/teacher.component";
 import {ConfigurationDrivenCoreModule, TrackedObjectOrchestrationService} from "configuration-driven-core";
+import {StudentComponent} from "./components/student/student.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooComponent,
-    BarComponent
+    TeacherComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,

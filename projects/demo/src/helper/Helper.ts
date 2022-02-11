@@ -1,19 +1,31 @@
 import {AppConfiguration} from "../app/app-configuration";
 import {PageConfiguration} from "configuration-driven-core";
-import {FooConfiguration} from "../app/components/foo/foo.config";
-import {BarConfiguration} from "../app/components/bar/bar.config";
+import {TeacherConfiguration} from "../app/components/teacher/teacher.config";
+import {StudentConfiguration} from "../app/components/student/student.config";
 
 export const mock_config = new AppConfiguration({
-    defaultLanding: "page_1",
+    defaultLanding: "demo_obs_created_by_parent",
     pages: {
-      "page_1":
+      "demo_obs_created_by_parent":
         new PageConfiguration({
-          title: "First Page",
+          title: "Use an observable created by parent component",
           components: [
-            new FooConfiguration({
-              text: "hello", yieldingObservables: {userInput: "foo_user_input"}
+            new TeacherConfiguration({
+              name: "Tom", yieldingObservables: {homeworkInput: "homework_from_tom"},
+              teaches: [
+                new StudentConfiguration({name: "Alice", consumingObservables: {homework: "homework_from_tom"}}),
+                new StudentConfiguration({name: "Bob", consumingObservables: {homework: "homework_from_tom"}}),
+                new StudentConfiguration({name: "Charlie", consumingObservables: {homework: "homework_from_tom"}}),
+              ]
             }),
-            new BarConfiguration({text: "world", consumingObservables: {dynamic_text: "foo_user_input"}}),
+            new TeacherConfiguration({
+              name: "Jack", yieldingObservables: {homeworkInput: "homework_from_jack"},
+              teaches: [
+                new StudentConfiguration({name: "Doug", consumingObservables: {homework: "homework_from_jack"}}),
+                new StudentConfiguration({name: "Edward", consumingObservables: {homework: "homework_from_jack"}}),
+                new StudentConfiguration({name: "Frank", consumingObservables: {homework: "homework_from_jack"}}),
+              ]
+            }),
           ]
         })
     }
