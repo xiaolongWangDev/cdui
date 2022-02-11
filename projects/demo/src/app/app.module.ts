@@ -14,7 +14,7 @@ import {StudentComponent} from "./components/student/student.component";
   ],
   imports: [
     BrowserModule,
-    ConfigurationDrivenCoreModule.forRoot()
+    ConfigurationDrivenCoreModule.forRoot(),
   ],
   providers: [
     TrackedObjectOrchestrationService
