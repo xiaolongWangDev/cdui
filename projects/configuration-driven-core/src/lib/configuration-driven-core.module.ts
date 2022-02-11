@@ -4,6 +4,8 @@ import {PageComponent} from "./component/page/page.component";
 import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
 import {TrackedObjectOrchestrationService} from "./service/tracked-object-orchestration.service";
+import {AlertComponent} from "./component/standard/alert/alert.component";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 
 @NgModule({
@@ -11,14 +13,17 @@ import {TrackedObjectOrchestrationService} from "./service/tracked-object-orches
     DynamicDirective,
     MiniStoreComponent,
     PageComponent,
+    AlertComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    AlertModule.forRoot()
   ],
   exports: [
     DynamicDirective,
     MiniStoreComponent,
     PageComponent,
+    AlertComponent
   ]
 })
 export class ConfigurationDrivenCoreModule {
