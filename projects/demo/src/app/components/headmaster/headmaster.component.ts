@@ -6,23 +6,23 @@ import {
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
-import {TeacherConfiguration} from "./teacher.config";
+import {HeadmasterConfiguration} from "./headmaster.config";
 
 @Component({
-  selector: "demo-teacher",
+  selector: "demo-headmaster",
   template: `
-    <div class="m-2" style="border:1px solid black;">
-      <div>Teacher: My name is {{config.name}}</div>
-      <div>Today's homework is <input #homework_input type="text"></div>
-      <div *ngFor="let studentConf of config.teaches">
-        <demo-student [config]="studentConf"></demo-student>
+    <div>
+      <div>Headmaster: My name is {{config.name}}</div>
+      <div>I'll charge you <input #collect_tuition_input type="number"></div>
+      <div *ngFor="let teacherConf of config.manages">
+        <demo-teacher [config]="teacherConf"></demo-teacher>
       </div>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit {
-  @ViewChild('homework_input', {static: true}) inputElement: ElementRef;
+export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit {
+  @ViewChild('collect_tuition_input', {static: true}) inputElement: ElementRef;
 
   constructor(private readonly toService: TrackedObjectOrchestrationService) {
     super();
@@ -31,7 +31,7 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
   ngAfterViewInit(): void {
     this.toService.addObject(
       new TrackedObservable(
-        this.config.yieldingObservables.homework,
+        this.config.yieldingObservables.tuition,
         fromEvent(this.inputElement.nativeElement, 'change')
           .pipe(map((e: any) => e.target.value)))
     );
