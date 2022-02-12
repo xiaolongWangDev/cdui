@@ -5,7 +5,7 @@ import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
 import {TrackedObjectOrchestrationService} from "./service/tracked-object-orchestration.service";
 import {AlertComponent} from "./component/standard/alert/alert.component";
-import {AlertModule} from "ngx-bootstrap/alert";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import {AlertModule} from "ngx-bootstrap/alert";
   ],
   imports: [
     CommonModule,
-    AlertModule.forRoot()
+    NgbModule
   ],
   exports: [
     DynamicDirective,

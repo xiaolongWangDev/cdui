@@ -58,8 +58,9 @@ export class TrackedObjectOrchestrationService {
   public revokeObject(ref: StringOrObservableReference): boolean {
     const key = refToKey(ref);
     console.log(`removing obj ${key}`);
+    const result = this.trackedObjectMap.delete(key);
     console.log(this.trackedObjectMap);
-    return this.trackedObjectMap.delete(key);
+    return result;
   }
 
 

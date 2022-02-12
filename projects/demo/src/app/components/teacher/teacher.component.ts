@@ -3,7 +3,7 @@ import {
   TrackedObjectOrchestrationService,
   TrackedObservable
 } from "configuration-driven-core";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeacherConfiguration} from "./teacher.config";
@@ -21,7 +21,7 @@ import {TeacherConfiguration} from "./teacher.config";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit {
+export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit, OnDestroy {
   @ViewChild('homework_input', {static: true}) inputElement: ElementRef;
 
   constructor(private readonly toService: TrackedObjectOrchestrationService) {
@@ -36,4 +36,9 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
           .pipe(map((e: any) => e.target.value)))
     );
   }
+
+  ngOnDestroy(): void {
+    this.toService.revokeObject(this.config.yieldingObservables.homework);
+  }
+
 }

@@ -7,7 +7,7 @@ import {AnyComponentConfiguration} from "../../model/types";
 @Component({
   selector: "cd-page",
   template: `
-    <div class="m-5">
+    <div class="mt-2 ml-5 mr-5 mb-2">
       <h1>{{config.title}}</h1>
       <div *ngFor="let _ of config.components">
         <ng-template cd-dynamic></ng-template>

@@ -3,7 +3,7 @@ import {
   TrackedObjectOrchestrationService,
   TrackedObservable
 } from "configuration-driven-core";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {HeadmasterConfiguration} from "./headmaster.config";
@@ -21,7 +21,7 @@ import {HeadmasterConfiguration} from "./headmaster.config";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit {
+export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit, OnDestroy {
   @ViewChild('collect_tuition_input', {static: true}) inputElement: ElementRef;
 
   constructor(private readonly toService: TrackedObjectOrchestrationService) {
@@ -36,4 +36,9 @@ export class HeadmasterComponent extends ConfigurationDrivenComponent<Headmaster
           .pipe(map((e: any) => e.target.value)))
     );
   }
+
+  ngOnDestroy(): void {
+    this.toService.revokeObject(this.config.yieldingObservables.tuition);
+  }
+
 }

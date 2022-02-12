@@ -1,6 +1,5 @@
 import {
   ConfigurationDrivenComponent,
-  TrackedBehaviorSubject,
   TrackedObjectOrchestrationService,
   TrackedObservable
 } from "configuration-driven-core";
@@ -13,7 +12,7 @@ import {BehaviorSubject} from "rxjs";
   template: `
     <div class="m-1" style="border:1px solid black;">
       <div>Student: {{config.name}}</div>
-      <div *ngIf="obsReady.behaviorSubject | async">
+      <div *ngIf="obsReady | async">
         My homework to do: {{homework.observable | async}}
         <br>
         I'm charged: $ {{tuition.observable | async}}
@@ -25,18 +24,18 @@ import {BehaviorSubject} from "rxjs";
 export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit {
   homework: TrackedObservable;
   tuition: TrackedObservable;
-  obsReady: TrackedBehaviorSubject;
+  obsReady: BehaviorSubject<boolean>;
 
   constructor(private toService: TrackedObjectOrchestrationService, private changeDetectionRef: ChangeDetectorRef) {
     super();
-    this.obsReady = new TrackedBehaviorSubject("StudentComponent.obsReady", new BehaviorSubject<boolean>(false));
+    this.obsReady = new BehaviorSubject<boolean>(false);
   }
 
   ngOnInit() {
     this.toService.waitFor([this.config.consumingObservables.homework, this.config.consumingObservables.tuition], () => {
       this.homework = this.toService.getObservable(this.config.consumingObservables.homework);
       this.tuition = this.toService.getObservable(this.config.consumingObservables.tuition);
-      this.obsReady.behaviorSubject.next(true);
+      this.obsReady.next(true);
       this.changeDetectionRef.detectChanges();
     });
   }

@@ -12,9 +12,9 @@ import {ConfigurationDrivenComponent} from "../../base/configuration-driven-comp
 @Component({
   selector: "cd-sc-alert",
   template: `
-    <alert [type]="config.type">
+    <ngb-alert [type]="config.type" [dismissible]="false">
       <div #dynamic_content></div>
-    </alert>
+    </ngb-alert>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

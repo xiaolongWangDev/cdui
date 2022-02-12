@@ -7,22 +7,20 @@ export class ObservableReference {
 
 export type ValueOrObservableReference = any | ObservableReference;
 
-export class TrackedObject {
+export type TrackedObject = TrackedObservable | TrackedBehaviorSubject;
+
+export class TrackedObservable {
   public readonly id: string;
 
-  constructor(ref: string | ObservableReference) {
+  constructor(ref: string | ObservableReference, public readonly observable: Observable<any>) {
     this.id = ref instanceof ObservableReference ? ref.observableId : ref;
   }
 }
 
-export class TrackedObservable extends TrackedObject {
-  constructor(ref: string | ObservableReference, public readonly observable: Observable<any>) {
-    super(ref)
-  }
-}
+export class TrackedBehaviorSubject {
+  public readonly id: string;
 
-export class TrackedBehaviorSubject extends TrackedObject {
   constructor(ref: string | ObservableReference, public readonly behaviorSubject: BehaviorSubject<any>) {
-    super(ref)
+    this.id = ref instanceof ObservableReference ? ref.observableId : ref;
   }
 }
