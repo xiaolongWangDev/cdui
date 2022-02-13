@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {TeacherComponent} from "./components/teacher/teacher.component";
-import {ConfigurationDrivenCoreModule, TrackedObjectOrchestrationService} from "configuration-driven-core";
+import {ConfigurationDrivenCoreModule, DynamicObservableOrchestrationService} from "configuration-driven-core";
 import {StudentComponent} from "./components/student/student.component";
 import {HeadmasterComponent} from "./components/headmaster/headmaster.component";
 import {AppRoutingModule} from "./app-routing.module";
@@ -31,7 +31,7 @@ import {DemoObsCreatedByParentPageComponent} from "./pages/demo-obs-created-by-p
     NgbModule,
   ],
   providers: [
-    TrackedObjectOrchestrationService
+    DynamicObservableOrchestrationService
   ],
   bootstrap: [AppComponent]
 })

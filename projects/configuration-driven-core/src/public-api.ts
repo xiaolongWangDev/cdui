@@ -3,7 +3,6 @@
  */
 
 export * from './lib/model/types';
-export * from './lib/model/tracked-types';
 export * from './lib/component/base/configuration-driven-component';
 export * from './lib/component/base/component-configuration';
 export * from './lib/component/base/dynamic-host-component';

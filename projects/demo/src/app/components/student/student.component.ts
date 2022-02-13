@@ -1,11 +1,8 @@
-import {
-  ConfigurationDrivenComponent,
-  TrackedObjectOrchestrationService,
-  TrackedObservable
-} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
 import {StudentConfiguration} from "./student.config";
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@angular/core";
-import {BehaviorSubject} from "rxjs";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
+import {BehaviorSubject, Observable} from "rxjs";
+import {markAsDemo} from "../../helper/Helper";
 
 @Component({
   selector: "demo-student",
@@ -13,30 +10,41 @@ import {BehaviorSubject} from "rxjs";
     <div class="m-1" style="border:1px solid black;">
       <div>Student: {{config.name}}</div>
       <div *ngIf="obsReady | async">
-        My homework to do: {{homework.observable | async}}
+        My homework to do: {{homework | async}}
         <br>
-        I'm charged: $ {{tuition.observable | async}}
+        I'm charged: $ {{tuition | async}}
       </div>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit {
-  homework: TrackedObservable;
-  tuition: TrackedObservable;
+export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit, OnDestroy {
+  homework: Observable<string>;
+  tuition: Observable<number>;
   obsReady: BehaviorSubject<boolean>;
 
-  constructor(private toService: TrackedObjectOrchestrationService, private changeDetectionRef: ChangeDetectorRef) {
+  constructor(private obsService: DynamicObservableOrchestrationService, private changeDetectionRef: ChangeDetectorRef) {
     super();
     this.obsReady = new BehaviorSubject<boolean>(false);
   }
 
   ngOnInit() {
-    this.toService.waitFor([this.config.consumingObservables.homework, this.config.consumingObservables.tuition], () => {
-      this.homework = this.toService.getObservable(this.config.consumingObservables.homework);
-      this.tuition = this.toService.getObservable(this.config.consumingObservables.tuition);
+    markAsDemo(this.obsReady, "obs_ready_" + this.config.name);
+
+    // let bob create a memory leak every time it's recreated
+    if(this.config.name==="Bob"){
+      console.log("hold");
+      this.obsService.holdRef(this);
+    }
+    this.obsService.waitFor([this.config.consumingObservables.homework, this.config.consumingObservables.tuition], () => {
+      this.homework = this.obsService.getObservable(this.config.consumingObservables.homework);
+      this.tuition = this.obsService.getObservable(this.config.consumingObservables.tuition);
       this.obsReady.next(true);
       this.changeDetectionRef.detectChanges();
     });
+  }
+
+  ngOnDestroy() {
+    console.log("destroy " + this.config.name)
   }
 }

@@ -3,7 +3,7 @@ import {MiniStoreComponent} from "./component/mini-store/mini-store.component";
 import {PageComponent} from "./component/page/page.component";
 import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
-import {TrackedObjectOrchestrationService} from "./service/tracked-object-orchestration.service";
+import {DynamicObservableOrchestrationService} from "./service/tracked-object-orchestration.service";
 import {AlertComponent} from "./component/standard/alert/alert.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
@@ -36,7 +36,7 @@ export class ConfigurationDrivenCoreModule {
   static forRoot(): ModuleWithProviders<ConfigurationDrivenCoreModule> {
     return {
       ngModule: ConfigurationDrivenCoreModule,
-      providers: [TrackedObjectOrchestrationService]
+      providers: [DynamicObservableOrchestrationService]
     };
   }
 }

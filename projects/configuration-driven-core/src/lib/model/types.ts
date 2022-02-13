@@ -4,3 +4,10 @@ import {ConfigurationDrivenComponent} from "../component/base/configuration-driv
 export type AnyComponentConfiguration = ComponentConfiguration<any>;
 
 export type AnyConfigurationDrivenComponent = ConfigurationDrivenComponent<any>;
+
+export class ObservableReference {
+  constructor(public readonly observableId: string) {
+  }
+}
+
+export type ValueOrObservableReference = any | ObservableReference;

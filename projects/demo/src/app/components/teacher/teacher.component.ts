@@ -1,12 +1,12 @@
 import {
   ConfigurationDrivenComponent,
-  TrackedObjectOrchestrationService,
-  TrackedObservable
+  DynamicObservableOrchestrationService,
 } from "configuration-driven-core";
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeacherConfiguration} from "./teacher.config";
+import {markAsDemo} from "../../helper/Helper";
 
 @Component({
   selector: "demo-teacher",
@@ -24,21 +24,23 @@ import {TeacherConfiguration} from "./teacher.config";
 export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit, OnDestroy {
   @ViewChild('homework_input', {static: true}) inputElement: ElementRef;
 
-  constructor(private readonly toService: TrackedObjectOrchestrationService) {
+  constructor(private readonly obsService: DynamicObservableOrchestrationService) {
     super();
   }
 
   ngAfterViewInit(): void {
-    this.toService.addObject(
-      new TrackedObservable(
-        this.config.yieldingObservables.homework,
-        fromEvent(this.inputElement.nativeElement, 'change')
-          .pipe(map((e: any) => e.target.value)))
+    this.obsService.addObject(
+      this.config.yieldingObservables.homework,
+      markAsDemo(
+        markAsDemo(fromEvent(this.inputElement.nativeElement, 'change'), this.config.yieldingObservables.homework + "_from_event")
+          .pipe(map((e: any) => e.target.value)),
+        this.config.yieldingObservables.homework
+      )
     );
   }
 
   ngOnDestroy(): void {
-    this.toService.revokeObject(this.config.yieldingObservables.homework);
+    this.obsService.revokeObject(this.config.yieldingObservables.homework);
   }
 
 }

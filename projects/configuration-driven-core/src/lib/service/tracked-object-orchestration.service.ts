@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
-import {TrackedBehaviorSubject, TrackedObservable, TrackedObject, ObservableReference} from "../model/tracked-types";
+import {ObservableReference} from "../model/types";
+import {BehaviorSubject, Observable} from "rxjs";
 
-export class ObjectReadyListener {
+export class ObservableReadyListener {
   constructor(public readonly ids: string[], public readonly callback: () => void) {
   }
 }
@@ -12,64 +13,74 @@ function refToKey(ref: StringOrObservableReference): string {
   return ref instanceof ObservableReference ? ref.observableId : ref;
 }
 
-@Injectable({providedIn: "root"})
-export class TrackedObjectOrchestrationService {
-  private readonly trackedObjectMap: Map<string, TrackedObject> = new Map<string, TrackedObject>();
-  private readonly trackedObjectReadyListeners: ObjectReadyListener[] = [];
+@Injectable()
+export class DynamicObservableOrchestrationService {
+  private readonly observablesMap: Map<string, Observable<any>> = new Map<string, Observable<any>>();
+  private readonly observableReadyListeners: ObservableReadyListener[] = [];
+
+  private tempRef: any[] = [];
+
 
   public waitFor(refs: StringOrObservableReference[], callback: () => void): void {
     if (refs !== undefined) {
-      const newListener = new ObjectReadyListener(refs.map(refToKey), callback);
+      const newListener = new ObservableReadyListener(refs.map(refToKey), callback);
       if (!this.triggerListenerIfReady(newListener)) {
-        this.trackedObjectReadyListeners.push(newListener)
+        this.observableReadyListeners.push(newListener)
       }
     } else {
       callback();
     }
   }
 
-  public addObject(obj: TrackedObject) {
-    console.log(`adding tracked obj ${obj.id}`);
-    if (this.trackedObjectMap.has(obj.id)) {
-      throw new Error(`${obj.id} is already registered`);
+  public addObject(ref: StringOrObservableReference, obs: Observable<any>) {
+    const key = refToKey(ref);
+    console.log(`adding observable ${key}`);
+    if (this.observablesMap.has(key)) {
+      throw new Error(`${key} is already registered`);
     }
-    this.trackedObjectMap.set(obj.id, obj);
+    this.observablesMap.set(key, obs);
     this.checkListeners();
   }
 
-  public getObservable(ref: StringOrObservableReference): TrackedObservable {
-    let obj = this.getTrackedObject(ref);
-    if (obj instanceof TrackedObservable) {
-      return obj;
-    } else {
-      throw new Error(`${obj.id} is not a tracked observable`)
+  public getObservable(ref: StringOrObservableReference): Observable<any> {
+    const key = refToKey(ref);
+    if (!this.observablesMap.has(key)) {
+      throw new Error(`${key} is not registered yet. this method should only be used in the waitFor() callback`)
     }
+    return this.observablesMap.get(key);
   }
 
-  public getBehaviorSubject(ref: StringOrObservableReference): TrackedBehaviorSubject {
-    let obj = this.getTrackedObject(ref);
-    if (obj instanceof TrackedBehaviorSubject) {
+  public getBehaviorSubject(ref: StringOrObservableReference): BehaviorSubject<any> {
+    const key = refToKey(ref);
+    let obj = this.getObservable(key);
+    if (obj instanceof BehaviorSubject) {
       return obj;
     } else {
-      throw new Error(`${obj.id} is not a tracked behavior subject`)
+      throw new Error(`${key} is not a behavior subject`)
     }
   }
 
   public revokeObject(ref: StringOrObservableReference): boolean {
     const key = refToKey(ref);
-    console.log(`removing obj ${key}`);
-    const result = this.trackedObjectMap.delete(key);
-    console.log(this.trackedObjectMap);
+    console.log(`removing observable ${key}`);
+    const result = this.observablesMap.delete(key);
+    console.log(this.observablesMap);
     return result;
+  }
+
+  // just for experiment
+  // this mimics that a component is still held after it's life cycle and not garbage collected for some reason
+  public holdRef(obj:any){
+    this.tempRef.push(obj);
   }
 
 
   // private methods
 
-  private triggerListenerIfReady(listener: ObjectReadyListener): boolean {
+  private triggerListenerIfReady(listener: ObservableReadyListener): boolean {
     let trigger = true;
     for (const id of listener.ids) {
-      if (!this.trackedObjectMap.has(id)) {
+      if (!this.observablesMap.has(id)) {
         trigger = false;
         break;
       }
@@ -83,20 +94,12 @@ export class TrackedObjectOrchestrationService {
   }
 
   private checkListeners(): void {
-    for (let i = this.trackedObjectReadyListeners.length - 1; i >= 0; i--) {
-      const trigger = this.triggerListenerIfReady(this.trackedObjectReadyListeners[i]);
+    for (let i = this.observableReadyListeners.length - 1; i >= 0; i--) {
+      const trigger = this.triggerListenerIfReady(this.observableReadyListeners[i]);
       if (trigger) {
-        this.trackedObjectReadyListeners.splice(i, 1);
+        this.observableReadyListeners.splice(i, 1);
       }
     }
-  }
-
-  public getTrackedObject(ref: StringOrObservableReference): TrackedObject {
-    const key: string = refToKey(ref);
-    if (!this.trackedObjectMap.has(key)) {
-      throw new Error(`${key} is not registered yet. this method should only be used in the waitFor() callback`)
-    }
-    return this.trackedObjectMap.get(key);
   }
 }
 

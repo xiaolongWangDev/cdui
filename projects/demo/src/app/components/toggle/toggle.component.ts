@@ -1,6 +1,7 @@
 import {Component, ContentChild} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {ToggleTargetDirective} from "./toggle-target.directive";
+import {markAsDemo} from "../../helper/Helper";
 
 @Component({
   "selector": "demo-toggle",
@@ -18,7 +19,7 @@ import {ToggleTargetDirective} from "./toggle-target.directive";
   `
 })
 export class ToggleComponent {
-  show: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  show: BehaviorSubject<boolean> = markAsDemo(new BehaviorSubject<boolean>(false), "demo_goggle_show");
   @ContentChild(ToggleTargetDirective) content!: ToggleTargetDirective;
 
   toggle() {
