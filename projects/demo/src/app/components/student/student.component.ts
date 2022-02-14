@@ -1,6 +1,6 @@
 import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
 import {StudentConfiguration} from "./student.config";
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
 import {markAsDemo} from "../../helper/Helper";
 
@@ -18,7 +18,7 @@ import {markAsDemo} from "../../helper/Helper";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit, OnDestroy {
+export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit {
   homework: Observable<string>;
   tuition: Observable<number>;
   obsReady: BehaviorSubject<boolean>;
@@ -30,21 +30,11 @@ export class StudentComponent extends ConfigurationDrivenComponent<StudentConfig
 
   ngOnInit() {
     markAsDemo(this.obsReady, "obs_ready_" + this.config.name);
-
-    // let bob create a memory leak every time it's recreated
-    if(this.config.name==="Bob"){
-      console.log("hold");
-      this.obsService.holdRef(this);
-    }
     this.obsService.waitFor([this.config.consumingObservables.homework, this.config.consumingObservables.tuition], () => {
       this.homework = this.obsService.getObservable(this.config.consumingObservables.homework);
       this.tuition = this.obsService.getObservable(this.config.consumingObservables.tuition);
       this.obsReady.next(true);
       this.changeDetectionRef.detectChanges();
     });
-  }
-
-  ngOnDestroy() {
-    console.log("destroy " + this.config.name)
   }
 }

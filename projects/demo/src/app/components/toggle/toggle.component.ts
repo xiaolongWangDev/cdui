@@ -19,7 +19,7 @@ import {markAsDemo} from "../../helper/Helper";
   `
 })
 export class ToggleComponent {
-  show: BehaviorSubject<boolean> = markAsDemo(new BehaviorSubject<boolean>(false), "demo_goggle_show");
+  show: BehaviorSubject<boolean> = markAsDemo(new BehaviorSubject<boolean>(true), "demo_goggle_show");
   @ContentChild(ToggleTargetDirective) content!: ToggleTargetDirective;
 
   toggle() {
