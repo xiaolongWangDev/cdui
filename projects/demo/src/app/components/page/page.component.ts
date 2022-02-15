@@ -20,7 +20,7 @@ export class PageComponent extends DynamicHostComponent<PageConfiguration> imple
     return this.config.components;
   }
 
-  ngOnDestroy(): void {
+  destroyExtra(): void {
     setNullAttributes(this);
   }
 }

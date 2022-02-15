@@ -1,8 +1,8 @@
 import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
 import {StudentConfiguration} from "./student.config";
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
-import {setNullAttributes, markAsDemo} from "../../helper/Helper";
+import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-student",
@@ -18,7 +18,7 @@ import {setNullAttributes, markAsDemo} from "../../helper/Helper";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit, OnDestroy {
+export class StudentComponent extends ConfigurationDrivenComponent<StudentConfiguration> implements OnInit {
   homework: Observable<string>;
   tuition: Observable<number>;
   obsReady: BehaviorSubject<boolean>;
@@ -38,7 +38,8 @@ export class StudentComponent extends ConfigurationDrivenComponent<StudentConfig
     });
   }
 
-  ngOnDestroy(): void {
+
+  destroyExtra(): void {
     setNullAttributes(this);
   }
 }

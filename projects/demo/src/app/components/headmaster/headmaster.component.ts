@@ -1,5 +1,5 @@
 import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {HeadmasterConfiguration} from "./headmaster.config";
@@ -18,7 +18,7 @@ import {markAsDemo, setNullAttributes} from "../../helper/Helper";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit, OnDestroy {
+export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit {
   @ViewChild('collect_tuition_input', {static: true}) inputElement: ElementRef;
 
   constructor(private readonly obsService: DynamicObservableOrchestrationService) {
@@ -27,7 +27,7 @@ export class HeadmasterComponent extends ConfigurationDrivenComponent<Headmaster
 
   ngAfterViewInit(): void {
     let tuition_observable_id = this.config.yieldingObservables.tuition;
-    this.obsService.addObject(
+    this.obsService.addObservable(
       tuition_observable_id,
       markAsDemo(
         markAsDemo(fromEvent(this.inputElement.nativeElement, 'change'), tuition_observable_id + "_from_event")
@@ -37,8 +37,9 @@ export class HeadmasterComponent extends ConfigurationDrivenComponent<Headmaster
     );
   }
 
-  ngOnDestroy(): void {
-    this.obsService.revokeObject(this.config.yieldingObservables.tuition);
+
+  destroyExtra(): void {
+    this.obsService.revokeObservable(this.config.yieldingObservables.tuition);
     setNullAttributes(this);
   }
 

@@ -7,7 +7,7 @@ export class TeacherConfiguration extends YieldingComponentConfiguration<Teacher
   public readonly teaches: StudentConfiguration[];
 
   constructor(args: Omit<TeacherConfiguration, "componentType">) {
-    super(TeacherComponent, args.yieldingObservables);
+    super(TeacherComponent);
     Object.assign(this, args);
   }
 }

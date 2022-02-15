@@ -1,16 +1,16 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {MiniStoreComponent} from "./component/mini-store/mini-store.component";
 import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
 import {DynamicObservableOrchestrationService} from "./service/tracked-object-orchestration.service";
 import {AlertComponent} from "./component/standard/alert/alert.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {StoreComponent} from "./component/store/store.component";
 
 
 @NgModule({
   declarations: [
     DynamicDirective,
-    MiniStoreComponent,
+    StoreComponent,
     AlertComponent
   ],
   imports: [
@@ -19,7 +19,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
   ],
   exports: [
     DynamicDirective,
-    MiniStoreComponent,
+    StoreComponent,
     AlertComponent
   ]
 })

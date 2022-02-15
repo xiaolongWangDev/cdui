@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ObservableReference} from "../model/types";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 export class ObservableReadyListener {
   constructor(public readonly ids: string[], public readonly callback: () => void) {
@@ -18,9 +19,6 @@ export class DynamicObservableOrchestrationService {
   private readonly observablesMap: Map<string, Observable<any>> = new Map<string, Observable<any>>();
   private readonly observableReadyListeners: ObservableReadyListener[] = [];
 
-  private tempRef: any[] = [];
-
-
   public waitFor(refs: StringOrObservableReference[], callback: () => void): void {
     if (refs !== undefined) {
       const newListener = new ObservableReadyListener(refs.map(refToKey), callback);
@@ -32,7 +30,25 @@ export class DynamicObservableOrchestrationService {
     }
   }
 
-  public addObject(ref: StringOrObservableReference, obs: Observable<any>) {
+  public add(observableId: string,
+              observable: Observable<any>,
+              keepInStore?: Set<string>,
+              componentDestroy?: Subject<void>) {
+    if (keepInStore.has(observableId)) {
+      this.waitFor([observableId], () => {
+        const subjectInStore = this.getBehaviorSubject(observableId);
+        observable
+          .pipe(takeUntil(componentDestroy))
+          .subscribe(val => {
+            subjectInStore.next(val);
+          })
+      })
+    } else {
+      this.addObservable(observableId, observable);
+    }
+  }
+
+  public addObservable(ref: StringOrObservableReference, obs: Observable<any>) {
     const key = refToKey(ref);
     console.log(`adding observable ${key}`);
     if (this.observablesMap.has(key)) {
@@ -60,20 +76,13 @@ export class DynamicObservableOrchestrationService {
     }
   }
 
-  public revokeObject(ref: StringOrObservableReference): boolean {
+  public revokeObservable(ref: StringOrObservableReference): boolean {
     const key = refToKey(ref);
     console.log(`removing observable ${key}`);
     const result = this.observablesMap.delete(key);
     console.log(this.observablesMap);
     return result;
   }
-
-  // just for experiment
-  // this mimics that a component is still held after it's life cycle and not garbage collected for some reason
-  public holdRef(obj:any){
-    this.tempRef.push(obj);
-  }
-
 
   // private methods
 

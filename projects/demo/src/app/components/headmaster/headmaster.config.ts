@@ -7,7 +7,7 @@ export class HeadmasterConfiguration extends YieldingComponentConfiguration<Head
   public readonly manages: TeacherConfiguration[];
 
   constructor(args: Omit<HeadmasterConfiguration, "componentType">) {
-    super(HeadmasterComponent, args.yieldingObservables);
+    super(HeadmasterComponent);
     Object.assign(this, args);
   }
 }

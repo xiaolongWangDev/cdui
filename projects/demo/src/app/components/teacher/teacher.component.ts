@@ -1,12 +1,9 @@
-import {
-  ConfigurationDrivenComponent,
-  DynamicObservableOrchestrationService,
-} from "configuration-driven-core";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, ViewChild} from "@angular/core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeacherConfiguration} from "./teacher.config";
-import {setNullAttributes, markAsDemo} from "../../helper/Helper";
+import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-teacher",
@@ -21,7 +18,7 @@ import {setNullAttributes, markAsDemo} from "../../helper/Helper";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit, OnDestroy {
+export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit {
   @ViewChild('homework_input', {static: true}) inputElement: ElementRef;
 
   constructor(private readonly obsService: DynamicObservableOrchestrationService) {
@@ -29,18 +26,21 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
   }
 
   ngAfterViewInit(): void {
-    this.obsService.addObject(
-      this.config.yieldingObservables.homework,
+    const homeworkObj = markAsDemo(
       markAsDemo(
-        markAsDemo(fromEvent(this.inputElement.nativeElement, 'change'), this.config.yieldingObservables.homework + "_from_event")
-          .pipe(map((e: any) => e.target.value)),
-        this.config.yieldingObservables.homework
-      )
+        fromEvent(this.inputElement.nativeElement, 'change'),
+        this.config.yieldingObservables.homework + "_from_event")
+        .pipe(map((e: any) => e.target.value)),
+      this.config.yieldingObservables.homework
     );
+
+    const keepInStore: Set<string> = new Set(this.config.keepInStore);
+    this.obsService.add(this.config.yieldingObservables.homework, homeworkObj, keepInStore, this.destroy$);
   }
 
-  ngOnDestroy(): void {
-    this.obsService.revokeObject(this.config.yieldingObservables.homework);
+
+  destroyExtra(): void {
+    this.obsService.revokeObservable(this.config.yieldingObservables.homework);
     setNullAttributes(this);
   }
 
