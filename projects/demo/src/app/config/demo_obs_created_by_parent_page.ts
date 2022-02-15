@@ -1,7 +1,8 @@
 import {TeacherConfiguration} from "../components/teacher/teacher.config";
 import {StudentConfiguration} from "../components/student/student.config";
-import {AlertConfiguration, PageConfiguration} from "configuration-driven-core";
+import {AlertConfiguration} from "configuration-driven-core";
 import {HeadmasterConfiguration} from "../components/headmaster/headmaster.config";
+import {PageConfiguration} from "../components/page/page.config";
 
 export const demo_obs_created_by_parent_page_conf = new PageConfiguration({
   title: "How to safely use an observable? Part 1",

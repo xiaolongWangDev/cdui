@@ -1,11 +1,9 @@
-import {Component, ComponentFactoryResolver} from "@angular/core";
+import {Component} from "@angular/core";
 import {PageConfiguration} from "./page.config";
-import {DynamicHostComponent} from "../base/dynamic-host-component";
-import {AnyComponentConfiguration} from "../../model/types";
-
+import {DynamicHostComponent, AnyComponentConfiguration} from "configuration-driven-core";
 
 @Component({
-  selector: "cd-page",
+  selector: "demo-page",
   template: `
     <div class="mt-2 ml-5 mr-5 mb-2">
       <h1>{{config.title}}</h1>
@@ -16,10 +14,6 @@ import {AnyComponentConfiguration} from "../../model/types";
   `
 })
 export class PageComponent extends DynamicHostComponent<PageConfiguration> {
-
-  constructor(resolver: ComponentFactoryResolver) {
-    super(resolver);
-  }
 
   protected getConfigurations(): AnyComponentConfiguration[] {
     return this.config.components;

@@ -5,7 +5,7 @@ import {demo_obs_created_by_parent_page_conf} from "../config/demo_obs_created_b
   template: `
     <demo-toggle>
       <ng-template demo-toggle-target>
-        <cd-page [config]="config"></cd-page>
+        <demo-page [config]="config"></demo-page>
       </ng-template>
     </demo-toggle>
   `

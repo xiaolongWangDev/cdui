@@ -1,6 +1,5 @@
-import {ComponentConfiguration} from "../base/component-configuration";
 import {PageComponent} from "./page.component";
-import {AnyComponentConfiguration} from "../../model/types";
+import {AnyComponentConfiguration, ComponentConfiguration} from "configuration-driven-core";
 
 
 export class PageConfiguration extends ComponentConfiguration<PageComponent> {
