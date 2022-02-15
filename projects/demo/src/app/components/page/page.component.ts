@@ -1,6 +1,7 @@
-import {Component} from "@angular/core";
+import {Component, OnDestroy} from "@angular/core";
 import {PageConfiguration} from "./page.config";
 import {DynamicHostComponent, AnyComponentConfiguration} from "configuration-driven-core";
+import {setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-page",
@@ -13,10 +14,13 @@ import {DynamicHostComponent, AnyComponentConfiguration} from "configuration-dri
     </div>
   `
 })
-export class PageComponent extends DynamicHostComponent<PageConfiguration> {
+export class PageComponent extends DynamicHostComponent<PageConfiguration> implements OnDestroy {
 
   protected getConfigurations(): AnyComponentConfiguration[] {
     return this.config.components;
   }
 
+  ngOnDestroy(): void {
+    setNullAttributes(this);
+  }
 }

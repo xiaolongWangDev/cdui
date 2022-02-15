@@ -10,3 +10,15 @@ export function markAsDemo(obs: any, id: string): any {
   return obs
 }
 
+// for various reason, when working in develop mode,
+// components are not properly garbage collected.
+// this results in all the property references got retained
+// this function exists to manually cut the chains
+export function setNullAttributes(obj: any){
+  for (const prop in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+      obj[prop] = null;
+    }
+  }
+}
+

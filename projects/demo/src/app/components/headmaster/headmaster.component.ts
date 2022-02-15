@@ -3,7 +3,7 @@ import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {HeadmasterConfiguration} from "./headmaster.config";
-import {markAsDemo} from "../../helper/Helper";
+import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-headmaster",
@@ -39,6 +39,7 @@ export class HeadmasterComponent extends ConfigurationDrivenComponent<Headmaster
 
   ngOnDestroy(): void {
     this.obsService.revokeObject(this.config.yieldingObservables.tuition);
+    setNullAttributes(this);
   }
 
 }

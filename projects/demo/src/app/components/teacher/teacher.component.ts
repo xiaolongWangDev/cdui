@@ -6,7 +6,7 @@ import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeacherConfiguration} from "./teacher.config";
-import {markAsDemo} from "../../helper/Helper";
+import {setNullAttributes, markAsDemo} from "../../helper/Helper";
 
 @Component({
   selector: "demo-teacher",
@@ -41,6 +41,7 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
 
   ngOnDestroy(): void {
     this.obsService.revokeObject(this.config.yieldingObservables.homework);
+    setNullAttributes(this);
   }
 
 }
