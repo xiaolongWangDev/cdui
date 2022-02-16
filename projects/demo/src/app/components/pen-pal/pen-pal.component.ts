@@ -1,4 +1,8 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
+import {
+  ConfigurationDrivenComponent,
+  DynamicObservableOrchestrationService,
+  markAsTracked
+} from "configuration-driven-core";
 import {PenPalConfig} from "./pen-pal.config";
 import {fromEvent, Observable} from "rxjs";
 import {
@@ -32,17 +36,12 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
   @ViewChild('mail_out', {static: true}) domElement: ElementRef;
 
   constructor(obsService: DynamicObservableOrchestrationService,
-              private readonly changeDetectionRef: ChangeDetectorRef) {
-    super(obsService);
+              changeDetectionRef: ChangeDetectorRef) {
+    super(obsService, changeDetectionRef);
   }
 
-  ngOnInit() {
-    markAsTracked(this.obsReady$, "obs_ready_" + this.config.name);
-    this.obsService.waitFor([this.config.consumingObservables.receive], () => {
+  protected readyToConsumeObservables() {
       this.newLetter$ = this.obsService.getObservable(this.config.consumingObservables.receive);
-      this.obsReady$.next(true);
-      this.changeDetectionRef.detectChanges();
-    });
   }
 
   ngAfterViewInit(): void {

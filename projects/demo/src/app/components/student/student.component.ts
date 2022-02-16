@@ -21,17 +21,12 @@ export class StudentComponent extends ConfigurationDrivenComponent<StudentConfig
   homework$: Observable<string>;
   tuition$: Observable<number>;
 
-  constructor(obsService: DynamicObservableOrchestrationService, private changeDetectionRef: ChangeDetectorRef) {
-    super(obsService);
+  constructor(obsService: DynamicObservableOrchestrationService, changeDetectionRef: ChangeDetectorRef) {
+    super(obsService, changeDetectionRef);
   }
 
-  ngOnInit() {
-    markAsTracked(this.obsReady$, "obs_ready_" + this.config.name);
-    this.obsService.waitFor([this.config.consumingObservables.homework, this.config.consumingObservables.tuition], () => {
-      this.homework$ = this.obsService.getObservable(this.config.consumingObservables.homework);
-      this.tuition$ = this.obsService.getObservable(this.config.consumingObservables.tuition);
-      this.obsReady$.next(true);
-      this.changeDetectionRef.detectChanges();
-    });
+  protected readyToConsumeObservables() {
+    this.homework$ = this.obsService.getObservable(this.config.consumingObservables.homework);
+    this.tuition$ = this.obsService.getObservable(this.config.consumingObservables.tuition);
   }
 }
