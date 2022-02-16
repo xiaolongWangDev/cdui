@@ -4,14 +4,20 @@ import {AlertConfiguration} from "configuration-driven-core";
 import {HeadmasterConfiguration} from "../components/headmaster/headmaster.config";
 import {PageConfiguration} from "../components/page/page.config";
 
-export const demo_obs_created_by_parent_page_conf = new PageConfiguration({
-  title: "How to safely use an observable? Part 1",
+export const demo_obs_created_by_ancestor_page_conf = new PageConfiguration({
+  title: "Configuration Driven Observable Best Practice: Part 1",
   components: [
     new AlertConfiguration({
       type: "success",
       htmlContent: `
-              <p>In the CD(configuration driven) framework, when the observable is created by an ancestor component, it's safe to directly grab the reference and use.</p>
+              <p>when a component(A) want to use observables created by one of its ancestor components, it's safe to directly grab the reference and use.</p>
               <p>By directly I mean we don't need to pull the state up into a store, which I will show you in the next demo.</p>
+              <p>In the following example, a student uses 2 observables: tuition from its headmaster and homework from its teacher.
+              The headmaster and the teachers are the "yielding" components here, they create observables.
+              The students are the consuming components. The linkage are the unique observable id strings.
+              Because of the component hierarchy, the yielding components never got destroyed before the consuming.
+              As a result, the observables holds valid throughout the lifespan of student component.
+              </p>
               `
     }),
     new HeadmasterConfiguration({

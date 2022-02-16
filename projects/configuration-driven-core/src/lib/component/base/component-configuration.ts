@@ -5,14 +5,13 @@ import {StoreConfiguration} from "../store/store.config";
 export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent,
   YIELD_TYPE extends Record<string, string>,
   CONSUME_TYPE extends Record<string, string>> {
-  public readonly componentType: Type<COMP_TYPE>;
   //
   public readonly yieldingObservables?: YIELD_TYPE;
   public readonly keepInStore?: string[];
   //
   public readonly consumingObservables?: CONSUME_TYPE;
 
-  constructor(componentType: Type<COMP_TYPE>) {
+  constructor(public readonly componentType: Type<COMP_TYPE>) {
   }
 }
 

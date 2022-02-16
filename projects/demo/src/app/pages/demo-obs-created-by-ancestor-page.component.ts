@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {demo_obs_created_by_parent_page_conf} from "../config/demo_obs_created_by_parent_page";
+import {demo_obs_created_by_ancestor_page_conf} from "../config/demo_obs_created_by_ancestor_page";
 
 @Component({
   template: `
@@ -10,6 +10,6 @@ import {demo_obs_created_by_parent_page_conf} from "../config/demo_obs_created_b
     </demo-toggle>
   `
 })
-export class DemoObsCreatedByParentPageComponent {
-  config = demo_obs_created_by_parent_page_conf;
+export class DemoObsCreatedByAncestorPageComponent {
+  config = demo_obs_created_by_ancestor_page_conf;
 }

@@ -1,12 +1,14 @@
 import {NgModule} from "@angular/core";
 import {Route, RouterModule} from "@angular/router";
-import {DemoObsCreatedByParentPageComponent} from "./pages/demo-obs-created-by-parent-page.component";
 import {IntroductionPageComponent} from "./pages/introduction-page.component";
+import {DemoObsCreatedByAncestorPageComponent} from "./pages/demo-obs-created-by-ancestor-page.component";
+import {DemoObsCreatedByNonAncestorPageComponent} from "./pages/demo-obs-created-by-non-ancestor-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
   {path: "introduction", component: IntroductionPageComponent},
-  {path: "demo_obs_created_by_parent", component: DemoObsCreatedByParentPageComponent}
+  {path: "demo_obs_created_by_ancestor", component: DemoObsCreatedByAncestorPageComponent},
+  {path: "demo_obs_created_by_non_ancestor", component: DemoObsCreatedByNonAncestorPageComponent}
 ]
 
 @NgModule({
