@@ -1,7 +1,6 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
 import {PenPalConfig} from "./pen-pal.config";
-import {markAsDemo, setNullAttributes} from "../../helper/Helper";
-import {BehaviorSubject, fromEvent, Observable} from "rxjs";
+import {fromEvent, Observable} from "rxjs";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -30,17 +29,15 @@ import {map} from "rxjs/operators";
 })
 export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> implements OnInit, AfterViewInit {
   newLetter$: Observable<string>;
-  obsReady$: BehaviorSubject<boolean>;
   @ViewChild('mail_out', {static: true}) domElement: ElementRef;
 
-  constructor(private readonly obsService: DynamicObservableOrchestrationService,
+  constructor(obsService: DynamicObservableOrchestrationService,
               private readonly changeDetectionRef: ChangeDetectorRef) {
-    super();
-    this.obsReady$ = new BehaviorSubject<boolean>(false);
+    super(obsService);
   }
 
   ngOnInit() {
-    markAsDemo(this.obsReady$, "obs_ready_" + this.config.name);
+    markAsTracked(this.obsReady$, "obs_ready_" + this.config.name);
     this.obsService.waitFor([this.config.consumingObservables.receive], () => {
       this.newLetter$ = this.obsService.getObservable(this.config.consumingObservables.receive);
       this.obsReady$.next(true);
@@ -49,8 +46,8 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
   }
 
   ngAfterViewInit(): void {
-    const sendOutObs = markAsDemo(
-      markAsDemo(
+    const sendOutObs = markAsTracked(
+      markAsTracked(
         fromEvent(this.domElement.nativeElement, 'change'),
         this.config.yieldingObservables.sendOut + "_from_event")
         .pipe(map((e: any) => e.target.value)),
@@ -59,13 +56,5 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
 
     const keepInStore: Set<string> = new Set(this.config.keepInStore);
     this.obsService.add(this.config.yieldingObservables.sendOut, sendOutObs, keepInStore, this.destroy$);
-  }
-
-  destroyExtra(): void {
-    const keepInStore: Set<string> = new Set(this.config.keepInStore);
-    if (!keepInStore.has(this.config.yieldingObservables.sendOut)) {
-      this.obsService.revokeObservable(this.config.yieldingObservables.sendOut);
-    }
-    setNullAttributes(this);
   }
 }

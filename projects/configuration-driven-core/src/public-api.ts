@@ -13,3 +13,4 @@ export * from './lib/component/standard/alert/alert.config';
 export * from './lib/directive/dynamic-directive';
 export * from './lib/service/tracked-object-orchestration.service';
 export * from './lib/configuration-driven-core.module';
+export * from './lib/Helper'

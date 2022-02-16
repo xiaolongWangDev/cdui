@@ -1,9 +1,8 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeacherConfiguration} from "./teacher.config";
-import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-teacher",
@@ -21,13 +20,13 @@ import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit {
   @ViewChild('homework_input', {static: true}) inputElement: ElementRef;
 
-  constructor(private readonly obsService: DynamicObservableOrchestrationService) {
-    super();
+  constructor(obsService: DynamicObservableOrchestrationService) {
+    super(obsService);
   }
 
   ngAfterViewInit(): void {
-    const homeworkObj = markAsDemo(
-      markAsDemo(
+    const homeworkObj = markAsTracked(
+      markAsTracked(
         fromEvent(this.inputElement.nativeElement, 'change'),
         this.config.yieldingObservables.homework + "_from_event")
         .pipe(map((e: any) => e.target.value)),
@@ -37,11 +36,4 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
     const keepInStore: Set<string> = new Set(this.config.keepInStore);
     this.obsService.add(this.config.yieldingObservables.homework, homeworkObj, keepInStore, this.destroy$);
   }
-
-
-  destroyExtra(): void {
-    this.obsService.revokeObservable(this.config.yieldingObservables.homework);
-    setNullAttributes(this);
-  }
-
 }

@@ -1,9 +1,8 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService,} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {HeadmasterConfiguration} from "./headmaster.config";
-import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-headmaster",
@@ -21,26 +20,19 @@ import {markAsDemo, setNullAttributes} from "../../helper/Helper";
 export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit {
   @ViewChild('collect_tuition_input', {static: true}) inputElement: ElementRef;
 
-  constructor(private readonly obsService: DynamicObservableOrchestrationService) {
-    super();
+  constructor(obsService: DynamicObservableOrchestrationService) {
+    super(obsService);
   }
 
   ngAfterViewInit(): void {
     let tuition_observable_id = this.config.yieldingObservables.tuition;
     this.obsService.addObservable(
       tuition_observable_id,
-      markAsDemo(
-        markAsDemo(fromEvent(this.inputElement.nativeElement, 'change'), tuition_observable_id + "_from_event")
+      markAsTracked(
+        markAsTracked(fromEvent(this.inputElement.nativeElement, 'change'), tuition_observable_id + "_from_event")
           .pipe(map((e: any) => e.target.value)),
         tuition_observable_id
       )
     );
   }
-
-
-  destroyExtra(): void {
-    this.obsService.revokeObservable(this.config.yieldingObservables.tuition);
-    setNullAttributes(this);
-  }
-
 }

@@ -1,7 +1,6 @@
 import {Component, OnDestroy} from "@angular/core";
 import {PageConfiguration} from "./page.config";
 import {DynamicHostComponent, AnyComponentConfiguration} from "configuration-driven-core";
-import {setNullAttributes} from "../../helper/Helper";
 
 @Component({
   selector: "demo-page",
@@ -18,9 +17,5 @@ export class PageComponent extends DynamicHostComponent<PageConfiguration> imple
 
   protected getConfigurations(): AnyComponentConfiguration[] {
     return this.config.components;
-  }
-
-  destroyExtra(): void {
-    setNullAttributes(this);
   }
 }
