@@ -1,6 +1,10 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
-import {fromEvent} from "rxjs";
+import {
+  ConfigurationDrivenComponent,
+  DynamicObservableOrchestrationService,
+  markAsTracked
+} from "configuration-driven-core";
+import {ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
+import {fromEvent, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HeadmasterConfiguration} from "./headmaster.config";
 
@@ -17,22 +21,27 @@ import {HeadmasterConfiguration} from "./headmaster.config";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> implements AfterViewInit {
+export class HeadmasterComponent extends ConfigurationDrivenComponent<HeadmasterConfiguration> {
   @ViewChild('collect_tuition_input', {static: true}) inputElement: ElementRef;
 
   constructor(obsService: DynamicObservableOrchestrationService) {
     super(obsService);
   }
 
-  ngAfterViewInit(): void {
-    let tuition_observable_id = this.config.yieldingObservables.tuition;
-    this.obsService.addObservable(
-      tuition_observable_id,
+  protected readyToYieldObservables(): Record<string, Observable<any>> {
+    let tuitionObsId = this.config.yieldingObservables.tuition;
+    // this is convoluted because of the use of markAsTracked. In production, we don't need to use them.
+    // They are just here to aggressively track all observables we created including the intermediate ones
+    // so that we are very sure no observable created by us is leaking memory
+    const tuitionObs =
       markAsTracked(
-        markAsTracked(fromEvent(this.inputElement.nativeElement, 'change'), tuition_observable_id + "_from_event")
+        markAsTracked(
+          fromEvent(this.inputElement.nativeElement, 'change'),
+          tuitionObsId + "_from_event")
           .pipe(map((e: any) => e.target.value)),
-        tuition_observable_id
-      )
-    );
+        tuitionObsId
+      );
+
+    return {[tuitionObsId]: tuitionObs}
   }
 }

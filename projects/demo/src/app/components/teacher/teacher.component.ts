@@ -1,6 +1,10 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
-import {fromEvent} from "rxjs";
+import {
+  ConfigurationDrivenComponent,
+  DynamicObservableOrchestrationService,
+  markAsTracked
+} from "configuration-driven-core";
+import {ChangeDetectionStrategy, Component, ElementRef, ViewChild} from "@angular/core";
+import {fromEvent, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeacherConfiguration} from "./teacher.config";
 
@@ -17,23 +21,25 @@ import {TeacherConfiguration} from "./teacher.config";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> implements AfterViewInit {
+export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfiguration> {
   @ViewChild('homework_input', {static: true}) inputElement: ElementRef;
 
   constructor(obsService: DynamicObservableOrchestrationService) {
     super(obsService);
   }
 
-  ngAfterViewInit(): void {
-    const homeworkObj = markAsTracked(
+  protected readyToYieldObservables(): Record<string, Observable<any>> {
+    let homeworkObsId = this.config.yieldingObservables.homework;
+    // this is convoluted because of the use of markAsTracked. In production, we don't need to use them.
+    // They are just here to aggressively track all observables we created including the intermediate ones
+    // so that we are very sure no observable created by us is leaking memory
+    const homeworkObs =
       markAsTracked(
-        fromEvent(this.inputElement.nativeElement, 'change'),
-        this.config.yieldingObservables.homework + "_from_event")
-        .pipe(map((e: any) => e.target.value)),
-      this.config.yieldingObservables.homework
-    );
-
-    const keepInStore: Set<string> = new Set(this.config.keepInStore);
-    this.obsService.add(this.config.yieldingObservables.homework, homeworkObj, keepInStore, this.destroy$);
+        markAsTracked(
+          fromEvent(this.inputElement.nativeElement, 'change'),
+          homeworkObsId + "_from_event")
+          .pipe(map((e: any) => e.target.value)),
+        homeworkObsId);
+    return {[homeworkObsId]: homeworkObs}
   }
 }

@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ObservableReference} from "../model/types";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {BehaviorSubject, Observable} from "rxjs";
 
 export class ObservableReadyListener {
   constructor(public readonly ids: string[], public readonly callback: () => void) {
@@ -27,24 +26,6 @@ export class DynamicObservableOrchestrationService {
       }
     } else {
       callback();
-    }
-  }
-
-  public add(observableId: string,
-              observable: Observable<any>,
-              keepInStore?: Set<string>,
-              componentDestroy?: Subject<void>) {
-    if (keepInStore.has(observableId)) {
-      this.waitFor([observableId], () => {
-        const subjectInStore = this.getBehaviorSubject(observableId);
-        observable
-          .pipe(takeUntil(componentDestroy))
-          .subscribe(val => {
-            subjectInStore.next(val);
-          })
-      })
-    } else {
-      this.addObservable(observableId, observable);
     }
   }
 
@@ -79,9 +60,8 @@ export class DynamicObservableOrchestrationService {
   public revokeObservable(ref: StringOrObservableReference): boolean {
     const key = refToKey(ref);
     console.log(`removing observable ${key}`);
-    const result = this.observablesMap.delete(key);
-    console.log(this.observablesMap);
-    return result;
+    // console.log(this.observablesMap);
+    return this.observablesMap.delete(key);
   }
 
   // private methods

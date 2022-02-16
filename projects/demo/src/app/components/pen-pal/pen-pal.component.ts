@@ -5,14 +5,7 @@ import {
 } from "configuration-driven-core";
 import {PenPalConfig} from "./pen-pal.config";
 import {fromEvent, Observable} from "rxjs";
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef, OnInit,
-  ViewChild
-} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild} from "@angular/core";
 import {map} from "rxjs/operators";
 
 
@@ -31,7 +24,7 @@ import {map} from "rxjs/operators";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> implements OnInit, AfterViewInit {
+export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> {
   newLetter$: Observable<string>;
   @ViewChild('mail_out', {static: true}) domElement: ElementRef;
 
@@ -41,19 +34,23 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
   }
 
   protected readyToConsumeObservables() {
-      this.newLetter$ = this.obsService.getObservable(this.config.consumingObservables.receive);
+    this.newLetter$ = this.obsService.getObservable(this.config.consumingObservables.receive);
   }
 
-  ngAfterViewInit(): void {
-    const sendOutObs = markAsTracked(
+  protected readyToYieldObservables(): Record<string, Observable<any>> {
+    // this is convoluted because of the use of markAsTracked. In production, we don't need to use them.
+    // They are just here to aggressively track all observables we created including the intermediate ones
+    // so that we are very sure no observable created by us is leaking memory
+    let sendOutObsId = this.config.yieldingObservables.sendOut;
+    const sendOutObs =
       markAsTracked(
-        fromEvent(this.domElement.nativeElement, 'change'),
-        this.config.yieldingObservables.sendOut + "_from_event")
-        .pipe(map((e: any) => e.target.value)),
-      this.config.yieldingObservables.sendOut
-    );
-
-    const keepInStore: Set<string> = new Set(this.config.keepInStore);
-    this.obsService.add(this.config.yieldingObservables.sendOut, sendOutObs, keepInStore, this.destroy$);
+        markAsTracked(
+          fromEvent(this.domElement.nativeElement, 'change'),
+          sendOutObsId + "_from_event")
+          .pipe(map((e: any) => e.target.value)),
+        sendOutObsId
+      );
+    return {[sendOutObsId]: sendOutObs}
   }
+
 }
