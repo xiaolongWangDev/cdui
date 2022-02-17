@@ -6,7 +6,6 @@ import {BlockConfiguration} from "./block.config";
 @Component({
   selector: "cd-sc-block",
   template: `
-    <cd-store *ngIf="config.store" [config]="config.store"></cd-store>
     <div *ngFor="let _ of config.components">
       <ng-template cd-dynamic></ng-template>
     </div>

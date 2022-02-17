@@ -1,10 +1,10 @@
 import {ComponentConfiguration} from "../base/component-configuration";
-import {StoreComponent} from "./store.component";
 
-export class StoreConfiguration extends ComponentConfiguration<StoreComponent, {}, {}> {
+// this configuration does not need a component
+export class StoreConfiguration extends ComponentConfiguration<null, {}, {}> {
   public readonly states: Record<string, any>;
   constructor(args: Omit<StoreConfiguration, "componentType">) {
-    super(StoreComponent);
+    super(null);
     Object.assign(this, args);
   }
 }

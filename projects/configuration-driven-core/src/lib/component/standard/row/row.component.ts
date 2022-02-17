@@ -6,7 +6,6 @@ import {RowConfiguration} from "./row.config";
 @Component({
   selector: "cd-sc-row",
   template: `
-    <cd-store *ngIf="config.store" [config]="config.store"></cd-store>
     <div class="row">
       <div *ngFor="let cWidth of config.colWidth" [ngClass]="'col-' + cWidth">
         <ng-template cd-dynamic></ng-template>

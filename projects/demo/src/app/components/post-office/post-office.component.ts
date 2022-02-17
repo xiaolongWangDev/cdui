@@ -8,7 +8,6 @@ import {Component} from "@angular/core";
 @Component({
   selector: "demo-post-office",
   template: `
-    <cd-store *ngIf="config.store" [config]="config.store"></cd-store>
     <div class="m-1" style="border:1px solid black;">
       <p>I'm an post office, my lifespan is longer than human</p>
       <p>Human can be destroyed and created. Their communication is always good so long as I exist</p>

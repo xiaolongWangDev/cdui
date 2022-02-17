@@ -6,7 +6,6 @@ export * from './lib/model/types';
 export * from './lib/component/base/configuration-driven-component';
 export * from './lib/component/base/component-configuration';
 export * from './lib/component/base/dynamic-host-component';
-export * from './lib/component/store/store.component';
 export * from './lib/component/store/store.config';
 export * from './lib/component/standard/block/block.component';
 export * from './lib/component/standard/block/block.config';

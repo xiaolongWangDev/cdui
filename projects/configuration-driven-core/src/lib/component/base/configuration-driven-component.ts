@@ -8,7 +8,7 @@ import {takeUntil} from "rxjs/operators";
 @Component({template: ``})
 export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponentConfiguration> implements OnInit, OnDestroy {
   @Input() config: CONF_TYPE;
-  obsReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  obsReady$: BehaviorSubject<boolean>;
   protected readonly destroy$: Subject<void> = new Subject<void>();
   protected keepInStore: Set<string>;
 
@@ -18,19 +18,30 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   ngOnInit() {
     this.keepInStore = this.config.keepInStore ? new Set<string>(this.config.keepInStore) : new Set<string>();
-
-    markAsTracked(this.obsReady$, "obs_ready_" + this.getComponentIdentity() || this.constructor.name);
+    if (this.config.consumingObservables) {
+      this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + (this.getComponentIdentity() || this.constructor.name));
+    }
 
     if (this.config.consumingObservables && (!this.obsService || !this.changeDetectionRef)) {
       throw new Error("Programmer Error: if you are consuming observables, " +
         "you need to inject DynamicObservableOrchestrationService and ChangeDetectorRef and pass them to ConfigurationDrivenComponent");
     }
+    if (this.config.store && !this.obsService) {
+      throw new Error("Programmer Error: if you enabled the store, " +
+        "you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
+    }
+
     if (this.config.consumingObservables) {
       this.obsService.waitFor(Object.values(this.config.consumingObservables), () => {
         this.readyToConsumeObservables();
         this.obsReady$.next(true);
         this.changeDetectionRef.detectChanges();
       })
+    }
+    if (this.config.store) {
+      for (const [observableId, initialValue] of Object.entries(this.config.store.states)) {
+        this.obsService.addObservable(observableId, markAsTracked(new BehaviorSubject<any>(initialValue), "store_entry_" + observableId));
+      }
     }
   }
 
@@ -63,7 +74,12 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     this.destroy$.complete();
 
     if (this.config.yieldingObservables && !this.obsService) {
-      throw new Error("Programmer Error: if you are yielding observables, you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
+      throw new Error("Programmer Error: if you are yielding observables, " +
+        "you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
+    }
+    if (this.config.store && !this.obsService) {
+      throw new Error("Programmer Error: if you enabled the store, " +
+        "you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
     }
 
     if (this.config.yieldingObservables) {
@@ -72,6 +88,12 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
         if (!this.keepInStore.has(observableId)) {
           this.obsService.revokeObservable(observableId);
         }
+      }
+    }
+
+    if (this.config.store) {
+      for (const observableId of Object.keys(this.config.store.states)) {
+        this.obsService.revokeObservable(observableId);
       }
     }
 
