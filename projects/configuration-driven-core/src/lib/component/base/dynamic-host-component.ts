@@ -1,12 +1,17 @@
 import {ConfigurationDrivenComponent} from "./configuration-driven-component";
 import {AnyComponentConfiguration, AnyConfigurationDrivenComponent} from "../../model/types";
-import {AfterViewInit, Component, ComponentRef, OnDestroy, QueryList, ViewChildren} from "@angular/core";
+import {ChangeDetectorRef, Component, ComponentRef, QueryList, ViewChildren} from "@angular/core";
 import {DynamicDirective} from "../../directive/dynamic-directive";
+import {DynamicObservableOrchestrationService} from "../../service/tracked-object-orchestration.service";
 
 @Component({template: ``})
 export abstract class DynamicHostComponent<CONF_TYPE extends AnyComponentConfiguration>
-  extends ConfigurationDrivenComponent<CONF_TYPE>
-  implements AfterViewInit, OnDestroy {
+  extends ConfigurationDrivenComponent<CONF_TYPE> {
+
+  constructor(obsService?: DynamicObservableOrchestrationService,
+              changeDetectionRef?: ChangeDetectorRef) {
+    super(obsService, changeDetectionRef);
+  }
 
   @ViewChildren(DynamicDirective) private dynamicComponentsPlaceholders: QueryList<DynamicDirective>;
   private dynamicComponentRefs: ComponentRef<AnyConfigurationDrivenComponent>[] = [];
@@ -14,6 +19,7 @@ export abstract class DynamicHostComponent<CONF_TYPE extends AnyComponentConfigu
   protected abstract getConfigurations(): AnyComponentConfiguration[];
 
   ngAfterViewInit(): void {
+    super.ngAfterViewInit();
     const childConfigurations = this.getConfigurations();
     this.dynamicComponentsPlaceholders.forEach((holder, index) => {
       const childConfig = childConfigurations[index];
@@ -24,7 +30,7 @@ export abstract class DynamicHostComponent<CONF_TYPE extends AnyComponentConfigu
     })
   }
 
-  ngOnDestroy(): void {
+  protected destroyExtra() {
     this.dynamicComponentRefs.forEach(c => c.destroy());
   }
 }

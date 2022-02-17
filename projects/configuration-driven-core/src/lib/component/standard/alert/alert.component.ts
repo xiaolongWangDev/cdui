@@ -26,11 +26,8 @@ export class AlertComponent extends ConfigurationDrivenComponent<AlertConfigurat
   }
 
   ngAfterViewInit(): void {
+    super.ngAfterViewInit();
     this.inputElement.nativeElement.innerHTML = this.config.htmlContent ?? this.config.content;
     this.changeDetectorRef.detectChanges();
   }
-
-  destroyExtra(): void {
-  }
-
 }

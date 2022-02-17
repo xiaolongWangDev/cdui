@@ -12,19 +12,8 @@ export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComp
   public readonly keepInStore?: string[];
   //
   public readonly consumingObservables?: CONSUME_TYPE;
-
+  //
+  public readonly store?: StoreConfiguration;
   constructor(public readonly componentType: Type<COMP_TYPE>) {
-  }
-}
-
-export class StoreAttachedComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent,
-  YIELD_TYPE extends Record<string, string>,
-  CONSUME_TYPE extends Record<string, string>>
-  extends ComponentConfiguration<COMP_TYPE, YIELD_TYPE, CONSUME_TYPE> {
-
-  public readonly store: StoreConfiguration;
-
-  constructor(componentType: Type<COMP_TYPE>) {
-    super(componentType);
   }
 }

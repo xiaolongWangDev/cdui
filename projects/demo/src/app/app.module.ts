@@ -16,11 +16,13 @@ import {PostOfficeComponent} from "./components/post-office/post-office.componen
 import {DemoObsCreatedByAncestorPageComponent} from "./pages/demo-obs-created-by-ancestor-page.component";
 import {DemoObsCreatedByNonAncestorPageComponent} from "./pages/demo-obs-created-by-non-ancestor-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {PlaceholderComponent} from "./components/placeholder/placeholder.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     PageComponent,
+    PlaceholderComponent,
     ToggleComponent,
     ToggleTargetDirective,
     HeadmasterComponent,

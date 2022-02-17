@@ -5,12 +5,16 @@ import {DynamicObservableOrchestrationService} from "./service/tracked-object-or
 import {AlertComponent} from "./component/standard/alert/alert.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {StoreComponent} from "./component/store/store.component";
+import {BlockComponent} from "./component/standard/block/block.component";
+import {RowComponent} from "./component/standard/row/row.component";
 
 
 @NgModule({
   declarations: [
     DynamicDirective,
     StoreComponent,
+    BlockComponent,
+    RowComponent,
     AlertComponent
   ],
   imports: [
@@ -20,6 +24,8 @@ import {StoreComponent} from "./component/store/store.component";
   exports: [
     DynamicDirective,
     StoreComponent,
+    BlockComponent,
+    RowComponent,
     AlertComponent
   ]
 })
