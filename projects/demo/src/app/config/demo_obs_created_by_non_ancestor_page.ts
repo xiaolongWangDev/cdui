@@ -21,8 +21,7 @@ export const demo_obs_created_by_non_ancestor_page_conf = new PageConfiguration(
                But instead, subscribe them right in the same component(B) and updating the value in the behavior subject.
                </p>
               <p>In the following example, the 2 pen pals each play both the role of A and B because they yield value and consume the value yielded by the other.
-               The post office plays the role of the common ancestor(C). If you check its config model, it extends StoreAttachedComponentConfiguration
-               which requires a cd-store to be configured.
+               The post office plays the role of the common ancestor(C). You can pass a store config to any config model to enable a store at that level
                </p>
               `
     }),
