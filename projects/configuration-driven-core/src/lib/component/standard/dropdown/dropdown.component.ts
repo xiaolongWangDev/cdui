@@ -8,12 +8,14 @@ import {DynamicObservableOrchestrationService} from "../../../service/tracked-ob
 @Component({
   selector: "cd-sc-dropdown",
   template: `
-    <div ngbDropdown class="d-inline-block ml-1" *ngIf="obsReady$ |async">
+    <div *ngIf="obsReady$ |async">
       <span style="font-size: 25px; vertical-align: bottom">{{config.label}}</span>
-      <button class="btn btn-outline-primary" ngbDropdownToggle>{{model.selectedLabel$ | async}}</button>
-      <div ngbDropdownMenu *ngIf="model.options$ | async as options">
-        <button *ngFor="let option of options" ngbDropdownItem (click)="handleClick($event)"
-                [value]="option">{{model.labelMapper(option)}}</button>
+      <div ngbDropdown class="d-inline-block ml-1">
+        <button class="btn btn-outline-primary" ngbDropdownToggle>{{model.selectedLabel$ | async}}</button>
+        <div ngbDropdownMenu *ngIf="model.options$ | async as options">
+          <button *ngFor="let option of options" ngbDropdownItem (click)="handleClick($event)"
+                  [value]="option">{{model.labelMapper(option)}}</button>
+        </div>
       </div>
     </div>
   `

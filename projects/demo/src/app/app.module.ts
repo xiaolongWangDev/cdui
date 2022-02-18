@@ -18,10 +18,12 @@ import {DemoObsCreatedByNonAncestorPageComponent} from "./pages/demo-obs-created
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {PlaceholderComponent} from "./components/placeholder/placeholder.component";
 import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.component";
+import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
 
 const pages = [
   IntroductionPageComponent,
   DemoGridSystemPageComponent,
+  DemoDropdownPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent
 ]
