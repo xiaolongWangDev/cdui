@@ -17,6 +17,14 @@ import {DemoObsCreatedByAncestorPageComponent} from "./pages/demo-obs-created-by
 import {DemoObsCreatedByNonAncestorPageComponent} from "./pages/demo-obs-created-by-non-ancestor-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {PlaceholderComponent} from "./components/placeholder/placeholder.component";
+import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.component";
+
+const pages = [
+  IntroductionPageComponent,
+  DemoGridSystemPageComponent,
+  DemoObsCreatedByAncestorPageComponent,
+  DemoObsCreatedByNonAncestorPageComponent
+]
 
 @NgModule({
   declarations: [
@@ -28,11 +36,9 @@ import {PlaceholderComponent} from "./components/placeholder/placeholder.compone
     HeadmasterComponent,
     TeacherComponent,
     StudentComponent,
-    DemoObsCreatedByAncestorPageComponent,
-    DemoObsCreatedByNonAncestorPageComponent,
-    IntroductionPageComponent,
     PenPalComponent,
-    PostOfficeComponent
+    PostOfficeComponent,
+    ...pages
   ],
   imports: [
     BrowserModule,

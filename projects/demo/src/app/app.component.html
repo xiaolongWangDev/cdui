@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/introduction">Configuration-Driven Demos</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="dropdown">
+          <button ngbDropdownToggle class="btn btn-info" type="button" id="componentsDemoDropdownBtn" aria-expanded="false">
+            Components
+          </button>
+          <ul ngbDropdownMenu aria-labelledby="componentsDemoDropdownBtn">
+            <li><a ngbDropdownItem routerLink="/demo_grid_system">Grid Layout</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <div ngbDropdown class="dropdown">
+          <button ngbDropdownToggle class="btn btn-info ml-2" type="button" id="observableDemoDropdownBtn" aria-expanded="false">
+            Observable
+          </button>
+          <ul ngbDropdownMenu aria-labelledby="observableDemoDropdownBtn">
+            <li><a ngbDropdownItem routerLink="/demo_obs_created_by_ancestor">Created By Ancestor</a></li>
+            <li><a ngbDropdownItem routerLink="/demo_obs_created_by_non_ancestor">Created By Non Ancestor</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<router-outlet></router-outlet>
