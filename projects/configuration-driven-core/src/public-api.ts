@@ -3,6 +3,7 @@
  */
 
 export * from './lib/model/types';
+export * from './lib/model/single-selection';
 export * from './lib/component/base/configuration-driven-component';
 export * from './lib/component/base/component-configuration';
 export * from './lib/component/base/dynamic-host-component';
@@ -11,6 +12,8 @@ export * from './lib/component/standard/block/block.component';
 export * from './lib/component/standard/block/block.config';
 export * from './lib/component/standard/row/row.component';
 export * from './lib/component/standard/row/row.config';
+export * from './lib/component/standard/dropdown/dropdown.component';
+export * from './lib/component/standard/dropdown/dropdown.config';
 export * from './lib/component/standard/alert/alert.component';
 export * from './lib/component/standard/alert/alert.config';
 export * from './lib/directive/dynamic-directive';

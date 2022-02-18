@@ -6,6 +6,7 @@ import {AlertComponent} from "./component/standard/alert/alert.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {BlockComponent} from "./component/standard/block/block.component";
 import {RowComponent} from "./component/standard/row/row.component";
+import {DropdownComponent} from "./component/standard/dropdown/dropdown.component";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {RowComponent} from "./component/standard/row/row.component";
     DynamicDirective,
     BlockComponent,
     RowComponent,
-    AlertComponent
+    AlertComponent,
+    DropdownComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import {RowComponent} from "./component/standard/row/row.component";
     DynamicDirective,
     BlockComponent,
     RowComponent,
-    AlertComponent
+    AlertComponent,
+    DropdownComponent
   ]
 })
 export class ConfigurationDrivenCoreModule {

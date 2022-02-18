@@ -45,9 +45,13 @@ const pages = [
     AppRoutingModule,
     ConfigurationDrivenCoreModule.forRoot(),
     NgbModule,
+    ConfigurationDrivenCoreModule,
   ],
   providers: [
     DynamicObservableOrchestrationService
+  ],
+  exports: [
+    PlaceholderComponent
   ],
   bootstrap: [AppComponent]
 })
