@@ -5,7 +5,7 @@ export class PenPalConfig extends ComponentConfiguration<PenPalComponent, { send
   public readonly name: string;
 
   constructor(args: Omit<PenPalConfig, "componentType">) {
-    super(PenPalComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: PenPalComponent});
   }
 }

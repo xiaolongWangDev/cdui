@@ -4,7 +4,7 @@ import {ComponentConfiguration} from "../base/component-configuration";
 export class StoreConfiguration extends ComponentConfiguration<null, {}, {}> {
   public readonly states: Record<string, any>;
   constructor(args: Omit<StoreConfiguration, "componentType">) {
-    super(null);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: null});
   }
 }

@@ -7,8 +7,8 @@ export class RowConfiguration extends ComponentConfiguration<RowComponent, {}, {
   public readonly colWidth: number[];
   public readonly components: AnyComponentConfiguration[];
   constructor(args: Omit<RowConfiguration, "componentType">) {
-    super(RowComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: RowComponent});
     if(this.colWidth.length != this.components.length) {
       throw new Error("colWidth and components must be of the same length");
     }

@@ -5,7 +5,7 @@ export class StudentConfiguration extends ComponentConfiguration<StudentComponen
   public readonly name: string;
 
   constructor(args: Omit<StudentConfiguration, "componentType">) {
-    super(StudentComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: StudentComponent});
   }
 }

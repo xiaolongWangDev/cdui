@@ -7,7 +7,7 @@ export class PostOfficeConfig extends ComponentConfiguration<PostOfficeComponent
   public readonly palB: PenPalConfig;
 
   constructor(args: Omit<PostOfficeConfig, "componentType">) {
-    super(PostOfficeComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: PostOfficeComponent});
   }
 }

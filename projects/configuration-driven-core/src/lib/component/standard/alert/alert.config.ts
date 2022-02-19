@@ -7,7 +7,7 @@ export class AlertConfiguration extends ComponentConfiguration<AlertComponent, {
   public readonly htmlContent?: string;
 
   constructor(args: Omit<AlertConfiguration, "componentType">) {
-    super(AlertComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: AlertComponent});
   }
 }

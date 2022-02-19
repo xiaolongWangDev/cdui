@@ -7,7 +7,7 @@ export class TeacherConfiguration extends ComponentConfiguration<TeacherComponen
   public readonly teaches: StudentConfiguration[];
 
   constructor(args: Omit<TeacherConfiguration, "componentType">) {
-    super(TeacherComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: TeacherComponent});
   }
 }

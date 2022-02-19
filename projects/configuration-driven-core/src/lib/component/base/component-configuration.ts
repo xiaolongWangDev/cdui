@@ -6,6 +6,8 @@ export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComp
   YIELD_TYPE extends Record<string, string>,
   CONSUME_TYPE extends Record<string, string>> {
 
+  public readonly componentType: Type<COMP_TYPE>;
+
   public readonly id?: string;
   //
   public readonly yieldingObservables?: YIELD_TYPE;
@@ -14,6 +16,4 @@ export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComp
   public readonly consumingObservables?: CONSUME_TYPE;
   //
   public readonly store?: StoreConfiguration;
-  constructor(public readonly componentType: Type<COMP_TYPE>) {
-  }
 }

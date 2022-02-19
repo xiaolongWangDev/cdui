@@ -21,6 +21,7 @@ import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.compone
 import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
 import {HighchartsChartModule} from "highcharts-angular";
 import {DemoHeatMapPageComponent} from "./pages/demo-heat-map-page.component";
+import {SpendingHeatMapComponent} from "./components/spending-heat-map/spending-heat-map.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -43,6 +44,7 @@ const pages = [
     StudentComponent,
     PenPalComponent,
     PostOfficeComponent,
+    SpendingHeatMapComponent,
     ...pages
   ],
   imports: [

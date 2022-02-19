@@ -7,6 +7,7 @@ import {
   HeatMapData,
   BlockConfiguration
 } from "configuration-driven-core";
+import {SpendingHeatMapConfig} from "../components/spending-heat-map/spending-heat-map.config.ts";
 
 @Component({
   template: `
@@ -45,6 +46,18 @@ const demo_heat_map_conf = new PageConfiguration({
           title: "A mysterious chart",
           xTittle: "Year",
           yTittle: "Company",
+          consumingObservables: {
+            data: "heat_map_data"
+          }
+        }),
+        new AlertConfiguration({
+          type: "success",
+          htmlContent: `<p>We can extend existing component and reuse most of the content without duplicating.</p>`
+        }),
+        new SpendingHeatMapConfig({
+          title: "Spending",
+          xTittle: "X",
+          yTittle: "$",
           consumingObservables: {
             data: "heat_map_data"
           }

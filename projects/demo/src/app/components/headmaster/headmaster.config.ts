@@ -7,7 +7,7 @@ export class HeadmasterConfiguration extends ComponentConfiguration<HeadmasterCo
   public readonly manages: TeacherConfiguration[];
 
   constructor(args: Omit<HeadmasterConfiguration, "componentType">) {
-    super(HeadmasterComponent);
-    Object.assign(this, args);
+    super();
+    Object.assign(this, {...args, componentType: HeadmasterComponent});
   }
 }
