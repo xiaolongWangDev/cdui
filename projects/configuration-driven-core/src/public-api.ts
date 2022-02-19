@@ -4,6 +4,7 @@
 
 export * from './lib/model/types';
 export * from './lib/model/single-selection';
+export * from './lib/model/data';
 export * from './lib/component/base/configuration-driven-component';
 export * from './lib/component/base/component-configuration';
 export * from './lib/component/base/dynamic-host-component';
@@ -16,6 +17,8 @@ export * from './lib/component/standard/dropdown/dropdown.component';
 export * from './lib/component/standard/dropdown/dropdown.config';
 export * from './lib/component/standard/alert/alert.component';
 export * from './lib/component/standard/alert/alert.config';
+export * from './lib/component/standard/highcharts/heatmap/heat-map.component';
+export * from './lib/component/standard/highcharts/heatmap/heat-map.config';
 export * from './lib/directive/dynamic-directive';
 export * from './lib/service/tracked-object-orchestration.service';
 export * from './lib/configuration-driven-core.module';

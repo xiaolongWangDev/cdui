@@ -7,6 +7,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {BlockComponent} from "./component/standard/block/block.component";
 import {RowComponent} from "./component/standard/row/row.component";
 import {DropdownComponent} from "./component/standard/dropdown/dropdown.component";
+import {HighchartsChartModule} from "highcharts-angular";
+import {HeatMapComponent} from "./component/standard/highcharts/heatmap/heat-map.component";
 
 
 @NgModule({
@@ -15,18 +17,21 @@ import {DropdownComponent} from "./component/standard/dropdown/dropdown.componen
     BlockComponent,
     RowComponent,
     AlertComponent,
-    DropdownComponent
+    DropdownComponent,
+    HeatMapComponent
   ],
   imports: [
     CommonModule,
-    NgbModule
+    NgbModule,
+    HighchartsChartModule
   ],
   exports: [
     DynamicDirective,
     BlockComponent,
     RowComponent,
     AlertComponent,
-    DropdownComponent
+    DropdownComponent,
+    HeatMapComponent
   ]
 })
 export class ConfigurationDrivenCoreModule {
@@ -36,6 +41,7 @@ export class ConfigurationDrivenCoreModule {
         'ConfigurationDrivenCoreModule is already loaded. Import it in the AppModule only');
     }
   }
+
   static forRoot(): ModuleWithProviders<ConfigurationDrivenCoreModule> {
     return {
       ngModule: ConfigurationDrivenCoreModule,

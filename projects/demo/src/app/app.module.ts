@@ -19,6 +19,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {PlaceholderComponent} from "./components/placeholder/placeholder.component";
 import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.component";
 import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
+import {HighchartsChartModule} from "highcharts-angular";
 
 const pages = [
   IntroductionPageComponent,
@@ -47,6 +48,8 @@ const pages = [
     AppRoutingModule,
     ConfigurationDrivenCoreModule.forRoot(),
     NgbModule,
+    HighchartsChartModule,
+    ConfigurationDrivenCoreModule,
     ConfigurationDrivenCoreModule,
   ],
   providers: [
