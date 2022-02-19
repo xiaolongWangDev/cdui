@@ -20,11 +20,13 @@ import {PlaceholderComponent} from "./components/placeholder/placeholder.compone
 import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.component";
 import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
 import {HighchartsChartModule} from "highcharts-angular";
+import {DemoHeatMapPageComponent} from "./pages/demo-heat-map-page.component";
 
 const pages = [
   IntroductionPageComponent,
   DemoGridSystemPageComponent,
   DemoDropdownPageComponent,
+  DemoHeatMapPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent
 ]
