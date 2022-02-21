@@ -2,7 +2,7 @@ import {ConfigurationDrivenComponent} from "./configuration-driven-component";
 import {AnyComponentConfiguration, AnyConfigurationDrivenComponent} from "../../model/types";
 import {ChangeDetectorRef, Component, ComponentRef, QueryList, ViewChildren} from "@angular/core";
 import {DynamicDirective} from "../../directive/dynamic-directive";
-import {DynamicObservableOrchestrationService} from "../../service/tracked-object-orchestration.service";
+import {DynamicObservableOrchestrationService} from "../../service/dynamic-observable-orchestration.service";
 
 @Component({template: ``})
 export abstract class DynamicHostComponent<CONF_TYPE extends AnyComponentConfiguration>

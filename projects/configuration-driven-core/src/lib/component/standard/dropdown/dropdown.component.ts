@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {DropdownConfiguration} from "./dropdown.config";
 import {ConfigurationDrivenComponent} from "../../base/configuration-driven-component";
 import {StringSingleSelectModel} from "../../../model/single-selection";
-import {DynamicObservableOrchestrationService} from "../../../service/tracked-object-orchestration.service";
+import {DynamicObservableOrchestrationService} from "../../../service/dynamic-observable-orchestration.service";
 
 @Component({
   selector: "cd-sc-dropdown",

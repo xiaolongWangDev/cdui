@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {AnyComponentConfiguration} from "../../model/types";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {DynamicObservableOrchestrationService} from "../../service/tracked-object-orchestration.service";
+import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
 import {markAsTracked, setNullAttributes} from "../../Helper";
-import {takeUntil} from "rxjs/operators";
+import {filter, first, takeUntil} from "rxjs/operators";
+import {DynamicObservableOrchestrationService} from "../../service/dynamic-observable-orchestration.service";
 
 @Component({template: ``})
-export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponentConfiguration> implements OnInit, OnDestroy {
+export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponentConfiguration> implements OnInit, AfterViewInit, OnDestroy {
   /**
    *  The configuration model that's driving the component
    */
@@ -14,13 +14,16 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
   /**
    *  Indicates whether the component is ready to render the part of the template that's relying on other public
    *  observables which are to be consumed from the outside.
-   *  It won't be set when the component does not consume at all.
    */
   obsReady$: BehaviorSubject<boolean>;
   /**
+   * indicates that the view is initialized
+   */
+  protected viewInitialized$: BehaviorSubject<boolean>;
+  /**
    * Indicates the component is destroyed. This is the common practice to unsubscribe in bulk.
    */
-  protected readonly destroy$: Subject<void> = new Subject<void>();
+  protected destroy$: Subject<void>;
   /**
    * Contains IDs of the observables that are supposed to be kept in a store instead of locally.
    */
@@ -37,13 +40,20 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   // config object only becomes available in and after ngOnInit
   ngOnInit() {
+    this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + this.getComponentIdentity());
+    this.viewInitialized$ = markAsTracked(new BehaviorSubject<boolean>(false), "view_initialized_" + this.getComponentIdentity());
+    this.destroy$ = markAsTracked(new Subject<void>(), "destroy_" + this.getComponentIdentity());
     // create the set from string array that's on the configuration model or empty if nothing is set
     this.keepInStore = this.config.keepInStore ? new Set<string>(this.config.keepInStore) : new Set<string>();
 
-    // only initialize obsReady$ if component consumes
-    if (this.config.consumingObservables) {
-      this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + this.getComponentIdentity());
-    }
+    // when observables are ready, and the view is initialized
+    combineLatest([this.obsReady$, this.viewInitialized$])
+      .pipe(
+        takeUntil(this.destroy$),
+        first(([obsReady, viewInitialized]) => obsReady && viewInitialized))
+      .subscribe(_ => {
+        this.yieldObservables()
+      });
 
     // programmer oriented errors
     if (this.config.consumingObservables && (!this.obsService || !this.changeDetectionRef)) {
@@ -67,7 +77,10 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
         // sometimes the view doesn't render on its own
         this.changeDetectionRef.detectChanges();
       })
+    } else {
+      this.obsReady$.next(true);
     }
+
     // if this component enabled the store, register the state behavior subjects
     if (this.config.store) {
       for (const [observableId, initialValue] of Object.entries(this.config.store.states)) {
@@ -78,37 +91,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   // dom ref only becomes available after ngAfterViewInit
   ngAfterViewInit(): void {
-    if (this.config.yieldingObservables && !this.obsService) {
-      throw new Error("Programmer Error: if you are yielding observables, you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
-    }
-
-    if (this.config.yieldingObservables) {
-      // at this point, we should have all the observables to yield ready
-      // because all the view and dom's are rendered. So any observable deriving from them should/can be created
-      const observablesToYield = this.readyToYieldObservables();
-      // for each observable to yield
-      for (const val of Object.values(this.config.yieldingObservables)) {
-        const observableId = val as string;
-        const observable: Observable<any> = observablesToYield[observableId];
-        // if it's marked to be kept in a store
-        if (this.keepInStore.has(observableId)) {
-          // instead of registering directly,
-          // wait for the placeholder behavior subject to be registered by the store
-          this.obsService.waitFor([observableId], () => {
-            const subjectInStore = this.obsService.getBehaviorSubject(observableId);
-            // subscribe the local observable and write any emission to the behavior subject
-            observable
-              // this takeUntil guarantees all the observables subscribed will be unsubscribed
-              // at the end of the component life cycle
-              .pipe(takeUntil(this.destroy$))
-              .subscribe(o => subjectInStore.next(o))
-          })
-        } else {
-          // otherwise, just register directly  to DynamicObservableOrchestrationService
-          this.obsService.addObservable(observableId, observable);
-        }
-      }
-    }
+    this.viewInitialized$.next(true);
   }
 
   ngOnDestroy(): void {
@@ -179,4 +162,44 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
    */
   protected destroyExtra(): void {
   }
+
+  /**
+   * should only be called after required observables are ready, and the view is initialized.
+   * The first condition is easy to understand, it's because we might rely on the data from the other observables.
+   * The second condition is required in case some of our observables need to derive from DOM elements
+   */
+  private yieldObservables(): void {
+    if (this.config.yieldingObservables && !this.obsService) {
+      throw new Error("Programmer Error: if you are yielding observables, you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
+    }
+
+    if (this.config.yieldingObservables) {
+      // at this point, we should have all the observables to yield ready
+      // because all the view and dom's are rendered. So any observable deriving from them should/can be created
+      const observablesToYield = this.readyToYieldObservables();
+      // for each observable to yield
+      for (const val of Object.values(this.config.yieldingObservables)) {
+        const observableId = val as string;
+        const observable: Observable<any> = observablesToYield[observableId];
+        // if it's marked to be kept in a store
+        if (this.keepInStore.has(observableId)) {
+          // instead of registering directly,
+          // wait for the placeholder behavior subject to be registered by the store
+          this.obsService.waitFor([observableId], () => {
+            const subjectInStore = this.obsService.getBehaviorSubject(observableId);
+            // subscribe the local observable and write any emission to the behavior subject
+            observable
+              // this takeUntil guarantees all the observables subscribed will be unsubscribed
+              // at the end of the component life cycle
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(o => subjectInStore.next(o))
+          })
+        } else {
+          // otherwise, just register directly  to DynamicObservableOrchestrationService
+          this.obsService.addObservable(observableId, observable);
+        }
+      }
+    }
+  }
+
 }

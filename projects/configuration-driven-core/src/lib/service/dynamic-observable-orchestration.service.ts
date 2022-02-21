@@ -1,9 +1,13 @@
 import {Injectable} from "@angular/core";
 import {ObservableReference} from "../model/types";
 import {BehaviorSubject, Observable} from "rxjs";
+import * as uuid from 'uuid';
 
 export class ObservableReadyListener {
-  constructor(public readonly ids: string[], public readonly callback: () => void) {
+  public readonly id: string;
+
+  constructor(public readonly observableIds: string[], public readonly callback: () => void) {
+    this.id = uuid.v4();
   }
 }
 
@@ -16,13 +20,13 @@ function refToKey(ref: StringOrObservableReference): string {
 @Injectable()
 export class DynamicObservableOrchestrationService {
   private readonly observablesMap: Map<string, Observable<any>> = new Map<string, Observable<any>>();
-  private readonly observableReadyListeners: ObservableReadyListener[] = [];
+  private readonly observableReadyListeners: { [observableId: string]: { [listenerId: string]: ObservableReadyListener } } = {}
 
   public waitFor(refs: StringOrObservableReference[], callback: () => void): void {
     if (refs !== undefined) {
       const newListener = new ObservableReadyListener(refs.map(refToKey), callback);
       if (!this.triggerListenerIfReady(newListener)) {
-        this.observableReadyListeners.push(newListener)
+        this.addListener(newListener);
       }
     } else {
       callback();
@@ -36,7 +40,7 @@ export class DynamicObservableOrchestrationService {
       throw new Error(`${key} is already registered`);
     }
     this.observablesMap.set(key, obs);
-    this.checkListeners();
+    this.checkListeners(key);
   }
 
   public getObservable(ref: StringOrObservableReference): Observable<any> {
@@ -68,7 +72,7 @@ export class DynamicObservableOrchestrationService {
 
   private triggerListenerIfReady(listener: ObservableReadyListener): boolean {
     let trigger = true;
-    for (const id of listener.ids) {
+    for (const id of listener.observableIds) {
       if (!this.observablesMap.has(id)) {
         trigger = false;
         break;
@@ -82,11 +86,28 @@ export class DynamicObservableOrchestrationService {
     return trigger;
   }
 
-  private checkListeners(): void {
-    for (let i = this.observableReadyListeners.length - 1; i >= 0; i--) {
-      const trigger = this.triggerListenerIfReady(this.observableReadyListeners[i]);
-      if (trigger) {
-        this.observableReadyListeners.splice(i, 1);
+  private addListener(newListener: ObservableReadyListener): void {
+    for (const observableId of newListener.observableIds) {
+      if (!this.observableReadyListeners[observableId]) {
+        this.observableReadyListeners[observableId] = {}
+      }
+      this.observableReadyListeners[observableId][newListener.id] = newListener;
+    }
+  }
+
+  private checkListeners(observableId: string): void {
+    let listenersForTheObservable = this.observableReadyListeners[observableId];
+    if (listenersForTheObservable) {
+      for (const [listenerId, listener] of Object.entries(listenersForTheObservable)) {
+        if (listenersForTheObservable[listenerId]) {
+          const trigger = this.triggerListenerIfReady(listener);
+          if (trigger) {
+            delete listenersForTheObservable[listenerId];
+            if (Object.keys(listenersForTheObservable).length === 0) {
+              delete this.observableReadyListeners[observableId];
+            }
+          }
+        }
       }
     }
   }

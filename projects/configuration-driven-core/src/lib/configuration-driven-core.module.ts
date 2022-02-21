@@ -1,7 +1,6 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
-import {DynamicObservableOrchestrationService} from "./service/tracked-object-orchestration.service";
 import {AlertComponent} from "./component/standard/alert/alert.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {BlockComponent} from "./component/standard/block/block.component";
@@ -9,6 +8,7 @@ import {RowComponent} from "./component/standard/row/row.component";
 import {DropdownComponent} from "./component/standard/dropdown/dropdown.component";
 import {HighchartsChartModule} from "highcharts-angular";
 import {HeatMapComponent} from "./component/standard/highcharts/heatmap/heat-map.component";
+import {DynamicObservableOrchestrationService} from "./service/dynamic-observable-orchestration.service";
 
 
 @NgModule({

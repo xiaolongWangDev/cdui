@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
-import {DynamicObservableOrchestrationService} from "../../../../service/tracked-object-orchestration.service";
 import {HeatMapConfig} from "./heat-map.config";
 import {map} from "rxjs/operators";
 import {markAsTracked} from "../../../../Helper";
 import {HeatMapData} from "../../../../model/data";
 import {getOptions} from "highcharts";
 import {BaseChartComponentComponent} from "../base-chart.component";
+import {DynamicObservableOrchestrationService} from "../../../../service/dynamic-observable-orchestration.service";
 
 export const heat_map_template = `<div *ngIf="obsReady$ |async">
   <highcharts-chart

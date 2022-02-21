@@ -20,6 +20,6 @@ export * from './lib/component/standard/alert/alert.config';
 export * from './lib/component/standard/highcharts/heatmap/heat-map.component';
 export * from './lib/component/standard/highcharts/heatmap/heat-map.config';
 export * from './lib/directive/dynamic-directive';
-export * from './lib/service/tracked-object-orchestration.service';
+export * from './lib/service/dynamic-observable-orchestration.service';
 export * from './lib/configuration-driven-core.module';
 export * from './lib/Helper'
