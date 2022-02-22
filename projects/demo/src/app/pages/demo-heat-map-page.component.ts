@@ -2,14 +2,11 @@ import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
 import {
   AlertConfiguration,
-  StoreConfiguration,
+  BlockConfiguration,
   HeatMapConfig,
   HeatMapData,
-  BlockConfiguration,
-  DropdownConfiguration
+  StoreConfiguration
 } from "configuration-driven-core";
-import {SpendingHeatMapConfig} from "../components/spending-heat-map/spending-heat-map.config.ts";
-import {ControlBarConfig} from "../components/filter-bar/control-bar.config";
 
 @Component({
   template: `
@@ -52,35 +49,6 @@ const demo_heat_map_conf = new PageConfiguration({
             data: "heat_map_data"
           }
         }),
-        new AlertConfiguration({
-          type: "success",
-          htmlContent: `<p>We can extend existing component and reuse most of the content without duplicating.</p>`
-        }),
-
-        new ControlBarConfig({
-          yieldingObservables: {
-            xDropdownOptions: "spendingXDropdownOptions",
-            yDropdownOptions: "spendingYDropdownOptions"
-          },
-          xAxisColumnsDropdownConfig: new DropdownConfiguration({
-            label: "on x axis: ",
-            consumingObservables: {options: "spendingXDropdownOptions"},
-            yieldingObservables: {selection: "spendingXAxis"}
-          }),
-          yAxisColumnsDropdownConfig: new DropdownConfiguration({
-            label: "on y axis: ",
-            consumingObservables: {options: "spendingYDropdownOptions"},
-            yieldingObservables: {selection: "spendingYAxis"}
-          }),
-        }),
-        new SpendingHeatMapConfig({
-          title: "Spending",
-          xTittle: "X",
-          yTittle: "$",
-          consumingObservables: {
-            data: "heat_map_data"
-          }
-        })
       ]
     })]
 });

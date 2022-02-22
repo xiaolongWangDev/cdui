@@ -30,16 +30,9 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
 
   protected readyToYieldObservables(): Record<string, Observable<any>> {
     let homeworkObsId = this.config.yieldingObservables.homework;
-    // this is convoluted because of the use of markAsTracked. In production, we don't need to use them.
-    // They are just here to aggressively track all observables we created including the intermediate ones
-    // so that we are very sure no observable created by us is leaking memory
-    const homeworkObs =
-      markAsTracked(
-        markAsTracked(
-          fromEvent(this.inputElement.nativeElement, 'change'),
-          homeworkObsId + "_from_event")
-          .pipe(map((e: any) => e.target.value)),
-        homeworkObsId);
+    const homeworkObs = markAsTracked(
+      fromEvent(this.inputElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
+      homeworkObsId);
     return {[homeworkObsId]: homeworkObs}
   }
 }

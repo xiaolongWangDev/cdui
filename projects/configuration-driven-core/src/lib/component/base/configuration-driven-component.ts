@@ -2,7 +2,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} f
 import {AnyComponentConfiguration} from "../../model/types";
 import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
 import {markAsTracked, setNullAttributes} from "../../Helper";
-import {filter, first, takeUntil} from "rxjs/operators";
+import {first, takeUntil} from "rxjs/operators";
 import {DynamicObservableOrchestrationService} from "../../service/dynamic-observable-orchestration.service";
 
 @Component({template: ``})
@@ -74,6 +74,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
         // set obsReady$ to true, so the interesting part of the page can be shown
         // (because data are coming in through observables)
         this.obsReady$.next(true);
+
         // sometimes the view doesn't render on its own
         this.changeDetectionRef.detectChanges();
       })

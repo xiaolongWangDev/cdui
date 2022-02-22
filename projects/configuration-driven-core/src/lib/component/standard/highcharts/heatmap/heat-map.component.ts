@@ -8,9 +8,9 @@ import {BaseChartComponentComponent} from "../base-chart.component";
 import {DynamicObservableOrchestrationService} from "../../../../service/dynamic-observable-orchestration.service";
 
 export const heat_map_template = `<div *ngIf="obsReady$ |async">
-  <highcharts-chart
+  <highcharts-chart *ngIf="options$ | async as options"
     [Highcharts]="highchartsLibrary"
-    [options]="options$ | async"
+    [options]="options"
     style="width: 100%; height: 400px; display: block;"
   ></highcharts-chart>
 </div>
@@ -31,7 +31,8 @@ export class HeatMapComponent<T extends HeatMapConfig> extends BaseChartComponen
     this.options$ =
       markAsTracked(
         this.obsService.getObservable(this.config.consumingObservables.data)
-          .pipe(map((heatMapData: HeatMapData) => {
+          .pipe(
+            map((heatMapData: HeatMapData) => {
             return {
               chart: {
                 type: 'heatmap',

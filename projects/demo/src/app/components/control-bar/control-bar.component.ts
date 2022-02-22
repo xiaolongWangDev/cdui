@@ -6,6 +6,7 @@ import {ChangeDetectorRef, Component} from "@angular/core";
 import {ControlBarConfig} from "./control-bar.config";
 import {Observable, of} from "rxjs";
 import {delay} from "rxjs/operators";
+import {MockApiService} from "../../service/mock-api.service";
 
 
 @Component({
@@ -25,17 +26,16 @@ import {delay} from "rxjs/operators";
   `
 })
 export class ControlBarComponent extends ConfigurationDrivenComponent<ControlBarConfig> {
-  constructor(obsService: DynamicObservableOrchestrationService,
+  constructor(private readonly mockApiService: MockApiService,
+              obsService: DynamicObservableOrchestrationService,
               changeDetectionRef: ChangeDetectorRef) {
     super(obsService, changeDetectionRef);
   }
 
   protected readyToYieldObservables(): Record<string, Observable<any>> {
-    const optionsData1 = of(["Monthly", "Yearly"]).pipe(delay(2000));
-    const optionsData2 = of(["Entertainment", "Study"]).pipe(delay(3000));
     return {
-      [this.config.yieldingObservables.xDropdownOptions]: optionsData1,
-      [this.config.yieldingObservables.yDropdownOptions]: optionsData2
+      [this.config.yieldingObservables.xDropdownOptions]: this.mockApiService.getSpendingXOptions(),
+      [this.config.yieldingObservables.yDropdownOptions]: this.mockApiService.getSpendingYOptions()
     }
   }
 }

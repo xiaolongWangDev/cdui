@@ -38,18 +38,11 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
   }
 
   protected readyToYieldObservables(): Record<string, Observable<any>> {
-    // this is convoluted because of the use of markAsTracked. In production, we don't need to use them.
-    // They are just here to aggressively track all observables we created including the intermediate ones
-    // so that we are very sure no observable created by us is leaking memory
     let sendOutObsId = this.config.yieldingObservables.sendOut;
-    const sendOutObs =
-      markAsTracked(
-        markAsTracked(
-          fromEvent(this.domElement.nativeElement, 'change'),
-          sendOutObsId + "_from_event")
-          .pipe(map((e: any) => e.target.value)),
-        sendOutObsId
-      );
+    const sendOutObs = markAsTracked(
+      fromEvent(this.domElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
+      sendOutObsId
+    );
     return {[sendOutObsId]: sendOutObs}
   }
 

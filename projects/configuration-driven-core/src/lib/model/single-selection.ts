@@ -17,11 +17,8 @@ export class SingleSelectModel<DATA_TYPE> {
               public readonly labelMapper: (option: DATA_TYPE) => string,
               private readonly equalPredicate = (newVal: DATA_TYPE, existingVal: DATA_TYPE): boolean => newVal === existingVal,
               defaultValueProvider: (options: DATA_TYPE[]) => Observable<DATA_TYPE> = useFirstOptionAsDefault) {
-    this.selected$ = markAsTracked(
-      combineLatest([this._selected, this.options$]),
-      "dropdown_combineLatest")
-      .pipe(
-        markAsTracked(
+    this.selected$ = markAsTracked(combineLatest([this._selected, this.options$])
+        .pipe(
           mergeMap(([selected, options]): Observable<DATA_TYPE> => {
             let foundOption = undefined;
             if (selected !== null) {
@@ -32,9 +29,9 @@ export class SingleSelectModel<DATA_TYPE> {
             } else {
               return of(foundOption);
             }
-          }),
-          "dropdown_selected")
-      );
+          })
+        ),
+      "dropdown_selected");
     this.selectedLabel$ = markAsTracked(this.selected$.pipe(map(this.labelMapper)), "dropdown_selectedLabel");
   }
 

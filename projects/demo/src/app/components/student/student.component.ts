@@ -1,4 +1,4 @@
-import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService} from "configuration-driven-core";
 import {StudentConfiguration} from "./student.config";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from "@angular/core";
 import {Observable} from "rxjs";
