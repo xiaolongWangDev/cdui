@@ -10,7 +10,7 @@ export class MockApiService {
   }
 
   getSpendingYOptions(): Observable<string[]> {
-    return markAsTracked(of(["Entertainment", "Dining"]).pipe(delay(3000)), "spending_y_options");
+    return markAsTracked(of(["Entertainment", "Dining"]).pipe(delay(1000)), "spending_y_options");
   }
 
   getSpendingHeatMapData(xAxis: string, yAxis: string): Observable<HeatMapData> {
@@ -27,7 +27,7 @@ export class MockApiService {
             [3, 0, 200], [3, 1, 100], [3, 2, 0],
             [4, 0, 20], [4, 1, 30], [4, 2, 100],
           ]
-        })).pipe(delay(2000));
+        })).pipe(delay(1000));
       } else {
         result = of(new HeatMapData({
           xCategories: ["2021-01", "2021-02", "2021-03", "2021-04", "2021-05"],
@@ -39,7 +39,7 @@ export class MockApiService {
             [3, 0, 55], [3, 1, 0], [3, 2, 40],
             [4, 0, 90], [4, 1, 80], [4, 2, 22],
           ]
-        })).pipe(delay(2000));
+        })).pipe(delay(1000));
       }
     } else {
       if (yAxis == "Entertainment") {
@@ -50,7 +50,7 @@ export class MockApiService {
             [0, 0, 800], [0, 1, 300], [0, 2, 2000],
             [1, 0, 1000], [1, 1, 200], [1, 2, 500],
           ]
-        })).pipe(delay(2000))
+        })).pipe(delay(1000))
       } else {
         result = of(new HeatMapData({
           xCategories: ["2020", "2021",],
@@ -59,7 +59,7 @@ export class MockApiService {
             [0, 0, 400], [0, 1, 500], [0, 2, 100],
             [1, 0, 300], [1, 1, 500], [1, 2, 200],
           ]
-        })).pipe(delay(2000))
+        })).pipe(delay(1000))
       }
     }
 
