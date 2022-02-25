@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {DynamicHostComponent} from "../../base/dynamic-host-component";
 import {AnyComponentConfiguration} from "../../../model/types";
 import {RowConfiguration} from "./row.config";
@@ -11,7 +11,8 @@ import {RowConfiguration} from "./row.config";
         <ng-template cd-dynamic></ng-template>
       </div>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RowComponent extends DynamicHostComponent<RowConfiguration> {
 

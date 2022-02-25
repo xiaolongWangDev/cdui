@@ -1,8 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {AnyComponentConfiguration} from "../../model/types";
-import {BehaviorSubject, combineLatest, Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {markAsTracked, setNullAttributes} from "../../Helper";
-import {first, takeUntil} from "rxjs/operators";
+import {takeUntil} from "rxjs/operators";
 import {DynamicObservableOrchestrationService} from "../../service/dynamic-observable-orchestration.service";
 
 @Component({template: ``})
@@ -14,12 +14,9 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
   /**
    *  Indicates whether the component is ready to render the part of the template that's relying on other public
    *  observables which are to be consumed from the outside.
+   *  only set when the component consumes observables
    */
   obsReady$: BehaviorSubject<boolean>;
-  /**
-   * indicates that the view is initialized
-   */
-  protected viewInitialized$: BehaviorSubject<boolean>;
   /**
    * Indicates the component is destroyed. This is the common practice to unsubscribe in bulk.
    */
@@ -40,20 +37,9 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   // config object only becomes available in and after ngOnInit
   ngOnInit() {
-    this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + this.getComponentIdentity());
-    this.viewInitialized$ = markAsTracked(new BehaviorSubject<boolean>(false), "view_initialized_" + this.getComponentIdentity());
     this.destroy$ = markAsTracked(new Subject<void>(), "destroy_" + this.getComponentIdentity());
     // create the set from string array that's on the configuration model or empty if nothing is set
     this.keepInStore = this.config.keepInStore ? new Set<string>(this.config.keepInStore) : new Set<string>();
-
-    // when observables are ready, and the view is initialized
-    combineLatest([this.obsReady$, this.viewInitialized$])
-      .pipe(
-        takeUntil(this.destroy$),
-        first(([obsReady, viewInitialized]) => obsReady && viewInitialized))
-      .subscribe(_ => {
-        this.yieldObservables()
-      });
 
     // programmer oriented errors
     if (this.config.consumingObservables && (!this.obsService || !this.changeDetectionRef)) {
@@ -68,8 +54,9 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     // if the component consumes, it'll tell obsService that it's waiting for the observables.
     // the obsService will run the callback as soon as those observables become available
     if (this.config.consumingObservables) {
+      this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + this.getComponentIdentity());
       this.obsService.waitFor(Object.values(this.config.consumingObservables), () => {
-        // This is to be implemented by child component. they can choose whatever way to use thpse observables
+        // This is to be implemented by child component. they can choose whatever way to use these observables
         this.readyToConsumeObservables();
         // set obsReady$ to true, so the interesting part of the page can be shown
         // (because data are coming in through observables)
@@ -78,8 +65,6 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
         // sometimes the view doesn't render on its own
         this.changeDetectionRef.detectChanges();
       })
-    } else {
-      this.obsReady$.next(true);
     }
 
     // if this component enabled the store, register the state behavior subjects
@@ -92,7 +77,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   // dom ref only becomes available after ngAfterViewInit
   ngAfterViewInit(): void {
-    this.viewInitialized$.next(true);
+    this.yieldObservables();
   }
 
   ngOnDestroy(): void {
@@ -112,7 +97,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     // if yielded observables, revoke them from DynamicObservableOrchestrationService
     if (this.config.yieldingObservables) {
       for (const val of Object.values(this.config.yieldingObservables)) {
-        const observableId = val as string;
+        const observableId = val.observableId;
         if (!this.keepInStore.has(observableId)) {
           this.obsService.revokeObservable(observableId);
         }
@@ -143,10 +128,10 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   /**
    * need to be overridden by any component that yields observables.
-   * user needs to create a map of locally created observables with observable IDs being the keys.
+   * user needs to create a map of factories that create observables with observable IDs being the keys.
    */
-  protected readyToYieldObservables(): Record<string, Observable<any>> {
-    throw new Error("Programmer Error: you need to override readyToYieldObservables() and return the observable instances you are yielding");
+  protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
+    throw new Error("Programmer Error: you need to override yieldObservablesFactories() and return the observable factories");
   }
 
   /**
@@ -165,9 +150,8 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
   }
 
   /**
-   * should only be called after required observables are ready, and the view is initialized.
-   * The first condition is easy to understand, it's because we might rely on the data from the other observables.
-   * The second condition is required in case some of our observables need to derive from DOM elements
+   * should only be called after the view is initialized
+   * in case some of our observables need to derive from DOM elements
    */
   private yieldObservables(): void {
     if (this.config.yieldingObservables && !this.obsService) {
@@ -175,32 +159,35 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     }
 
     if (this.config.yieldingObservables) {
-      // at this point, we should have all the observables to yield ready
       // because all the view and dom's are rendered. So any observable deriving from them should/can be created
-      const observablesToYield = this.readyToYieldObservables();
+      const factories = this.yieldObservablesFactories();
       // for each observable to yield
       for (const val of Object.values(this.config.yieldingObservables)) {
-        const observableId = val as string;
-        const observable: Observable<any> = observablesToYield[observableId];
-        // if it's marked to be kept in a store
-        if (this.keepInStore.has(observableId)) {
-          // instead of registering directly,
-          // wait for the placeholder behavior subject to be registered by the store
-          this.obsService.waitFor([observableId], () => {
-            const subjectInStore = this.obsService.getBehaviorSubject(observableId);
-            // subscribe the local observable and write any emission to the behavior subject
-            observable
-              // this takeUntil guarantees all the observables subscribed will be unsubscribed
-              // at the end of the component life cycle
-              .pipe(takeUntil(this.destroy$))
-              .subscribe(o => subjectInStore.next(o))
-          })
-        } else {
-          // otherwise, just register directly  to DynamicObservableOrchestrationService
-          this.obsService.addObservable(observableId, observable);
-        }
+        let observableId = val.observableId;
+        let dependencies = Object.values(val.dependsOn || {});
+        // wait for the dependency observables
+        this.obsService.waitFor(dependencies, () => {
+          // now that the dependencies are ready, call the factory to gen the observable
+          const observable: Observable<any> = factories[observableId]();
+          // if it's marked to be kept in a store
+          if (this.keepInStore.has(observableId)) {
+            // instead of registering directly,
+            // wait for the placeholder behavior subject to be registered by the store
+            this.obsService.waitFor([observableId], () => {
+              const subjectInStore = this.obsService.getBehaviorSubject(observableId);
+              // subscribe the local observable and write any emission to the behavior subject
+              observable
+                // this takeUntil guarantees all the observables subscribed will be unsubscribed
+                // at the end of the component life cycle
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(o => subjectInStore.next(o))
+            })
+          } else {
+            // otherwise, just register directly to DynamicObservableOrchestrationService
+            this.obsService.addObservable(observableId, observable);
+          }
+        });
       }
     }
   }
-
 }

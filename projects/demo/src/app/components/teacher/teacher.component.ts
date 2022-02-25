@@ -28,11 +28,12 @@ export class TeacherComponent extends ConfigurationDrivenComponent<TeacherConfig
     super(obsService);
   }
 
-  protected readyToYieldObservables(): Record<string, Observable<any>> {
-    let homeworkObsId = this.config.yieldingObservables.homework;
-    const homeworkObs = markAsTracked(
-      fromEvent(this.inputElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
-      homeworkObsId);
-    return {[homeworkObsId]: homeworkObs}
+  protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
+    let homeworkObsId = this.config.yieldingObservables.homework.observableId;
+    return {
+      [homeworkObsId]: () => markAsTracked(
+        fromEvent(this.inputElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
+        homeworkObsId)
+    }
   }
 }

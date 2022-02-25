@@ -35,22 +35,52 @@ const demo_obs_created_by_ancestor_page_conf = new PageConfiguration({
               `
     }),
     new HeadmasterConfiguration({
-      name: "George", yieldingObservables: {tuition: "tuition_amount_from_George"},
+      name: "George", yieldingObservables: {
+        tuition: {
+          observableId: "tuition_amount_from_George"
+        }
+      },
       manages: [
         new TeacherConfiguration({
-          name: "Tom", yieldingObservables: {homework: "homework_from_tom"},
+          name: "Tom", yieldingObservables: {
+            homework: {
+              observableId: "homework_from_tom"
+            }
+          },
           teaches: [
-            new StudentConfiguration({name: "Alice", consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}}),
-            new StudentConfiguration({name: "Bob", consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}}),
-            new StudentConfiguration({name: "Charlie", consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}}),
+            new StudentConfiguration({
+              name: "Alice",
+              consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
+            }),
+            new StudentConfiguration({
+              name: "Bob",
+              consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
+            }),
+            new StudentConfiguration({
+              name: "Charlie",
+              consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
+            }),
           ]
         }),
         new TeacherConfiguration({
-          name: "Jack", yieldingObservables: {homework: "homework_from_jack"},
+          name: "Jack", yieldingObservables: {
+            homework: {
+              observableId: "homework_from_jack"
+            }
+          },
           teaches: [
-            new StudentConfiguration({name: "Donald", consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}}),
-            new StudentConfiguration({name: "Edward", consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}}),
-            new StudentConfiguration({name: "Frank", consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}}),
+            new StudentConfiguration({
+              name: "Donald",
+              consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
+            }),
+            new StudentConfiguration({
+              name: "Edward",
+              consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
+            }),
+            new StudentConfiguration({
+              name: "Frank",
+              consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
+            }),
           ]
         }),
       ]

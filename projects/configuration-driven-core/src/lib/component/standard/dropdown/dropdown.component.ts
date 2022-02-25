@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {Observable} from "rxjs";
 import {DropdownConfiguration} from "./dropdown.config";
 import {ConfigurationDrivenComponent} from "../../base/configuration-driven-component";
@@ -18,7 +18,8 @@ import {DynamicObservableOrchestrationService} from "../../../service/dynamic-ob
         </div>
       </div>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownComponent extends ConfigurationDrivenComponent<DropdownConfiguration> {
   model: StringSingleSelectModel;
@@ -33,9 +34,9 @@ export class DropdownComponent extends ConfigurationDrivenComponent<DropdownConf
     this.model = new StringSingleSelectModel(options$);
   }
 
-  protected readyToYieldObservables(): Record<string, Observable<any>> {
+  protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
     return {
-      [this.config.yieldingObservables.selection]: this.model.selected$
+      [this.config.yieldingObservables.selection.observableId]: () => this.model.selected$
     }
   }
 

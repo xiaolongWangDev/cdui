@@ -18,7 +18,7 @@ import {ConfigurationDrivenComponent} from "../../base/configuration-driven-comp
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlertComponent extends ConfigurationDrivenComponent<AlertConfiguration> implements AfterViewInit {
+export class AlertComponent extends ConfigurationDrivenComponent<AlertConfiguration> {
   @ViewChild('dynamic_content') inputElement: ElementRef;
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {

@@ -43,10 +43,15 @@ const demo_dropdown_conf = new PageConfiguration({
       colWidth: [4, 8],
       components: [
         new DropdownConfiguration({
-        label: "Drinks: ",
-        yieldingObservables: {selection: "selected_drink"},
-        consumingObservables: {options: "drink_options"}
-      }), new PlaceholderConfig({
+          label: "Drinks: ",
+          yieldingObservables: {
+            selection: {
+              observableId: "selected_drink",
+              dependsOn: {options: "drink_options"}
+            }
+          },
+          consumingObservables: {options: "drink_options"}
+        }), new PlaceholderConfig({
           text: "I'm a placeholder! I drink: ",
           consumingObservables: {
             value: "selected_drink",

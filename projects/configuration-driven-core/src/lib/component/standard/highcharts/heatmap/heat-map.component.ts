@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {HeatMapConfig} from "./heat-map.config";
 import {map} from "rxjs/operators";
 import {markAsTracked} from "../../../../Helper";
@@ -18,7 +18,8 @@ export const heat_map_template = `<div *ngIf="obsReady$ |async">
 
 @Component({
   selector: "cd-sc-heat-map",
-  template: heat_map_template
+  template: heat_map_template,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeatMapComponent<T extends HeatMapConfig> extends BaseChartComponentComponent<T> {
 

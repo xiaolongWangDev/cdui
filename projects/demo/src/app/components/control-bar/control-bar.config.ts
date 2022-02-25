@@ -2,7 +2,7 @@ import {ComponentConfiguration, DropdownConfiguration} from "configuration-drive
 import {ControlBarComponent} from "./control-bar.component";
 
 export class ControlBarConfig extends ComponentConfiguration<ControlBarComponent,
-  { [P in "xDropdownOptions" | "yDropdownOptions"]: string }, {}> {
+  { xDropdownOptions: [], yDropdownOptions: [] }, {}> {
   public readonly xAxisColumnsDropdownConfig: DropdownConfiguration;
   public readonly yAxisColumnsDropdownConfig: DropdownConfiguration;
 

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {DynamicHostComponent} from "../../base/dynamic-host-component";
 import {AnyComponentConfiguration} from "../../../model/types";
 import {BlockConfiguration} from "./block.config";
@@ -9,7 +9,8 @@ import {BlockConfiguration} from "./block.config";
     <div *ngFor="let _ of config.components">
       <ng-template cd-dynamic></ng-template>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlockComponent extends DynamicHostComponent<BlockConfiguration> {
 

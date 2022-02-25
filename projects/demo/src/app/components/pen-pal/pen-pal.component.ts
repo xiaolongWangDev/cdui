@@ -37,13 +37,14 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
     this.newLetter$ = this.obsService.getObservable(this.config.consumingObservables.receive);
   }
 
-  protected readyToYieldObservables(): Record<string, Observable<any>> {
-    let sendOutObsId = this.config.yieldingObservables.sendOut;
-    const sendOutObs = markAsTracked(
-      fromEvent(this.domElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
-      sendOutObsId
-    );
-    return {[sendOutObsId]: sendOutObs}
+  protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
+    let sendOutObsId = this.config.yieldingObservables.sendOut.observableId;
+    return {
+      [sendOutObsId]: () => markAsTracked(
+        fromEvent(this.domElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
+        sendOutObsId
+      )
+    }
   }
 
 }

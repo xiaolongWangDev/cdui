@@ -37,23 +37,35 @@ const demo_custom_heat_map_conf = new PageConfiguration({
         yAxis: "spending_y_axis",
       },
       yieldingObservables: {
-        heatMapData: "spending_heat_map_data"
+        heatMapData: {observableId: "spending_heat_map_data"}
       },
       controlBar: new ControlBarConfig({
         yieldingObservables: {
-          xDropdownOptions: "spending_x_dropdown_options",
-          yDropdownOptions: "spending_y_dropdown_options"
+          xDropdownOptions: {observableId: "spending_x_dropdown_options"},
+          yDropdownOptions: {observableId: "spending_y_dropdown_options"}
         },
         xAxisColumnsDropdownConfig: new DropdownConfiguration({
           label: "on x axis:",
           consumingObservables: {options: "spending_x_dropdown_options"},
-          yieldingObservables: {selection: "spending_x_axis"},
+          yieldingObservables: {
+            selection: {
+              observableId: "spending_x_axis",
+              dependsOn: {
+                options: "spending_x_dropdown_options"
+              }
+            }
+          },
           keepInStore: ["spending_x_axis"]
         }),
         yAxisColumnsDropdownConfig: new DropdownConfiguration({
           label: "on y axis:",
           consumingObservables: {options: "spending_y_dropdown_options"},
-          yieldingObservables: {selection: "spending_y_axis"},
+          yieldingObservables: {
+            selection: {
+              observableId: "spending_y_axis",
+              dependsOn: {options: "spending_y_dropdown_options"}
+            }
+          },
           keepInStore: ["spending_y_axis"]
         }),
       }),

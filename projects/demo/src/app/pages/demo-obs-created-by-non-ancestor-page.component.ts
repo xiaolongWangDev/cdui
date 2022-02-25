@@ -43,7 +43,9 @@ const demo_obs_created_by_non_ancestor_page_conf = new PageConfiguration({
       palA: new PenPalConfig({
         name: "Alice",
         yieldingObservables: {
-          sendOut: "alice_mail",
+          sendOut: {
+            observableId: "alice_mail"
+          },
         },
         keepInStore: ["alice_mail"],
         consumingObservables: {
@@ -53,7 +55,9 @@ const demo_obs_created_by_non_ancestor_page_conf = new PageConfiguration({
       palB: new PenPalConfig({
         name: "Bob",
         yieldingObservables: {
-          sendOut: "bob_mail",
+          sendOut: {
+            observableId: "bob_mail"
+          },
         },
         keepInStore: ["bob_mail"],
         consumingObservables: {

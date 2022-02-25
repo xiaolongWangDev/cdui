@@ -28,16 +28,13 @@ export class HeadmasterComponent extends ConfigurationDrivenComponent<Headmaster
     super(obsService);
   }
 
-  protected readyToYieldObservables(): Record<string, Observable<any>> {
-    let tuitionObsId = this.config.yieldingObservables.tuition;
-    // this is convoluted because of the use of markAsTracked. In production, we don't need to use them.
-    // They are just here to aggressively track all observables we created so that we
-    // are very sure no observable created by us is leaking memory
-    const tuitionObs = markAsTracked(
-      fromEvent(this.inputElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
-      tuitionObsId
-    );
-
-    return {[tuitionObsId]: tuitionObs}
+  protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
+    let tuitionObsId = this.config.yieldingObservables.tuition.observableId;
+    return {
+      [tuitionObsId]: () => markAsTracked(
+        fromEvent(this.inputElement.nativeElement, 'change').pipe(map((e: any) => e.target.value)),
+        tuitionObsId
+      )
+    }
   }
 }
