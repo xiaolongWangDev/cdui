@@ -8,13 +8,9 @@ export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetC
   public readonly controlBar: ControlBarConfig;
   public readonly heatMap: SpendingHeatMapConfig;
 
-  constructor(args: Omit<SpendingWidgetConfig, "componentType"> | undefined) {
+  constructor() {
     super();
-    if (args === undefined) {
-      Object.assign(this, {...DEFAULT_CONFIG_TEMPLATE, componentType: SpendingWidgetComponent});
-    } else {
-      Object.assign(this, {...args, componentType: SpendingWidgetComponent});
-    }
+    Object.assign(this, {...DEFAULT_CONFIG_TEMPLATE, componentType: SpendingWidgetComponent});
   }
 }
 
@@ -44,27 +40,15 @@ const DEFAULT_CONFIG_TEMPLATE = {
   controlBar: new ControlBarConfig({
     xAxisColumnsDropdownConfig: new DropdownConfiguration({
       label: "on x axis:",
-      consumingObservables: {options: SPENDING_X_DROPDOWN_OPTIONS},
-      yieldingObservables: {
-        selection: {
-          observableId: SPENDING_X_AXIS,
-          dependsOn: {
-            options: SPENDING_X_DROPDOWN_OPTIONS
-          }
-        }
-      },
-      keepInStore: [SPENDING_X_AXIS]
+      optionsObservable: SPENDING_X_DROPDOWN_OPTIONS,
+      selectionObservable: SPENDING_X_AXIS,
+      keepInStore: true
     }),
     yAxisColumnsDropdownConfig: new DropdownConfiguration({
       label: "on y axis:",
-      consumingObservables: {options: SPENDING_Y_DROPDOWN_OPTIONS},
-      yieldingObservables: {
-        selection: {
-          observableId: SPENDING_Y_AXIS,
-          dependsOn: {options: SPENDING_Y_DROPDOWN_OPTIONS}
-        }
-      },
-      keepInStore: [SPENDING_Y_AXIS]
+      optionsObservable: SPENDING_Y_DROPDOWN_OPTIONS,
+      selectionObservable: SPENDING_Y_AXIS,
+      keepInStore: true
     }),
   }),
   heatMap: new SpendingHeatMapConfig({
