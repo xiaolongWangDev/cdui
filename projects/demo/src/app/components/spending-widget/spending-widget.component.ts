@@ -22,9 +22,9 @@ export class SpendingWidgetComponent extends ConfigurationDrivenComponent<Spendi
   }
 
   protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
-    let observableId = this.config.yieldingObservables.heatMapData.observableId;
+    let heatMapDataObservableId = this.config.yieldingObservables.heatMapData.observableId;
     return {
-      [observableId]:
+      [heatMapDataObservableId]:
         () => markAsTracked(combineLatest([
           this.obsService.getObservable(this.config.consumingObservables.xAxis),
           this.obsService.getObservable(this.config.consumingObservables.yAxis)])
@@ -32,7 +32,11 @@ export class SpendingWidgetComponent extends ConfigurationDrivenComponent<Spendi
             mergeMap(([xAxis, yAxis]) => {
               return this.mockApiService.getSpendingHeatMapData(xAxis, yAxis)
             })
-          ), observableId)
+          ), heatMapDataObservableId),
+      [this.config.yieldingObservables.xDropdownOptions.observableId]: () => this.mockApiService.getSpendingXOptions(),
+      [this.config.yieldingObservables.yDropdownOptions.observableId]: () => this.mockApiService.getSpendingYOptions()
     }
   }
 }
+
+

@@ -31,11 +31,4 @@ export class ControlBarComponent extends ConfigurationDrivenComponent<ControlBar
               changeDetectionRef: ChangeDetectorRef) {
     super(obsService, changeDetectionRef);
   }
-
-  protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
-    return {
-      [this.config.yieldingObservables.xDropdownOptions.observableId]: () => this.mockApiService.getSpendingXOptions(),
-      [this.config.yieldingObservables.yDropdownOptions.observableId]: () => this.mockApiService.getSpendingYOptions()
-    }
-  }
 }
