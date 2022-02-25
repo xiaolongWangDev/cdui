@@ -3,7 +3,7 @@ import {ComponentConfiguration} from "../../base/component-configuration";
 import {RowComponent} from "./row.component";
 
 
-export class RowConfiguration extends ComponentConfiguration<RowComponent, {}, {}> {
+export class RowConfiguration extends ComponentConfiguration<RowComponent, {}, []> {
   public readonly colWidth: number[];
   public readonly components: AnyComponentConfiguration[];
   constructor(args: Omit<RowConfiguration, "componentType">) {

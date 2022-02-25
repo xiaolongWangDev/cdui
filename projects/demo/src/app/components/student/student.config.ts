@@ -1,7 +1,7 @@
 import {ComponentConfiguration} from "configuration-driven-core";
 import {StudentComponent} from "./student.component";
 
-export class StudentConfiguration extends ComponentConfiguration<StudentComponent, {}, { [P in "homework" | "tuition"]: string }> {
+export class StudentConfiguration extends ComponentConfiguration<StudentComponent, {}, ["homework" | "tuition"]> {
   public readonly name: string;
 
   constructor(args: Omit<StudentConfiguration, "componentType">) {

@@ -2,7 +2,7 @@ import {ComponentConfiguration} from "configuration-driven-core";
 import {HeadmasterComponent} from "./headmaster.component";
 import {TeacherConfiguration} from "../teacher/teacher.config";
 
-export class HeadmasterConfiguration extends ComponentConfiguration<HeadmasterComponent, { tuition: [] }, {}> {
+export class HeadmasterConfiguration extends ComponentConfiguration<HeadmasterComponent, { tuition: [] }, []> {
   public readonly name: string;
   public readonly manages: TeacherConfiguration[];
 

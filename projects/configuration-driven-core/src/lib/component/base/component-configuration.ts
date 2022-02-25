@@ -5,31 +5,36 @@ import {StoreConfiguration} from "../store/store.config";
 type NonEmptyStringArray = [string, ...string[]]
 
 type YieldParamType = {
-  [yieldObservableIdentity: string]: [] | NonEmptyStringArray
+  [yieldObservableRole: string]: [] | NonEmptyStringArray
 }
 
-type ArrayKeys = keyof string[];
-type Indices<T> = Exclude<keyof T, ArrayKeys>;
+type Indices<T> = Exclude<keyof T, keyof string[]>;
+type StringTupleToStringLiteralUnion<T> = Extract<T[Indices<T>], string>
 
-type YieldType<T extends { [yieldObservableIdentity: string]: any }> = {
+type YieldType<T extends YieldParamType> = {
   [P in keyof T]: T[P] extends NonEmptyStringArray ? {
       observableId: string;
       dependsOn: {
-        [U in T[P][Indices<T[P]>]]: string
+        [U in StringTupleToStringLiteralUnion<T[P]>]: string
       }
     } :
     {
       observableId: string;
       dependsOn?: {
-        [U in T[P][Indices<T[P]>]]: string
+        [U in StringTupleToStringLiteralUnion<T[P]>]: string
       }
     }
+}
+
+type ConsumeParamType = string[]
+type ConsumeType<T extends ConsumeParamType> = {
+  [P in StringTupleToStringLiteralUnion<T>]: string
 }
 
 
 export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent,
   CONCRETE_YIELD_PARAM_TYPE extends YieldParamType,
-  CONCRETE_CONSUME_TYPE extends Record<string, string>> {
+  CONCRETE_CONSUME_TYPE extends ConsumeParamType> {
 
   public readonly componentType: Type<COMP_TYPE>;
 
@@ -38,7 +43,7 @@ export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComp
   public readonly yieldingObservables?: YieldType<CONCRETE_YIELD_PARAM_TYPE>;
   public readonly keepInStore?: string[];
   //
-  public readonly consumingObservables?: CONCRETE_CONSUME_TYPE;
+  public readonly consumingObservables?: ConsumeType<CONCRETE_CONSUME_TYPE>;
   //
   public readonly store?: StoreConfiguration;
 }

@@ -1,7 +1,7 @@
 import {AlertComponent} from "./alert.component";
 import {ComponentConfiguration} from "../../base/component-configuration";
 
-export class AlertConfiguration extends ComponentConfiguration<AlertComponent, {}, {}> {
+export class AlertConfiguration extends ComponentConfiguration<AlertComponent, {}, []> {
   public readonly type: string;
   public readonly content?: string;
   public readonly htmlContent?: string;
