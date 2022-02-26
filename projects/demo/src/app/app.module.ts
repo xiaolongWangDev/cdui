@@ -28,11 +28,15 @@ import {ControlBarComponent} from "./components/control-bar/control-bar.componen
 import {DemoSpendingWidgetPageComponent} from "./pages/demo-spending-widget-page.component";
 import {DemoScatterPageComponent} from "./pages/demo-scatter-page.component";
 import {DemoSplinePageComponent} from "./pages/demo-spline-page.component";
+import {AgGridModule} from "ag-grid-angular";
+import {TableComponent} from "./components/table/table.component";
+import {DemoTablePageComponent} from "./pages/demo-table-page.component";
 
 const pages = [
   IntroductionPageComponent,
   DemoGridSystemPageComponent,
   DemoDropdownPageComponent,
+  DemoTablePageComponent,
   DemoHeatMapPageComponent,
   DemoScatterPageComponent,
   DemoSplinePageComponent,
@@ -45,6 +49,7 @@ const pages = [
   declarations: [
     AppComponent,
     PageComponent,
+    TableComponent,
     PlaceholderComponent,
     ToggleComponent,
     ToggleTargetDirective,
@@ -64,7 +69,7 @@ const pages = [
     ConfigurationDrivenCoreModule.forRoot(),
     NgbModule,
     HighchartsChartModule,
-    ConfigurationDrivenCoreModule,
+    AgGridModule,
     ConfigurationDrivenCoreModule,
   ],
   providers: [

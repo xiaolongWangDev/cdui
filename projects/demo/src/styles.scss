@@ -2,3 +2,7 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+/* ag grid */
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
