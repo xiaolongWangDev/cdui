@@ -9,6 +9,7 @@ import {DropdownComponent} from "./component/standard/dropdown/dropdown.componen
 import {HighchartsChartModule} from "highcharts-angular";
 import {HeatMapComponent} from "./component/standard/highcharts/heatmap/heat-map.component";
 import {DynamicObservableOrchestrationService} from "./service/dynamic-observable-orchestration.service";
+import {ScatterComponent} from "./component/standard/highcharts/scatter/scatter.component";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {DynamicObservableOrchestrationService} from "./service/dynamic-observabl
     RowComponent,
     AlertComponent,
     DropdownComponent,
-    HeatMapComponent
+    HeatMapComponent,
+    ScatterComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import {DynamicObservableOrchestrationService} from "./service/dynamic-observabl
     RowComponent,
     AlertComponent,
     DropdownComponent,
-    HeatMapComponent
+    HeatMapComponent,
+    ScatterComponent
   ]
 })
 export class ConfigurationDrivenCoreModule {

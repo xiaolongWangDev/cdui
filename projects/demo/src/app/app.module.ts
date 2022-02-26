@@ -26,12 +26,14 @@ import {SpendingWidgetComponent} from "./components/spending-widget/spending-wid
 import {MockApiService} from "./service/mock-api.service";
 import {ControlBarComponent} from "./components/control-bar/control-bar.component";
 import {DemoSpendingWidgetPageComponent} from "./pages/demo-spending-widget-page.component";
+import {DemoScatterPageComponent} from "./pages/demo-scatter-page.component";
 
 const pages = [
   IntroductionPageComponent,
   DemoGridSystemPageComponent,
   DemoDropdownPageComponent,
   DemoHeatMapPageComponent,
+  DemoScatterPageComponent,
   DemoSpendingWidgetPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent

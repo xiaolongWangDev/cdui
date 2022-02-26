@@ -7,6 +7,7 @@ import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.compone
 import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
 import {DemoHeatMapPageComponent} from "./pages/demo-heat-map-page.component";
 import {DemoSpendingWidgetPageComponent} from "./pages/demo-spending-widget-page.component";
+import {DemoScatterPageComponent} from "./pages/demo-scatter-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Route[] = [
   {path: "demo_grid_system", component: DemoGridSystemPageComponent},
   {path: "demo_dropdown", component: DemoDropdownPageComponent},
   {path: "demo_heat_map", component: DemoHeatMapPageComponent},
+  {path: "demo_scatter", component: DemoScatterPageComponent},
   {path: "demo_spending_widget", component: DemoSpendingWidgetPageComponent},
   {path: "demo_obs_created_by_ancestor", component: DemoObsCreatedByAncestorPageComponent},
   {path: "demo_obs_created_by_non_ancestor", component: DemoObsCreatedByNonAncestorPageComponent}

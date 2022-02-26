@@ -19,6 +19,8 @@ export * from './lib/component/standard/alert/alert.component';
 export * from './lib/component/standard/alert/alert.config';
 export * from './lib/component/standard/highcharts/heatmap/heat-map.component';
 export * from './lib/component/standard/highcharts/heatmap/heat-map.config';
+export * from './lib/component/standard/highcharts/scatter/scatter.component';
+export * from './lib/component/standard/highcharts/scatter/scatter.config';
 export * from './lib/directive/dynamic-directive';
 export * from './lib/service/dynamic-observable-orchestration.service';
 export * from './lib/configuration-driven-core.module';
