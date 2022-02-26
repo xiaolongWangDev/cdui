@@ -1,9 +1,6 @@
-import * as Highcharts from "highcharts";
-
-import HC_stock from 'highcharts/modules/stock';
+import * as Highcharts from 'highcharts/highstock';
 import HC_heatmap from 'highcharts/modules/heatmap';
 
-HC_stock(Highcharts);
 HC_heatmap(Highcharts);
 
 export const configuredHighchartsLibrary = Highcharts;

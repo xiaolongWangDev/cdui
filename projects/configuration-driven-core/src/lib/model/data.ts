@@ -13,3 +13,10 @@ export class ScatterData {
     Object.assign(this, args);
   }
 }
+
+export class SplineData {
+  data: [number, number][];
+  constructor(args: Readonly<ScatterData>) {
+    Object.assign(this, args);
+  }
+}

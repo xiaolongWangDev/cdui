@@ -27,6 +27,7 @@ import {MockApiService} from "./service/mock-api.service";
 import {ControlBarComponent} from "./components/control-bar/control-bar.component";
 import {DemoSpendingWidgetPageComponent} from "./pages/demo-spending-widget-page.component";
 import {DemoScatterPageComponent} from "./pages/demo-scatter-page.component";
+import {DemoSplinePageComponent} from "./pages/demo-spline-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -34,6 +35,7 @@ const pages = [
   DemoDropdownPageComponent,
   DemoHeatMapPageComponent,
   DemoScatterPageComponent,
+  DemoSplinePageComponent,
   DemoSpendingWidgetPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent
