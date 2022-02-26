@@ -4,6 +4,26 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <div ngbDropdown class="dropdown">
+          <button ngbDropdownToggle class="btn btn-info" type="button" id="basicsDemoDropdownBtn" aria-expanded="false">
+            Basics
+          </button>
+          <ul ngbDropdownMenu aria-labelledby="basicsDemoDropdownBtn">
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item dropdown ml-2">
+        <div ngbDropdown class="dropdown">
+          <button ngbDropdownToggle class="btn btn-info" type="button" id="observableDemoDropdownBtn" aria-expanded="false">
+            Observable
+          </button>
+          <ul ngbDropdownMenu aria-labelledby="observableDemoDropdownBtn">
+            <li><a ngbDropdownItem routerLink="/demo_obs_created_by_ancestor">Created By Ancestor</a></li>
+            <li><a ngbDropdownItem routerLink="/demo_obs_created_by_non_ancestor">Created By Non Ancestor</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item dropdown ml-2">
+        <div ngbDropdown class="dropdown">
           <button ngbDropdownToggle class="btn btn-info" type="button" id="componentsDemoDropdownBtn" aria-expanded="false">
             Components
           </button>
@@ -11,18 +31,16 @@
             <li><a ngbDropdownItem routerLink="/demo_grid_system">Grid Layout</a></li>
             <li><a ngbDropdownItem routerLink="/demo_dropdown">Dropdown</a></li>
             <li><a ngbDropdownItem routerLink="/demo_heat_map">Heat Map</a></li>
-            <li><a ngbDropdownItem routerLink="/demo_custom_heat_map">Custom Heat Map</a></li>
           </ul>
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown ml-2">
         <div ngbDropdown class="dropdown">
-          <button ngbDropdownToggle class="btn btn-info ml-2" type="button" id="observableDemoDropdownBtn" aria-expanded="false">
-            Observable
+          <button ngbDropdownToggle class="btn btn-info" type="button" id="applicationDemoDropdownBtn" aria-expanded="false">
+            Applications
           </button>
-          <ul ngbDropdownMenu aria-labelledby="observableDemoDropdownBtn">
-            <li><a ngbDropdownItem routerLink="/demo_obs_created_by_ancestor">Created By Ancestor</a></li>
-            <li><a ngbDropdownItem routerLink="/demo_obs_created_by_non_ancestor">Created By Non Ancestor</a></li>
+          <ul ngbDropdownMenu aria-labelledby="applicationDemoDropdownBtn">
+            <li><a ngbDropdownItem routerLink="/demo_spending_widget">Widget</a></li>
           </ul>
         </div>
       </li>

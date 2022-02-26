@@ -26,7 +26,7 @@ const demo_heat_map_conf = new PageConfiguration({
   components: [
     new AlertConfiguration({
       type: "success",
-      htmlContent: ``
+      htmlContent: `This is a wrapper of Highcharts chart`
     }), new BlockConfiguration({
       store: new StoreConfiguration({
         states: {

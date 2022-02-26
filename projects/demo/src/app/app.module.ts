@@ -22,17 +22,17 @@ import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
 import {HighchartsChartModule} from "highcharts-angular";
 import {DemoHeatMapPageComponent} from "./pages/demo-heat-map-page.component";
 import {SpendingHeatMapComponent} from "./components/spending-heat-map/spending-heat-map.component";
-import {DemoCustomHeatMapPageComponent} from "./pages/demo-custom-heat-map-page.component";
 import {SpendingWidgetComponent} from "./components/spending-widget/spending-widget.component";
 import {MockApiService} from "./service/mock-api.service";
 import {ControlBarComponent} from "./components/control-bar/control-bar.component";
+import {DemoSpendingWidgetPageComponent} from "./pages/demo-spending-widget-page.component";
 
 const pages = [
   IntroductionPageComponent,
   DemoGridSystemPageComponent,
   DemoDropdownPageComponent,
   DemoHeatMapPageComponent,
-  DemoCustomHeatMapPageComponent,
+  DemoSpendingWidgetPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent
 ]
