@@ -26,7 +26,7 @@ const demo_spine_conf = new PageConfiguration({
   components: [
     new AlertConfiguration({
       type: "success",
-      htmlContent: `This is a wrapper of Highcharts chart`
+      htmlContent: `This is a wrapper of Highcharts stock chart`
     }), new BlockConfiguration({
       store: new StoreConfiguration({
         states: {
