@@ -31,6 +31,8 @@ import {DemoSplinePageComponent} from "./pages/demo-spline-page.component";
 import {AgGridModule} from "ag-grid-angular";
 import {TableComponent} from "./components/table/table.component";
 import {DemoTablePageComponent} from "./pages/demo-table-page.component";
+import {HttpClientModule} from "@angular/common/http";
+import {OlympicDataFetcherComponent} from "./components/olympic-data-fetcher/olympic-data-fetcher.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -50,6 +52,7 @@ const pages = [
     AppComponent,
     PageComponent,
     TableComponent,
+    OlympicDataFetcherComponent,
     PlaceholderComponent,
     ToggleComponent,
     ToggleTargetDirective,
@@ -65,6 +68,7 @@ const pages = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     ConfigurationDrivenCoreModule.forRoot(),
     NgbModule,

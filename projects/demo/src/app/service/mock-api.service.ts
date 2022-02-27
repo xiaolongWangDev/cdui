@@ -2,15 +2,23 @@ import {Injectable} from "@angular/core";
 import {HeatMapData, markAsTracked} from "configuration-driven-core";
 import {Observable, of} from "rxjs";
 import {delay} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class MockApiService {
+  constructor(private http: HttpClient) {
+  }
+
   getSpendingXOptions(): Observable<string[]> {
     return markAsTracked(of(["Monthly", "Yearly"]).pipe(delay(2000)), "spending_x_options");
   }
 
   getSpendingYOptions(): Observable<string[]> {
     return markAsTracked(of(["Entertainment", "Dining"]).pipe(delay(1000)), "spending_y_options");
+  }
+
+  getOlympicData(): Observable<Record<string, any>[]> {
+    return this.http.get<Record<string, any>[]>("https://www.ag-grid.com/example-assets/olympic-winners.json")
   }
 
   getSpendingHeatMapData(xAxis: string, yAxis: string): Observable<HeatMapData> {

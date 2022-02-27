@@ -9,7 +9,12 @@ import {Observable} from "rxjs";
     <div class="m-1 p-1" style="border:1px solid black;">
       {{config.text}}
       <ng-container *ngIf="obsReady$ | async">
-        {{value$ | async}}
+        <ng-container *ngIf="config.parseJson">
+            {{value$ | async | json}}
+        </ng-container>
+        <ng-container *ngIf="!config.parseJson">
+            {{value$ | async}}
+        </ng-container>
       </ng-container>
     </div>
   `
