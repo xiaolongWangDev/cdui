@@ -1,22 +1,18 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from "@angular/core";
+import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {PageConfiguration} from "./page.config";
-import {DynamicHostComponent, AnyComponentConfiguration} from "configuration-driven-core";
+import {ConfigurationDrivenComponent} from "configuration-driven-core";
 
 @Component({
   selector: "demo-page",
   template: `
     <div class="mt-2 ml-5 mr-5 mb-2">
       <h1>{{config.title}}</h1>
-      <div *ngFor="let _ of config.components">
-        <ng-template cd-dynamic></ng-template>
+      <div *ngFor="let childConfig of config.components">
+        <ng-template [cdDynamic]="childConfig"></ng-template>
       </div>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PageComponent extends DynamicHostComponent<PageConfiguration> implements OnDestroy {
-
-  protected getConfigurations(): AnyComponentConfiguration[] {
-    return this.config.components;
-  }
+export class PageComponent extends ConfigurationDrivenComponent<PageConfiguration>{
 }

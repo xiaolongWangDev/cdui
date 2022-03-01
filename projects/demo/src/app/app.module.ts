@@ -40,12 +40,15 @@ import {RowComponent} from "./components/row/row.component";
 import {ScatterComponent} from "./components/highcharts/scatter/scatter.component";
 import {HeatMapComponent} from "./components/highcharts/heatmap/heat-map.component";
 import {SplineComponent} from "./components/highcharts/spline/spline.component";
+import {TabComponent} from "./components/tab/tab.component";
+import {DemoTabPageComponent} from "./pages/demo-tab-page.component";
 
 const pages = [
   IntroductionPageComponent,
   DemoGridSystemPageComponent,
   DemoDropdownPageComponent,
   DemoTablePageComponent,
+  DemoTabPageComponent,
   DemoHeatMapPageComponent,
   DemoScatterPageComponent,
   DemoSplinePageComponent,
@@ -65,6 +68,7 @@ const pages = [
     SplineComponent,
     HeatMapComponent,
     PageComponent,
+    TabComponent,
     TableComponent,
     OlympicDataFetcherComponent,
     PlaceholderComponent,
