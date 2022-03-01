@@ -1,13 +1,14 @@
-import {AfterViewInit, Directive, Input, OnDestroy, ViewContainerRef} from "@angular/core";
+import {AfterViewInit, ComponentRef, Directive, Input, OnDestroy, ViewContainerRef} from "@angular/core";
+import {AnyComponentConfiguration, AnyConfigurationDrivenComponent} from "../model/types";
 
 @Directive({
   selector: "[cdDynamic]"
 })
 export class DynamicDirective implements AfterViewInit, OnDestroy {
-  @Input() cdDynamic: any;
-  private componentRef: any;
+  @Input() cdDynamic: AnyComponentConfiguration;
+  private componentRef: ComponentRef<AnyConfigurationDrivenComponent>;
 
-  constructor(public readonly viewContainerRef: ViewContainerRef) {
+  constructor(private readonly viewContainerRef: ViewContainerRef) {
   }
 
   ngAfterViewInit(): void {

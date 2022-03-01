@@ -5,7 +5,7 @@ import {TabConfiguration} from "./tab.config";
 @Component({
   selector: "demo-tab",
   template: `
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
       <li *ngFor="let label of config.tabLabels; let i = index" [ngbNavItem]="i + 1">
         <a ngbNavLink>{{label}}</a>
         <ng-template ngbNavContent>
@@ -18,8 +18,6 @@ import {TabConfiguration} from "./tab.config";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabComponent extends ConfigurationDrivenComponent<TabConfiguration> {
-  active = 1;
-
   protected getConfigurations(): AnyComponentConfiguration[] {
     return this.config.components;
   }
