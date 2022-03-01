@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
-import {
-  AlertConfiguration,
-  BlockConfiguration,
-  HeatMapConfig,
-  HeatMapData,
-  StoreConfiguration
-} from "configuration-driven-core";
+import {StoreConfiguration} from "configuration-driven-core";
+import {HeatMapData} from "../model/data";
+import {HeatMapConfig} from "../components/highcharts/heatmap/heat-map.config";
+import {BlockConfiguration} from "../components/block/block.config";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

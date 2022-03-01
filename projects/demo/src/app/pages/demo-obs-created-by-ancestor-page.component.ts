@@ -3,7 +3,7 @@ import {PageConfiguration} from "../components/page/page.config";
 import {HeadmasterConfiguration} from "../components/headmaster/headmaster.config";
 import {TeacherConfiguration} from "../components/teacher/teacher.config";
 import {StudentConfiguration} from "../components/student/student.config";
-import {AlertConfiguration} from "configuration-driven-core";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

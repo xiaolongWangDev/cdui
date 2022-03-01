@@ -1,16 +1,9 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  ViewChild
-} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild} from "@angular/core";
 import {AlertConfiguration} from "./alert.config";
-import {ConfigurationDrivenComponent} from "../../base/configuration-driven-component";
+import {ConfigurationDrivenComponent} from "configuration-driven-core";
 
 @Component({
-  selector: "cd-sc-alert",
+  selector: "demo-alert",
   template: `
     <ngb-alert [type]="config.type" [dismissible]="false">
       <div #dynamic_content></div>

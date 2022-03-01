@@ -1,10 +1,9 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {DynamicHostComponent} from "../../base/dynamic-host-component";
-import {AnyComponentConfiguration} from "../../../model/types";
+import {AnyComponentConfiguration, DynamicHostComponent} from "configuration-driven-core";
 import {RowConfiguration} from "./row.config";
 
 @Component({
-  selector: "cd-sc-row",
+  selector: "demo-row",
   template: `
     <div class="row">
       <div *ngFor="let cWidth of config.colWidth" [ngClass]="'col-' + cWidth">

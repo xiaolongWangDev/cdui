@@ -1,9 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {map} from "rxjs/operators";
-import {markAsTracked} from "../../../../Helper";
-import {SplineData} from "../../../../model/data";
+import {DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
+import {SplineData} from "../../../model/data";
 import {BaseChartComponentComponent} from "../base-chart.component";
-import {DynamicObservableOrchestrationService} from "../../../../service/dynamic-observable-orchestration.service";
 import {SplineConfig} from "./spline.config";
 import * as Highcharts from "highcharts";
 import {AxisLabelsFormatterCallbackFunction} from "highcharts";
@@ -19,7 +18,7 @@ export const spline_template = `<div *ngIf="obsReady$ |async">
 `
 
 @Component({
-  selector: "cd-sc-spline",
+  selector: "demo-spline",
   template: spline_template,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

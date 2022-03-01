@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
 import {PageConfiguration} from "../components/page/page.config";
-import {
-  AlertConfiguration,
-  DropdownConfiguration,
-  RowConfiguration,
-  StoreConfiguration
-} from "configuration-driven-core";
+import {StoreConfiguration} from "configuration-driven-core";
+import {DropdownConfiguration} from "../components/dropdown/dropdown.config";
+import {RowConfiguration} from "../components/row/row.config";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

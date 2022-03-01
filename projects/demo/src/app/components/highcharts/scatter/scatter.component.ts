@@ -1,13 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
-import {HeatMapConfig} from "./heat-map.config";
 import {map} from "rxjs/operators";
-import {markAsTracked} from "../../../../Helper";
-import {HeatMapData} from "../../../../model/data";
-import {getOptions} from "highcharts";
+import {DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
+import {ScatterData} from "../../../model/data";
 import {BaseChartComponentComponent} from "../base-chart.component";
-import {DynamicObservableOrchestrationService} from "../../../../service/dynamic-observable-orchestration.service";
+import {ScatterConfig} from "./scatter.config";
 
-export const heat_map_template = `<div *ngIf="obsReady$ |async">
+export const scatter_template = `<div *ngIf="obsReady$ |async">
   <highcharts-chart *ngIf="options$ | async as options"
     [Highcharts]="highchartsLibrary"
     [options]="options"
@@ -17,11 +15,11 @@ export const heat_map_template = `<div *ngIf="obsReady$ |async">
 `
 
 @Component({
-  selector: "cd-sc-heat-map",
-  template: heat_map_template,
+  selector: "demo-scatter",
+  template: scatter_template,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeatMapComponent<T extends HeatMapConfig> extends BaseChartComponentComponent<T> {
+export class ScatterComponent<T extends ScatterConfig> extends BaseChartComponentComponent<T> {
 
   constructor(obsService: DynamicObservableOrchestrationService,
               changeDetectionRef: ChangeDetectorRef) {
@@ -33,37 +31,30 @@ export class HeatMapComponent<T extends HeatMapConfig> extends BaseChartComponen
       markAsTracked(
         this.obsService.getObservable(this.config.consumingObservables.data)
           .pipe(
-            map((heatMapData: HeatMapData) => {
+            map((dataModel: ScatterData) => {
             return {
               chart: {
-                type: 'heatmap',
+                type: 'scatter',
               },
               title: {
                 text: this.config.title
-              },
-              colorAxis: {
-                min: 0,
-                minColor: '#FFFFFF',
-                maxColor: getOptions().colors[0]
               },
               xAxis: {
                 title: {
                   text: this.config.xTittle,
                 },
-                categories: heatMapData.xCategories,
               },
               yAxis: {
                 title: {
                   text: this.config.yTittle,
                 },
-                categories: heatMapData.yCategories,
               },
               series: [{
-                data: heatMapData.data
+                data: dataModel.data
               }]
             }
           })),
-        "heatmap_options"
+        "scatter_options"
       )
   }
 }

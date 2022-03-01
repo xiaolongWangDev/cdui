@@ -1,5 +1,5 @@
-import {ComponentConfiguration} from "../../base/component-configuration";
 import {DropdownComponent} from "./dropdown.component";
+import {ComponentConfiguration} from "configuration-driven-core";
 
 
 export class DropdownConfiguration extends ComponentConfiguration<DropdownComponent, { selection: ["options"] }, ["options"]> {

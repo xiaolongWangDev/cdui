@@ -1,5 +1,6 @@
-import {ComponentConfiguration, DropdownConfiguration} from "configuration-driven-core";
+import {ComponentConfiguration} from "configuration-driven-core";
 import {ControlBarComponent} from "./control-bar.component";
+import {DropdownConfiguration} from "../dropdown/dropdown.config";
 
 export class ControlBarConfig extends ComponentConfiguration<ControlBarComponent, {}, []> {
   public readonly xAxisColumnsDropdownConfig: DropdownConfiguration;

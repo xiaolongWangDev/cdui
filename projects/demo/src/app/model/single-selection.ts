@@ -1,6 +1,6 @@
 import {BehaviorSubject, combineLatest, Observable, of} from "rxjs";
 import {map, mergeMap} from "rxjs/operators";
-import {markAsTracked} from "../Helper";
+import {markAsTracked} from "configuration-driven-core";
 
 
 function useFirstOptionAsDefault<DATA_TYPE>(options: DATA_TYPE[]): Observable<DATA_TYPE> {

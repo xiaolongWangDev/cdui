@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
-import {AlertConfiguration, BlockConfiguration, StoreConfiguration} from "configuration-driven-core";
+import {StoreConfiguration} from "configuration-driven-core";
 import {TableConfiguration} from "../components/table/table.config";
 import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
 import {OlympicDataFetcherConfig} from "../components/olympic-data-fetcher/olympic-data-fetcher.config";
+import {BlockConfiguration} from "../components/block/block.config";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

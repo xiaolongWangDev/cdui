@@ -1,4 +1,4 @@
-import {ComponentConfiguration} from "../../../base/component-configuration";
+import {ComponentConfiguration} from "configuration-driven-core";
 import {ScatterComponent} from "./scatter.component";
 
 

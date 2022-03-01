@@ -1,14 +1,13 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
 import {
   DynamicObservableOrchestrationService,
-  heat_map_template,
-  HeatMapComponent,
   markAsTracked
 } from "configuration-driven-core";
 import {map} from "rxjs/operators";
 import {SpendingHeatMapConfig} from "./spending-heat-map.config";
 import {Options} from "highcharts";
 import {BehaviorSubject} from "rxjs";
+import {heat_map_template, HeatMapComponent} from "../highcharts/heatmap/heat-map.component";
 
 @Component({
   selector: "demo-spending-heat-map",

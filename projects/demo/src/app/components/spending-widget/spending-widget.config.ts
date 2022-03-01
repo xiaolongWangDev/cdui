@@ -1,7 +1,8 @@
-import {ComponentConfiguration, StoreConfiguration, DropdownConfiguration} from "configuration-driven-core";
+import {ComponentConfiguration, StoreConfiguration} from "configuration-driven-core";
 import {SpendingWidgetComponent} from "./spending-widget.component";
 import {SpendingHeatMapConfig} from "../spending-heat-map/spending-heat-map.config";
 import {ControlBarConfig} from "../control-bar/control-bar.config";
+import {DropdownConfiguration} from "../dropdown/dropdown.config";
 
 export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent,
   { xDropdownOptions: [], yDropdownOptions: [], heatMapData: [] }, ['xAxis' | 'yAxis']> {

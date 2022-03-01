@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
-import {AlertConfiguration} from "configuration-driven-core";
 import {SpendingWidgetConfig} from "../components/spending-widget/spending-widget.config";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

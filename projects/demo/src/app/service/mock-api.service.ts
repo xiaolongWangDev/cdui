@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
-import {HeatMapData, markAsTracked} from "configuration-driven-core";
+import {markAsTracked} from "configuration-driven-core";
 import {Observable, of} from "rxjs";
 import {delay} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
+import {HeatMapData} from "../model/data";
 
 @Injectable()
 export class MockApiService {

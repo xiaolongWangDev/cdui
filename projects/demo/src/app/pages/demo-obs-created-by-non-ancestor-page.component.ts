@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
 import {PostOfficeConfig} from "../components/post-office/post-office.config";
 import {PenPalConfig} from "../components/pen-pal/pen-pal.config";
-import {AlertConfiguration, StoreConfiguration} from "configuration-driven-core";
+import {StoreConfiguration} from "configuration-driven-core";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

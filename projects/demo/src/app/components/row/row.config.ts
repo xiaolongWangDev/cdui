@@ -1,5 +1,4 @@
-import {AnyComponentConfiguration} from "../../../model/types";
-import {ComponentConfiguration} from "../../base/component-configuration";
+import {AnyComponentConfiguration, ComponentConfiguration} from "configuration-driven-core";
 import {RowComponent} from "./row.component";
 
 

@@ -33,6 +33,13 @@ import {TableComponent} from "./components/table/table.component";
 import {DemoTablePageComponent} from "./pages/demo-table-page.component";
 import {HttpClientModule} from "@angular/common/http";
 import {OlympicDataFetcherComponent} from "./components/olympic-data-fetcher/olympic-data-fetcher.component";
+import {AlertComponent} from "./components/alert/alert.component";
+import {BlockComponent} from "./components/block/block.component";
+import {DropdownComponent} from "./components/dropdown/dropdown.component";
+import {RowComponent} from "./components/row/row.component";
+import {ScatterComponent} from "./components/highcharts/scatter/scatter.component";
+import {HeatMapComponent} from "./components/highcharts/heatmap/heat-map.component";
+import {SplineComponent} from "./components/highcharts/spline/spline.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -50,6 +57,13 @@ const pages = [
 @NgModule({
   declarations: [
     AppComponent,
+    AlertComponent,
+    BlockComponent,
+    DropdownComponent,
+    RowComponent,
+    ScatterComponent,
+    SplineComponent,
+    HeatMapComponent,
     PageComponent,
     TableComponent,
     OlympicDataFetcherComponent,

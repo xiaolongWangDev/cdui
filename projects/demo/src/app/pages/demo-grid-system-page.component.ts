@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
 import {PageConfiguration} from "../components/page/page.config";
-import {AlertConfiguration, BlockConfiguration, RowConfiguration} from "configuration-driven-core";
+import {RowConfiguration} from "../components/row/row.config";
+import {BlockConfiguration} from "../components/block/block.config";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

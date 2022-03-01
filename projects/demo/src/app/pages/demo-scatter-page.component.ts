@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
-import {
-  AlertConfiguration,
-  BlockConfiguration,
-  ScatterData,
-  ScatterConfig,
-  StoreConfiguration
-} from "configuration-driven-core";
+import {StoreConfiguration} from "configuration-driven-core";
+import {AlertConfiguration} from "../components/alert/alert.config";
+import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
+import {BlockConfiguration} from "../components/block/block.config";
+import {ScatterData} from "../model/data";
 
 @Component({
   template: `

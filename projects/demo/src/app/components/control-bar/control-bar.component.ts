@@ -1,11 +1,6 @@
-import {
-  ConfigurationDrivenComponent,
-  DynamicObservableOrchestrationService
-} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService} from "configuration-driven-core";
 import {ChangeDetectorRef, Component} from "@angular/core";
 import {ControlBarConfig} from "./control-bar.config";
-import {Observable, of} from "rxjs";
-import {delay} from "rxjs/operators";
 import {MockApiService} from "../../service/mock-api.service";
 
 
@@ -17,10 +12,10 @@ import {MockApiService} from "../../service/mock-api.service";
         <h4 class="pt-1">Controls:</h4>
       </div>
       <div class="col-4">
-        <cd-sc-dropdown [config]="config.xAxisColumnsDropdownConfig"></cd-sc-dropdown>
+        <demo-dropdown [config]="config.xAxisColumnsDropdownConfig"></demo-dropdown>
       </div>
       <div class="col-4">
-        <cd-sc-dropdown [config]="config.yAxisColumnsDropdownConfig"></cd-sc-dropdown>
+        <demo-dropdown [config]="config.yAxisColumnsDropdownConfig"></demo-dropdown>
       </div>
     </div>
   `

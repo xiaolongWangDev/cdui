@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {PageConfiguration} from "../components/page/page.config";
 import {
-  AlertConfiguration,
-  BlockConfiguration,
-  SplineConfig,
-  SplineData,
   StoreConfiguration
 } from "configuration-driven-core";
+import {SplineData} from "../model/data";
+import {BlockConfiguration} from "../components/block/block.config";
+import {SplineConfig} from "../components/highcharts/spline/spline.config";
+import {AlertConfiguration} from "../components/alert/alert.config";
 
 @Component({
   template: `

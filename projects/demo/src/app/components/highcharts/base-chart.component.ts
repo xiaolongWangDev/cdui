@@ -1,10 +1,12 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
 import {Observable} from "rxjs";
 import {Options} from "highcharts";
-import {AnyComponentConfiguration} from "../../../model/types";
-import {ConfigurationDrivenComponent} from "../../base/configuration-driven-component";
-import {configuredHighchartsLibrary} from "../../../model/highcharts-import";
-import {DynamicObservableOrchestrationService} from "../../../service/dynamic-observable-orchestration.service";
+import {
+  AnyComponentConfiguration,
+  ConfigurationDrivenComponent,
+  DynamicObservableOrchestrationService
+} from "configuration-driven-core";
+import {configuredHighchartsLibrary} from "../../model/highcharts-import";
 
 @Component({
   template: ``

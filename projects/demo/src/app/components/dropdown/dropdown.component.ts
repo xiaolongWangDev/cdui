@@ -1,12 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {Observable} from "rxjs";
+import {StringSingleSelectModel} from "../../model/single-selection";
+import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService} from "configuration-driven-core";
 import {DropdownConfiguration} from "./dropdown.config";
-import {ConfigurationDrivenComponent} from "../../base/configuration-driven-component";
-import {StringSingleSelectModel} from "../../../model/single-selection";
-import {DynamicObservableOrchestrationService} from "../../../service/dynamic-observable-orchestration.service";
 
 @Component({
-  selector: "cd-sc-dropdown",
+  selector: "demo-dropdown",
   template: `
     <div *ngIf="obsReady$ |async">
       <span style="font-size: 25px; vertical-align: bottom">{{config.label}}</span>

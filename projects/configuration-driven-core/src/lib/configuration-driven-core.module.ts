@@ -1,43 +1,18 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
-import {AlertComponent} from "./component/standard/alert/alert.component";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {BlockComponent} from "./component/standard/block/block.component";
-import {RowComponent} from "./component/standard/row/row.component";
-import {DropdownComponent} from "./component/standard/dropdown/dropdown.component";
-import {HighchartsChartModule} from "highcharts-angular";
-import {HeatMapComponent} from "./component/standard/highcharts/heatmap/heat-map.component";
 import {DynamicObservableOrchestrationService} from "./service/dynamic-observable-orchestration.service";
-import {ScatterComponent} from "./component/standard/highcharts/scatter/scatter.component";
-import {SplineComponent} from "./component/standard/highcharts/spline/spline.component";
 
 
 @NgModule({
   declarations: [
     DynamicDirective,
-    BlockComponent,
-    RowComponent,
-    AlertComponent,
-    DropdownComponent,
-    HeatMapComponent,
-    ScatterComponent,
-    SplineComponent
   ],
   imports: [
     CommonModule,
-    NgbModule,
-    HighchartsChartModule
   ],
   exports: [
     DynamicDirective,
-    BlockComponent,
-    RowComponent,
-    AlertComponent,
-    DropdownComponent,
-    HeatMapComponent,
-    ScatterComponent,
-    SplineComponent
   ]
 })
 export class ConfigurationDrivenCoreModule {

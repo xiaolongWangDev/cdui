@@ -1,10 +1,9 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {DynamicHostComponent} from "../../base/dynamic-host-component";
-import {AnyComponentConfiguration} from "../../../model/types";
+import {AnyComponentConfiguration, DynamicHostComponent} from "configuration-driven-core";
 import {BlockConfiguration} from "./block.config";
 
 @Component({
-  selector: "cd-sc-block",
+  selector: "demo-block",
   template: `
     <div *ngFor="let _ of config.components">
       <ng-template cd-dynamic></ng-template>

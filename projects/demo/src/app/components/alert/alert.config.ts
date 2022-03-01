@@ -1,5 +1,5 @@
 import {AlertComponent} from "./alert.component";
-import {ComponentConfiguration} from "../../base/component-configuration";
+import {ComponentConfiguration} from "configuration-driven-core";
 
 export class AlertConfiguration extends ComponentConfiguration<AlertComponent, {}, []> {
   public readonly type: string;
