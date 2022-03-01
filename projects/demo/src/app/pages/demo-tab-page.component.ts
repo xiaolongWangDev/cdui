@@ -3,18 +3,13 @@ import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
 import {PageConfiguration} from "../components/page/page.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
 import {TabConfiguration} from "../components/tab/tab.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoTabPageComponent {
-  config =demo_tab_conf;
+  config = demo_tab_conf;
 }
 
 const demo_tab_conf = new PageConfiguration({

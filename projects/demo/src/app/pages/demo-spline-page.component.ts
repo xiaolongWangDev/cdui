@@ -7,15 +7,10 @@ import {SplineData} from "../model/data";
 import {BlockConfiguration} from "../components/block/block.config";
 import {SplineConfig} from "../components/highcharts/spline/spline.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoSplinePageComponent {
   config = demo_spine_conf;

@@ -5,15 +5,10 @@ import {HeatMapData} from "../model/data";
 import {HeatMapConfig} from "../components/highcharts/heatmap/heat-map.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoHeatMapPageComponent {
   config = demo_heat_map_conf;

@@ -4,15 +4,10 @@ import {PostOfficeConfig} from "../components/post-office/post-office.config";
 import {PenPalConfig} from "../components/pen-pal/pen-pal.config";
 import {StoreConfiguration} from "configuration-driven-core";
 import {AlertConfiguration} from "../components/alert/alert.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoObsCreatedByNonAncestorPageComponent {
   config = demo_obs_created_by_non_ancestor_page_conf;

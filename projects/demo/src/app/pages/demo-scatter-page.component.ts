@@ -5,15 +5,10 @@ import {AlertConfiguration} from "../components/alert/alert.config";
 import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {ScatterData} from "../model/data";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoScatterPageComponent {
   config = demo_scatter_conf;

@@ -5,15 +5,10 @@ import {StoreConfiguration} from "configuration-driven-core";
 import {DropdownConfiguration} from "../components/dropdown/dropdown.config";
 import {RowConfiguration} from "../components/row/row.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoDropdownPageComponent {
   config = demo_dropdown_conf;

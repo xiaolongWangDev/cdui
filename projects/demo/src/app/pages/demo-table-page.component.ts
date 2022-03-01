@@ -6,15 +6,10 @@ import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
 import {OlympicDataFetcherConfig} from "../components/olympic-data-fetcher/olympic-data-fetcher.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoTablePageComponent {
   config = demo_table_conf;

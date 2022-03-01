@@ -4,15 +4,10 @@ import {HeadmasterConfiguration} from "../components/headmaster/headmaster.confi
 import {TeacherConfiguration} from "../components/teacher/teacher.config";
 import {StudentConfiguration} from "../components/student/student.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
+import {standard_page_template} from "../components/page/page.component";
 
 @Component({
-  template: `
-    <demo-toggle>
-      <ng-template demo-toggle-target>
-        <demo-page [config]="config"></demo-page>
-      </ng-template>
-    </demo-toggle>
-  `
+  template: standard_page_template
 })
 export class DemoObsCreatedByAncestorPageComponent {
   config = demo_obs_created_by_ancestor_page_conf;
