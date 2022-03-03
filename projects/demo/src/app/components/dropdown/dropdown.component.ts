@@ -8,12 +8,16 @@ import {DropdownConfiguration} from "./dropdown.config";
   selector: "demo-dropdown",
   template: `
     <div *ngIf="obsReady$ |async">
-      <span style="font-size: 25px; vertical-align: bottom">{{config.label}}</span>
-      <div ngbDropdown class="d-inline-block ml-1">
-        <button class="btn btn-outline-primary" ngbDropdownToggle>{{model.selectedLabel$ | async}}</button>
-        <div ngbDropdownMenu *ngIf="model.options$ | async as options">
-          <button *ngFor="let option of options" ngbDropdownItem (click)="handleClick($event)"
-                  [value]="option">{{model.labelMapper(option)}}</button>
+      <div class="btn-group mb-3" style="width: 100%">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">{{config.label}}</span>
+        </div>
+        <div ngbDropdown class="btn-group" style="width: 100%">
+          <button class="btn btn-info" ngbDropdownToggle style="width: 100%">{{model.selectedLabel$ | async}}</button>
+          <div ngbDropdownMenu *ngIf="model.options$ | async as options">
+            <button *ngFor="let option of options" ngbDropdownItem (click)="handleClick($event)"
+                    [value]="option">{{model.labelMapper(option)}}</button>
+          </div>
         </div>
       </div>
     </div>

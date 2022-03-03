@@ -7181,6 +7181,18 @@ export class MockApiService {
     ]);
   }
 
+  getNumericColumns(): Observable<string[]> {
+    return of(["age", "year"]);
+  }
+
+  getPivotColumns(): Observable<string[]> {
+    return of(["sport", "country"]);
+  }
+
+  getMedalColumns(): Observable<string[]> {
+    return of(["all", "gold", "silver", "bronze"])
+  }
+
   getSpendingHeatMapData(xAxis: string, yAxis: string): Observable<HeatMapData> {
     let result: Observable<HeatMapData>;
     if (xAxis === "Monthly") {

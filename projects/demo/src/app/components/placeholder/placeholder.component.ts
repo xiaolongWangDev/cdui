@@ -6,17 +6,23 @@ import {Observable} from "rxjs";
 @Component({
   selector: "demo-placeholder",
   template: `
-    <div class="m-1 p-1" style="border:1px solid black;">
+    <span *ngIf="config.textOnly; else fullBlown" style="vertical-align: '-webkit-baseline-middle'">
       {{config.text}}
-      <ng-container *ngIf="obsReady$ | async">
-        <ng-container *ngIf="config.parseJson">
+    </span>
+    <ng-template #fullBlown>
+      <div class="m-1 p-1" style="border:1px solid black;">
+        {{config.text}}
+        <ng-container *ngIf="obsReady$ | async">
+          <ng-container *ngIf="config.parseJson">
             {{value$ | async | json}}
-        </ng-container>
-        <ng-container *ngIf="!config.parseJson">
+          </ng-container>
+          <ng-container *ngIf="!config.parseJson">
             {{value$ | async}}
+          </ng-container>
         </ng-container>
-      </ng-container>
-    </div>
+      </div>
+    </ng-template>
+
   `
 })
 export class PlaceholderComponent extends ConfigurationDrivenComponent<PlaceholderConfig> {

@@ -4,6 +4,9 @@ import {OlympicAppComponent} from "./olympic-app.component";
 export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent,
   {
     tableColDef: [],
+    medalColumnOptions: [],
+    pivotColumnOptions: [],
+    numericColumnOptions: [],
     athleteOptions: [],
     countryOptions: [],
     sportOptions: [],
