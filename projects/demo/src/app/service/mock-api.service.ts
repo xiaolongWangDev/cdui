@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {markAsTracked} from "configuration-driven-core";
 import {Observable, of} from "rxjs";
-import {delay} from "rxjs/operators";
+import {delay, map, tap} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {HeatMapData} from "../model/data";
+import {ColDef} from "ag-grid-community";
 
 @Injectable()
 export class MockApiService {
@@ -18,8 +19,32 @@ export class MockApiService {
     return markAsTracked(of(["Entertainment", "Dining"]).pipe(delay(1000)), "spending_y_options");
   }
 
-  getOlympicData(): Observable<Record<string, any>[]> {
+  getOlympicDataMeta(): Observable<ColDef[]> {
+    return of([
+        {field: 'athlete'},
+        {field: 'age'},
+        {field: 'country'},
+        {field: 'sport'},
+        {field: 'year'},
+        {field: 'date'},
+        {field: 'gold'},
+        {field: 'silver'},
+        {field: 'bronze'},
+        {field: 'total'},
+      ]
+    )
+  }
+
+  getOlympicData([athlete, country, sport]: string[]): Observable<Record<string, any>[]> {
     return this.http.get<Record<string, any>[]>("https://www.ag-grid.com/example-assets/olympic-winners.json")
+      .pipe(map(data => {
+        return data.filter(o => {
+          if (athlete && athlete !== o.athlete) return false;
+          if (country && country !== o.country) return false;
+          if (sport && sport !== o.sport) return false;
+          return true;
+        })
+      }))
   }
 
   getAthletes(): Observable<string[]> {

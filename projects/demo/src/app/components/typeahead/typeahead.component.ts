@@ -62,7 +62,7 @@ export class TypeaheadComponent extends ConfigurationDrivenComponent<TypeaheadCo
           .pipe(
             debounceTime(500),
             filter(([options, model]) => {
-              return options.includes(model)
+              return model == null || options.includes(model)
             }), map(([_, model]) => {
               return model
             }))

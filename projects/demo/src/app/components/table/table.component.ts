@@ -13,7 +13,7 @@ import {filter} from "rxjs/operators";
   selector: "demo-table",
   template: `
     <ag-grid-angular *ngIf="obsReady$ | async"
-                     style="width: 100%; height: 500px;"
+                     style="width: 100%; height: 350px;"
                      class="ag-theme-alpine"
                      [rowData]="rowData$ | async"
                      [columnDefs]="columnDefs$ | async"
@@ -29,7 +29,6 @@ export class TableComponent extends ConfigurationDrivenComponent<TableConfigurat
   readonly defaultColDef: ColDef = {
     sortable: true,
     resizable: true,
-    width: 100,
   };
   readonly gridOptions;
 

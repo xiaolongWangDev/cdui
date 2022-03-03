@@ -12,6 +12,7 @@ import {DemoSplinePageComponent} from "./pages/demo-spline-page.component";
 import {DemoTablePageComponent} from "./pages/demo-table-page.component";
 import {DemoTabPageComponent} from "./pages/demo-tab-page.component";
 import {DemoTypeaheadPageComponent} from "./pages/demo-typeahead-page.component";
+import {DemoOlympicAppPageComponent} from "./pages/demo-olympic-app-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
@@ -26,7 +27,8 @@ const routes: Route[] = [
   {path: "demo_typeahead", component: DemoTypeaheadPageComponent},
   {path: "demo_spending_widget", component: DemoSpendingWidgetPageComponent},
   {path: "demo_obs_created_by_ancestor", component: DemoObsCreatedByAncestorPageComponent},
-  {path: "demo_obs_created_by_non_ancestor", component: DemoObsCreatedByNonAncestorPageComponent}
+  {path: "demo_obs_created_by_non_ancestor", component: DemoObsCreatedByNonAncestorPageComponent},
+  {path: "demo_olympic_app", component: DemoOlympicAppPageComponent}
 ]
 
 @NgModule({

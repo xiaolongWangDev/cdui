@@ -23,7 +23,7 @@ export class OlympicDataFetcherComponent extends ConfigurationDrivenComponent<Ol
   protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
     return markAsTracked({
       [this.config.yieldingObservables.data.observableId]:
-        () => this.mockApiService.getOlympicData()
+        () => this.mockApiService.getOlympicData([] )
     }, this.config.yieldingObservables.data.observableId)
   }
 }

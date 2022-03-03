@@ -46,6 +46,7 @@ import {OlympicAppComponent} from "./components/olympic-app/olympic-app.componen
 import {TypeaheadComponent} from "./components/typeahead/typeahead.component";
 import {DemoTypeaheadPageComponent} from "./pages/demo-typeahead-page.component";
 import {FormsModule} from "@angular/forms";
+import {DemoOlympicAppPageComponent} from "./pages/demo-olympic-app-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -60,7 +61,7 @@ const pages = [
   DemoSpendingWidgetPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent,
-  OlympicAppComponent
+  DemoOlympicAppPageComponent
 ]
 
 @NgModule({
@@ -89,6 +90,7 @@ const pages = [
     SpendingWidgetComponent,
     ControlBarComponent,
     SpendingHeatMapComponent,
+    OlympicAppComponent,
     ...pages
   ],
   imports: [
