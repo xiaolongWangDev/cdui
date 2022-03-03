@@ -42,6 +42,10 @@ import {HeatMapComponent} from "./components/highcharts/heatmap/heat-map.compone
 import {SplineComponent} from "./components/highcharts/spline/spline.component";
 import {TabComponent} from "./components/tab/tab.component";
 import {DemoTabPageComponent} from "./pages/demo-tab-page.component";
+import {OlympicAppComponent} from "./components/olympic-app/olympic-app.component";
+import {TypeaheadComponent} from "./components/typeahead/typeahead.component";
+import {DemoTypeaheadPageComponent} from "./pages/demo-typeahead-page.component";
+import {FormsModule} from "@angular/forms";
 
 const pages = [
   IntroductionPageComponent,
@@ -52,9 +56,11 @@ const pages = [
   DemoHeatMapPageComponent,
   DemoScatterPageComponent,
   DemoSplinePageComponent,
+  DemoTypeaheadPageComponent,
   DemoSpendingWidgetPageComponent,
   DemoObsCreatedByAncestorPageComponent,
-  DemoObsCreatedByNonAncestorPageComponent
+  DemoObsCreatedByNonAncestorPageComponent,
+  OlympicAppComponent
 ]
 
 @NgModule({
@@ -70,6 +76,7 @@ const pages = [
     PageComponent,
     TabComponent,
     TableComponent,
+    TypeaheadComponent,
     OlympicDataFetcherComponent,
     PlaceholderComponent,
     ToggleComponent,
@@ -88,6 +95,7 @@ const pages = [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     ConfigurationDrivenCoreModule.forRoot(),
     NgbModule,
     HighchartsChartModule,

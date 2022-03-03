@@ -11,6 +11,7 @@ import {DemoScatterPageComponent} from "./pages/demo-scatter-page.component";
 import {DemoSplinePageComponent} from "./pages/demo-spline-page.component";
 import {DemoTablePageComponent} from "./pages/demo-table-page.component";
 import {DemoTabPageComponent} from "./pages/demo-tab-page.component";
+import {DemoTypeaheadPageComponent} from "./pages/demo-typeahead-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
@@ -22,6 +23,7 @@ const routes: Route[] = [
   {path: "demo_spline", component: DemoSplinePageComponent},
   {path: "demo_tab", component: DemoTabPageComponent},
   {path: "demo_table", component: DemoTablePageComponent},
+  {path: "demo_typeahead", component: DemoTypeaheadPageComponent},
   {path: "demo_spending_widget", component: DemoSpendingWidgetPageComponent},
   {path: "demo_obs_created_by_ancestor", component: DemoObsCreatedByAncestorPageComponent},
   {path: "demo_obs_created_by_non_ancestor", component: DemoObsCreatedByNonAncestorPageComponent}
