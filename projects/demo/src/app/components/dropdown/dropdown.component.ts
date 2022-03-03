@@ -10,10 +10,10 @@ import {DropdownConfiguration} from "./dropdown.config";
     <div *ngIf="obsReady$ |async">
       <div class="btn-group mb-3" style="width: 100%">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">{{config.label}}</span>
+          <span class="input-group-text">{{config.label}}</span>
         </div>
         <div ngbDropdown class="btn-group" style="width: 100%">
-          <button class="btn btn-info" ngbDropdownToggle style="width: 100%">{{model.selectedLabel$ | async}}</button>
+          <button class="btn btn-dark" ngbDropdownToggle style="width: 100%">{{model.selectedLabel$ | async}}</button>
           <div ngbDropdownMenu *ngIf="model.options$ | async as options">
             <button *ngFor="let option of options" ngbDropdownItem (click)="handleClick($event)"
                     [value]="option">{{model.labelMapper(option)}}</button>
