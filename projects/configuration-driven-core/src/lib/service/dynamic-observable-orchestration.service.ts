@@ -1,7 +1,9 @@
 import {Injectable} from "@angular/core";
 import {ObservableReference} from "../model/types";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, combineLatest, Observable, ReplaySubject, Subject} from "rxjs";
 import * as uuid from 'uuid';
+import {takeUntil} from "rxjs/operators";
+import {markAsTracked} from "../Helper";
 
 export class ObservableReadyListener {
   public readonly id: string;
@@ -20,14 +22,18 @@ function refToKey(ref: StringOrObservableReference): string {
 @Injectable()
 export class DynamicObservableOrchestrationService {
   private readonly observablesMap: Map<string, Observable<any>> = new Map<string, Observable<any>>();
-  private readonly observableReadyListeners: { [observableId: string]: { [listenerId: string]: ObservableReadyListener } } = {}
+  private readonly observableReadyEvents: Map<string, ReplaySubject<void>> = new Map<string, ReplaySubject<void>>();
 
-  public waitFor(refs: StringOrObservableReference[], callback: () => void): void {
-    if (refs !== undefined) {
-      const newListener = new ObservableReadyListener(refs.map(refToKey), callback);
-      if (!this.triggerListenerIfReady(newListener)) {
-        this.addListener(newListener);
+  public waitFor(refs: StringOrObservableReference[], callback: () => void, noLongerNeeded: Subject<void>): void {
+    if (refs && refs.length) {
+      const readyEvents: ReplaySubject<void>[] = [];
+      for (const key of refs.map(refToKey)) {
+        this.createEventIfNotExist(key);
+        readyEvents.push(this.observableReadyEvents.get(key));
       }
+      combineLatest(readyEvents).pipe(takeUntil(noLongerNeeded)).subscribe(() => {
+        callback();
+      });
     } else {
       callback();
     }
@@ -40,7 +46,11 @@ export class DynamicObservableOrchestrationService {
       throw new Error(`${key} is already registered`);
     }
     this.observablesMap.set(key, obs);
-    this.checkListeners(key);
+
+    // next, will set the subject saying the observable is ready
+    // if no dependant hit the service before, there won't be a subject yet, in that case, we will create one
+    this.createEventIfNotExist(key)
+    this.observableReadyEvents.get(key).next();
   }
 
   public getObservable(ref: StringOrObservableReference): Observable<any> {
@@ -63,54 +73,26 @@ export class DynamicObservableOrchestrationService {
 
   public revokeObservable(ref: StringOrObservableReference): boolean {
     const key = refToKey(ref);
+
+    // remove the ready event since it will no longer be valid
+    console.log(`removing event for ${key}`);
+    this.observableReadyEvents.get(key).complete();
+    this.observableReadyEvents.delete(key);
+    console.log(this.observableReadyEvents);
+
     console.log(`removing observable ${key}`);
     // console.log(this.observablesMap);
     return this.observablesMap.delete(key);
   }
 
-  // private methods
-
-  private triggerListenerIfReady(listener: ObservableReadyListener): boolean {
-    let trigger = true;
-    for (const id of listener.observableIds) {
-      if (!this.observablesMap.has(id)) {
-        trigger = false;
-        break;
-      }
-    }
-
-    if (trigger) {
-      listener.callback();
-    }
-
-    return trigger;
-  }
-
-  private addListener(newListener: ObservableReadyListener): void {
-    for (const observableId of newListener.observableIds) {
-      if (!this.observableReadyListeners[observableId]) {
-        this.observableReadyListeners[observableId] = {}
-      }
-      this.observableReadyListeners[observableId][newListener.id] = newListener;
+  // private
+  private createEventIfNotExist(key: string) {
+    if (!this.observableReadyEvents.has(key)) {
+      console.log(`adding event for ${key}`);
+      this.observableReadyEvents.set(key, markAsTracked(new ReplaySubject<void>(1), `ready_event_${key}`));
     }
   }
 
-  private checkListeners(observableId: string): void {
-    let listenersForTheObservable = this.observableReadyListeners[observableId];
-    if (listenersForTheObservable) {
-      for (const [listenerId, listener] of Object.entries(listenersForTheObservable)) {
-        if (listenersForTheObservable[listenerId]) {
-          const trigger = this.triggerListenerIfReady(listener);
-          if (trigger) {
-            delete listenersForTheObservable[listenerId];
-            if (Object.keys(listenersForTheObservable).length === 0) {
-              delete this.observableReadyListeners[observableId];
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 

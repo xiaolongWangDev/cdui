@@ -64,7 +64,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
         // sometimes the view doesn't render on its own
         this.changeDetectionRef.detectChanges();
-      })
+      }, this.destroy$)
     }
 
     // if this component enabled the store, register the state behavior subjects
@@ -181,12 +181,12 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
                 // at the end of the component life cycle
                 .pipe(takeUntil(this.destroy$))
                 .subscribe(o => subjectInStore.next(o))
-            })
+            }, this.destroy$)
           } else {
             // otherwise, just register directly to DynamicObservableOrchestrationService
             this.obsService.addObservable(observableId, observable);
           }
-        });
+        }, this.destroy$);
       }
     }
   }
