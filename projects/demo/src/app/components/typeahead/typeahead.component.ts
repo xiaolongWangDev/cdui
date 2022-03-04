@@ -12,7 +12,7 @@ import {TypeaheadConfiguration} from "./typeahead.config";
   selector: "demo-typeahead",
   template: `
     <div class="input-group mb-3">
-      <input *ngIf="obsReady$ | async" type="text" class="form-control"
+      <input *ngIf="ready$ | async" type="text" class="form-control"
              [ngClass]="{'is-invalid': (invalidInput$ | async)}"
              [placeholder]="config.label"
              [ngModel]="model$ | async"

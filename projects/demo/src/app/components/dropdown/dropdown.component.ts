@@ -7,7 +7,7 @@ import {DropdownConfiguration} from "./dropdown.config";
 @Component({
   selector: "demo-dropdown",
   template: `
-    <div *ngIf="obsReady$ |async">
+    <div *ngIf="ready$ |async">
       <div class="btn-group mb-3" style="width: 100%">
         <div class="input-group-prepend">
           <span class="input-group-text">{{config.label}}</span>

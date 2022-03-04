@@ -16,7 +16,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
    *  observables which are to be consumed from the outside.
    *  only set when the component consumes observables
    */
-  obsReady$: BehaviorSubject<boolean>;
+  ready$: BehaviorSubject<boolean>;
   /**
    * Indicates the component is destroyed. This is the common practice to unsubscribe in bulk.
    */
@@ -54,13 +54,13 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     // if the component consumes, it'll tell obsService that it's waiting for the observables.
     // the obsService will run the callback as soon as those observables become available
     if (this.config.getConsumingObservables()) {
-      this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + this.getComponentIdentity());
+      this.ready$ = markAsTracked(new BehaviorSubject<boolean>(false), "ready_" + this.getComponentIdentity());
       this.obsService.waitFor(Object.values(this.config.getConsumingObservables()), () => {
         // This is to be implemented by child component. they can choose whatever way to use these observables
         this.readyToConsumeObservables();
-        // set obsReady$ to true, so the interesting part of the page can be shown
+        // set ready$ to true, so the interesting part of the page can be shown
         // (because data are coming in through observables)
-        this.obsReady$.next(true);
+        this.ready$.next(true);
 
         // sometimes the view doesn't render on its own
         this.changeDetectionRef.detectChanges();

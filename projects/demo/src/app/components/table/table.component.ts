@@ -12,7 +12,7 @@ import {filter} from "rxjs/operators";
 @Component({
   selector: "demo-table",
   template: `
-    <ag-grid-angular *ngIf="obsReady$ | async"
+    <ag-grid-angular *ngIf="ready$ | async"
                      style="width: 100%; height: 350px;"
                      class="ag-theme-alpine"
                      [rowData]="rowData$ | async"

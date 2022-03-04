@@ -6,7 +6,7 @@ import {HeatMapData} from "../../../model/data";
 import {getOptions} from "highcharts";
 import {BaseChartComponentComponent} from "../base-chart.component";
 
-export const heat_map_template = `<div *ngIf="obsReady$ |async">
+export const heat_map_template = `<div *ngIf="ready$ |async">
   <highcharts-chart *ngIf="options$ | async as options"
     [Highcharts]="highchartsLibrary"
     [options]="options"

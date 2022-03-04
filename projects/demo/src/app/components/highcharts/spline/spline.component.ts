@@ -7,7 +7,7 @@ import {SplineConfig} from "./spline.config";
 import * as Highcharts from "highcharts";
 import {AxisLabelsFormatterCallbackFunction} from "highcharts";
 
-export const spline_template = `<div *ngIf="obsReady$ |async">
+export const spline_template = `<div *ngIf="ready$ |async">
   <highcharts-chart *ngIf="options$ | async as options"
     [Highcharts]="highchartsLibrary"
     [constructorType]="'stockChart'"

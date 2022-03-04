@@ -12,7 +12,7 @@ import {PlayerData} from "../../../model/data";
       <div class="card-header">
         Top Athletes
       </div>
-      <ul class="list-group" *ngIf="obsReady$ |async">
+      <ul class="list-group" *ngIf="ready$ |async">
         <li *ngFor="let row of data$ | async" class="list-group-item">
           <div class="row">
             <div class="col-6">{{row.name}}</div>

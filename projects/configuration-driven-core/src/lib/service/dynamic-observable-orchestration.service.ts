@@ -75,10 +75,10 @@ export class DynamicObservableOrchestrationService {
     const key = refToKey(ref);
 
     // remove the ready event since it will no longer be valid
-    console.log(`removing event for ${key}`);
+    // console.log(`removing event for ${key}`);
     this.observableReadyEvents.get(key).complete();
     this.observableReadyEvents.delete(key);
-    console.log(this.observableReadyEvents);
+    // console.log(this.observableReadyEvents);
 
     console.log(`removing observable ${key}`);
     // console.log(this.observablesMap);

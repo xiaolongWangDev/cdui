@@ -5,7 +5,7 @@ import {ScatterData} from "../../../model/data";
 import {BaseChartComponentComponent} from "../base-chart.component";
 import {ScatterConfig} from "./scatter.config";
 
-export const scatter_template = `<div *ngIf="obsReady$ |async">
+export const scatter_template = `<div *ngIf="ready$ |async">
   <highcharts-chart *ngIf="options$ | async as options"
     [Highcharts]="highchartsLibrary"
     [options]="options"

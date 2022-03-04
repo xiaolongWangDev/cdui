@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
   template: `
     <div class="m-1" style="border:1px solid black;">
       <div>Student: {{config.name}}</div>
-      <div *ngIf="obsReady$ | async">
+      <div *ngIf="ready$ | async">
         My homework to do: {{homework$ | async}}
         <br>
         I'm charged: $ {{tuition$ | async}}

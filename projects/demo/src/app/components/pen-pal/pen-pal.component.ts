@@ -14,7 +14,7 @@ import {map} from "rxjs/operators";
   template: `
     <div class="m-1" style="border:1px solid black;">
       <div>My name is: {{config.name}}</div>
-      <div *ngIf="obsReady$ | async">
+      <div *ngIf="ready$ | async">
         Latest mail from my pen pal: {{newLetter$ | async}}
       </div>
       <div>
