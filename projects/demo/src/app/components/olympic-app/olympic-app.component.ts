@@ -65,8 +65,8 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
           this.obsService.getObservable(filterObsId),
           this.obsService.getObservable(selectedResultColumnObsId)
         ]).pipe(
-          mergeMap(([filter, selectedResultColumn]) =>
-            this.mockApiService.getMedalByDate(filter, selectedResultColumn)),
+          mergeMap((args) =>
+            this.mockApiService.getMedalByDate(...args)),
         );
       },
       [heatMapDataObsId]: () => {
@@ -77,11 +77,22 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
           this.obsService.getObservable(selectedResultColumnObsId),
           this.obsService.getObservable(selectedPivotColumnObsId)
         ]).pipe(
-          mergeMap(([filter, selectedResultColumn, selectedPivotColumn]) =>
-            this.mockApiService.getMedalByYearAndPivot(filter, selectedResultColumn, selectedPivotColumn)),
+          mergeMap((args) =>
+            this.mockApiService.getMedalByYearAndPivot(...args)),
         );
       },
-      [scatterDataObsId]: () => null,
+      [scatterDataObsId]: () => {
+        const selectedResultColumnObsId = this.config.yieldingObservables.scatterData.dependsOn.selectedResultColumn;
+        const selectedNumericColumnObsId = this.config.yieldingObservables.scatterData.dependsOn.selectedNumericColumn;
+        return combineLatest([
+          this.obsService.getObservable(filterObsId),
+          this.obsService.getObservable(selectedResultColumnObsId),
+          this.obsService.getObservable(selectedNumericColumnObsId)
+        ]).pipe(
+          mergeMap((args) =>
+            this.mockApiService.getMedalAndNumber(...args)),
+        );
+      },
     }
   }
 }

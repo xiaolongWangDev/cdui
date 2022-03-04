@@ -3,7 +3,7 @@ import {markAsTracked} from "configuration-driven-core";
 import {Observable, of} from "rxjs";
 import {delay, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {HeatMapData, SplineData} from "../model/data";
+import {HeatMapData, ScatterData, SplineData} from "../model/data";
 import {ColDef} from "ag-grid-community";
 
 @Injectable()
@@ -87,6 +87,21 @@ export class MockApiService {
         return new HeatMapData({data: cellData, xCategories: years, yCategories: categories});
       }),
     );
+  }
+
+  getMedalAndNumber(filters: string[], selectedMedalColumn: string, selectedNumericColumn: string): Observable<ScatterData> {
+    return this.getOlympicData(filters).pipe(
+      map(data => {
+        const sorted: [number, number][] = [];
+        let i = 0;
+        for (const row of data) {
+          sorted.push([row[selectedNumericColumn], row[selectedMedalColumn]]);
+          if(i++ > 100) break
+        }
+        sorted.sort((a, b) => a[0] - b[0]);
+        return new ScatterData({data: sorted})
+      }));
+
   }
 
   getOlympicData([athlete, country, sport]: string[]): Observable<Record<string, any>[]> {

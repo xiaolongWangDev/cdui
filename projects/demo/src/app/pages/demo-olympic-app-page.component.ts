@@ -14,6 +14,7 @@ import {BlockConfiguration} from "../components/block/block.config";
 import {SplineConfig} from "../components/highcharts/spline/spline.config";
 import {HeatMapData} from "../model/data";
 import {HeatMapConfig} from "../components/highcharts/heatmap/heat-map.config";
+import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
 
 @Component({
   template: standard_page_template
@@ -178,7 +179,11 @@ const demo_olympic_app_conf = new PageConfiguration({
                         data: "heat_map_data"
                       }
                     }),
-                    new PlaceholderConfig({text: ""})
+                    new ScatterConfig({
+                      consumingObservables: {
+                        data: "scatter_data"
+                      }
+                    })
                   ]
                 })
 
