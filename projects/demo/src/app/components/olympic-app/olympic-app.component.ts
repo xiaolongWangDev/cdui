@@ -3,7 +3,7 @@ import {ChangeDetectorRef, Component} from "@angular/core";
 import {combineLatest, Observable} from "rxjs";
 import {MockApiService} from "../../service/mock-api.service";
 import {OlympicAppConfig} from "./olympic-app.config";
-import {mergeMap} from "rxjs/operators";
+import {distinctUntilChanged, mergeMap, shareReplay, tap} from "rxjs/operators";
 
 
 @Component({
@@ -35,9 +35,9 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
     const scatterDataObsId = this.config.yieldingObservables.scatterData.observableId;
     return {
       [tableColDefObsId]: () => this.mockApiService.getOlympicDataMeta(),
-      [medalColumnOptionsObsId]: ()=> this.mockApiService.getMedalColumns(),
-      [pivotColumnOptionsObsId]: ()=> this.mockApiService.getPivotColumns(),
-      [numericColumnOptionsObsId]: ()=> this.mockApiService.getNumericColumns(),
+      [medalColumnOptionsObsId]: () => this.mockApiService.getMedalColumns(),
+      [pivotColumnOptionsObsId]: () => this.mockApiService.getPivotColumns(),
+      [numericColumnOptionsObsId]: () => this.mockApiService.getNumericColumns(),
       [athleteOptionsObsId]: () => this.mockApiService.getAthletes(),
       [countryOptionsObsId]: () => this.mockApiService.getCountries(),
       [sportOptionsObsId]: () => this.mockApiService.getSports(),
@@ -48,15 +48,29 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
         return combineLatest([this.obsService.getObservable(selectedAthleteObsId),
           this.obsService.getObservable(selectedCountryObsId),
           this.obsService.getObservable(selectedSportObsId)])
+          .pipe(
+            distinctUntilChanged((prev, cur) =>
+              prev[0] === cur[0]
+              && prev[1] === cur[1]
+              && prev[2] === cur[2]))
       },
       [tableDataObsId]: () => {
         return this.obsService.getObservable(filterObsId).pipe(
           mergeMap(filter => this.mockApiService.getOlympicData(filter))
         );
       },
-      [splineDataObsId]: ()=> null,
-      [heatMapDataObsId]: ()=> null,
-      [scatterDataObsId]: ()=> null,
+      [splineDataObsId]: () => {
+        const selectedResultColumnObsId = this.config.yieldingObservables.splineData.dependsOn.selectedResultColumn;
+        return combineLatest([
+          this.obsService.getObservable(filterObsId),
+          this.obsService.getObservable(selectedResultColumnObsId)
+        ]).pipe(
+          mergeMap(([filter, selectedResultColumn]) =>
+            this.mockApiService.getMedalByDate(filter, selectedResultColumn)),
+        );
+      },
+      [heatMapDataObsId]: () => null,
+      [scatterDataObsId]: () => null,
     }
   }
 }

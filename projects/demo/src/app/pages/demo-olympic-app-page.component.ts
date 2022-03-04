@@ -11,6 +11,7 @@ import {TypeaheadConfiguration} from "../components/typeahead/typeahead.config";
 import {TabConfiguration} from "../components/tab/tab.config";
 import {TableConfiguration} from "../components/table/table.config";
 import {BlockConfiguration} from "../components/block/block.config";
+import {SplineConfig} from "../components/highcharts/spline/spline.config";
 
 @Component({
   template: standard_page_template
@@ -154,6 +155,17 @@ const demo_olympic_app_conf = new PageConfiguration({
                       selectionObservable: "selected_numeric_column",
                       keepInStore: true
                     }),
+                  ]
+                }),
+                new RowConfiguration({
+                  colWidth: [8, 4],
+                  components: [
+                    new SplineConfig({
+                      consumingObservables: {
+                        data: "spline_data"
+                      }
+                    }),
+                    new PlaceholderConfig({text: ""})
                   ]
                 })
               ]

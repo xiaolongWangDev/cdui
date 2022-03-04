@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {markAsTracked} from "configuration-driven-core";
 import {Observable, of} from "rxjs";
-import {delay, map, tap} from "rxjs/operators";
+import {delay, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {HeatMapData} from "../model/data";
+import {HeatMapData, SplineData} from "../model/data";
 import {ColDef} from "ag-grid-community";
 
 @Injectable()
@@ -33,6 +33,21 @@ export class MockApiService {
         {field: 'total'},
       ]
     )
+  }
+
+  getMedalByDate(filters: string[], selectedMedalColumn: string): Observable<SplineData> {
+    return this.getOlympicData(filters).pipe(
+      map(data => {
+        const perDateCount = new Map<number, number>()
+        for (const row of data) {
+          const dateParts = row.date.split("/");
+          const numDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).getTime()
+          perDateCount.set(numDate, (perDateCount.get(numDate) || 0) + row[selectedMedalColumn]);
+        }
+        let seriesData = Array.from(perDateCount.entries()).sort((a, b) => a[0] - b[0]);
+        return new SplineData({data: seriesData});
+      }),
+    );
   }
 
   getOlympicData([athlete, country, sport]: string[]): Observable<Record<string, any>[]> {
@@ -7190,7 +7205,7 @@ export class MockApiService {
   }
 
   getMedalColumns(): Observable<string[]> {
-    return of(["all", "gold", "silver", "bronze"])
+    return of(["total", "gold", "silver", "bronze"])
   }
 
   getSpendingHeatMapData(xAxis: string, yAxis: string): Observable<HeatMapData> {

@@ -16,7 +16,7 @@ export class ScatterData {
 
 export class SplineData {
   data: [number, number][];
-  constructor(args: Readonly<ScatterData>) {
+  constructor(args: Readonly<SplineData>) {
     Object.assign(this, args);
   }
 }
