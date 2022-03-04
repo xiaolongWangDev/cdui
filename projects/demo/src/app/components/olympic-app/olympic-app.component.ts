@@ -69,7 +69,18 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
             this.mockApiService.getMedalByDate(filter, selectedResultColumn)),
         );
       },
-      [heatMapDataObsId]: () => null,
+      [heatMapDataObsId]: () => {
+        const selectedResultColumnObsId = this.config.yieldingObservables.heatMapData.dependsOn.selectedResultColumn;
+        const selectedPivotColumnObsId = this.config.yieldingObservables.heatMapData.dependsOn.selectedPivotColumn;
+        return combineLatest([
+          this.obsService.getObservable(filterObsId),
+          this.obsService.getObservable(selectedResultColumnObsId),
+          this.obsService.getObservable(selectedPivotColumnObsId)
+        ]).pipe(
+          mergeMap(([filter, selectedResultColumn, selectedPivotColumn]) =>
+            this.mockApiService.getMedalByYearAndPivot(filter, selectedResultColumn, selectedPivotColumn)),
+        );
+      },
       [scatterDataObsId]: () => null,
     }
   }

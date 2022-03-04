@@ -50,6 +50,45 @@ export class MockApiService {
     );
   }
 
+  getMedalByYearAndPivot(filters: string[], selectedMedalColumn: string, selectedPivotColumn: string): Observable<HeatMapData> {
+    return this.getOlympicData(filters).pipe(
+      map(data => {
+        const count = new Map<string, Map<string, number>>()
+        const years: string[] = []
+        const categories: string[] = []
+        for (const row of data) {
+          if (!years.includes(row.year)) {
+            years.push(row.year)
+          }
+          if (!categories.includes(row[selectedPivotColumn])) {
+            categories.push(row[selectedPivotColumn])
+          }
+          if (!count.has(row.year)) {
+            count.set(row.year, new Map<string, number>());
+          }
+          if (!count.get(row.year).has(row[selectedPivotColumn])) {
+            count.get(row.year).set(row[selectedPivotColumn], 0);
+          }
+          count.get(row.year).set(row[selectedPivotColumn],
+            count.get(row.year).get(row[selectedPivotColumn]) + row[selectedMedalColumn]);
+        }
+        years.sort();
+        categories.sort();
+        const cellData: [number, number, number][] = []
+        let i = 0;
+        for (const year of years) {
+          let j = 0;
+          for (const category of categories) {
+            cellData.push([i, j, count.get(year).get(category) || 0])
+            j++;
+          }
+          i++;
+        }
+        return new HeatMapData({data: cellData, xCategories: years, yCategories: categories});
+      }),
+    );
+  }
+
   getOlympicData([athlete, country, sport]: string[]): Observable<Record<string, any>[]> {
     return this.http.get<Record<string, any>[]>("https://www.ag-grid.com/example-assets/olympic-winners.json")
       .pipe(map(data => {

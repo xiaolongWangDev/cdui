@@ -12,6 +12,8 @@ import {TabConfiguration} from "../components/tab/tab.config";
 import {TableConfiguration} from "../components/table/table.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {SplineConfig} from "../components/highcharts/spline/spline.config";
+import {HeatMapData} from "../model/data";
+import {HeatMapConfig} from "../components/highcharts/heatmap/heat-map.config";
 
 @Component({
   template: standard_page_template
@@ -167,7 +169,19 @@ const demo_olympic_app_conf = new PageConfiguration({
                     }),
                     new PlaceholderConfig({text: ""})
                   ]
+                }),
+                new RowConfiguration({
+                  colWidth: [6, 6],
+                  components: [
+                    new HeatMapConfig({
+                      consumingObservables: {
+                        data: "heat_map_data"
+                      }
+                    }),
+                    new PlaceholderConfig({text: ""})
+                  ]
                 })
+
               ]
             }),
             new TableConfiguration({
