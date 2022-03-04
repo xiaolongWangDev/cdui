@@ -13,6 +13,7 @@ export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent
     filters: ["selectedAthlete", "selectedCountry", "selectedSport"],
     tableData: ["filters"],
     splineData: ["filters", "selectedResultColumn"],
+    topPlayerData: ["filters"],
     heatMapData: ["filters", "selectedResultColumn", "selectedPivotColumn"],
     scatterData: ["filters", "selectedResultColumn", "selectedNumericColumn"],
   },

@@ -3,7 +3,7 @@ import {markAsTracked} from "configuration-driven-core";
 import {Observable, of} from "rxjs";
 import {delay, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {HeatMapData, ScatterData, SplineData} from "../model/data";
+import {HeatMapData, PlayerData, ScatterData, SplineData} from "../model/data";
 import {ColDef} from "ag-grid-community";
 
 @Injectable()
@@ -46,6 +46,28 @@ export class MockApiService {
         }
         let seriesData = Array.from(perDateCount.entries()).sort((a, b) => a[0] - b[0]);
         return new SplineData({data: seriesData});
+      }),
+    );
+  }
+
+  getPerPlayerCounts(filters: string[]): Observable<PlayerData> {
+    return this.getOlympicData(filters).pipe(
+      map(data => {
+        const perPlayerCounts = new Map<string, { name: string; gold: number; silver: number, bronze: number, total: number }>()
+        for (const row of data) {
+          if (!perPlayerCounts.has(row.athlete)) {
+            perPlayerCounts.set(row.athlete, {name: row.athlete, gold: 0, silver: 0, bronze: 0, total: 0})
+          }
+          const existing = perPlayerCounts.get(row.athlete);
+          perPlayerCounts.set(row.athlete, {
+            name: row.athlete,
+            gold: existing.gold + row.gold,
+            silver: existing.silver + row.silver,
+            bronze: existing.bronze + row.bronze,
+            total: existing.total + row.total,
+          });
+        }
+        return Array.from(perPlayerCounts.values()).sort((a, b) => b.total - a.total).slice(0, 10);
       }),
     );
   }
@@ -96,7 +118,7 @@ export class MockApiService {
         let i = 0;
         for (const row of data) {
           sorted.push([row[selectedNumericColumn], row[selectedMedalColumn]]);
-          if(i++ > 100) break
+          if (i++ > 100) break
         }
         sorted.sort((a, b) => a[0] - b[0]);
         return new ScatterData({data: sorted})

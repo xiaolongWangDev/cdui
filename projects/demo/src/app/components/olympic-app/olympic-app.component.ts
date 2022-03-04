@@ -31,6 +31,7 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
     const filterObsId = this.config.yieldingObservables.filters.observableId;
     const tableDataObsId = this.config.yieldingObservables.tableData.observableId;
     const splineDataObsId = this.config.yieldingObservables.splineData.observableId;
+    const topPlayerDataObsId = this.config.yieldingObservables.topPlayerData.observableId;
     const heatMapDataObsId = this.config.yieldingObservables.heatMapData.observableId;
     const scatterDataObsId = this.config.yieldingObservables.scatterData.observableId;
     return {
@@ -68,6 +69,10 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
           mergeMap((args) =>
             this.mockApiService.getMedalByDate(...args)),
         );
+      },
+      [topPlayerDataObsId]: () => {
+        return this.obsService.getObservable(filterObsId).pipe(
+          mergeMap((filter) => this.mockApiService.getPerPlayerCounts(filter)))
       },
       [heatMapDataObsId]: () => {
         const selectedResultColumnObsId = this.config.yieldingObservables.heatMapData.dependsOn.selectedResultColumn;

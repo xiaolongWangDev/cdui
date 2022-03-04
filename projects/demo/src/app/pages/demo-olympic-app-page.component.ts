@@ -15,6 +15,7 @@ import {SplineConfig} from "../components/highcharts/spline/spline.config";
 import {HeatMapData} from "../model/data";
 import {HeatMapConfig} from "../components/highcharts/heatmap/heat-map.config";
 import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
+import {TopPlayersConfig} from "../components/olympic-app/top-players/top-players.config";
 
 @Component({
   template: standard_page_template
@@ -82,6 +83,12 @@ const demo_olympic_app_conf = new PageConfiguration({
           dependsOn: {
             filters: "filters",
             selectedResultColumn: "selected_medal_column"
+          }
+        },
+        topPlayerData: {
+          observableId: "top_player_data",
+          dependsOn: {
+            filters: "filters",
           }
         },
         heatMapData: {
@@ -168,7 +175,11 @@ const demo_olympic_app_conf = new PageConfiguration({
                         data: "spline_data"
                       }
                     }),
-                    new PlaceholderConfig({text: ""})
+                    new TopPlayersConfig({
+                      consumingObservables: {
+                        data: "top_player_data"
+                      }
+                    })
                   ]
                 }),
                 new RowConfiguration({

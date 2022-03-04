@@ -47,6 +47,7 @@ import {TypeaheadComponent} from "./components/typeahead/typeahead.component";
 import {DemoTypeaheadPageComponent} from "./pages/demo-typeahead-page.component";
 import {FormsModule} from "@angular/forms";
 import {DemoOlympicAppPageComponent} from "./pages/demo-olympic-app-page.component";
+import {TopPlayersComponent} from "./components/olympic-app/top-players/top-players.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -91,6 +92,7 @@ const pages = [
     ControlBarComponent,
     SpendingHeatMapComponent,
     OlympicAppComponent,
+    TopPlayersComponent,
     ...pages
   ],
   imports: [

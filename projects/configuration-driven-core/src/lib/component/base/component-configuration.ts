@@ -11,7 +11,7 @@ type YieldParamType = {
 type Indices<T> = Exclude<keyof T, keyof string[]>;
 type StringTupleToStringLiteralUnion<T> = Extract<T[Indices<T>], string>
 
-type YieldType<T extends YieldParamType> = {
+export type YieldType<T extends YieldParamType> = {
   [P in keyof T]: T[P] extends NonEmptyStringArray ? {
       observableId: string;
       dependsOn: {
@@ -27,7 +27,7 @@ type YieldType<T extends YieldParamType> = {
 }
 
 type ConsumeParamType = string[]
-type ConsumeType<T extends ConsumeParamType> = {
+export type ConsumeType<T extends ConsumeParamType> = {
   [P in StringTupleToStringLiteralUnion<T>]: string
 }
 
