@@ -1,10 +1,10 @@
-import {ComponentConfiguration} from "../base/component-configuration";
+import {ComponentConfiguration, ExcludedAttributes} from "../base/component-configuration";
 
 // this configuration does not need a component
-export class StoreConfiguration extends ComponentConfiguration<null, {}, []> {
+export class StoreConfiguration extends ComponentConfiguration<null> {
   public readonly states: Record<string, any>;
 
-  constructor(args: Omit<StoreConfiguration, "componentType">) {
+  constructor(args: Omit<StoreConfiguration, ExcludedAttributes>) {
     super();
     Object.assign(this, {...args, componentType: null});
   }

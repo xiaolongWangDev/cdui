@@ -1,8 +1,14 @@
-import {AnyComponentConfiguration, ComponentConfiguration} from "configuration-driven-core";
+import {
+  AnyComponentConfiguration,
+  ComponentConfiguration,
+  ExcludedAttributes,
+  YieldType
+} from "configuration-driven-core";
 import {OlympicAppComponent} from "./olympic-app.component";
 
-export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent,
-  {
+export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent> {
+  public readonly components: AnyComponentConfiguration[];
+  public readonly yieldingObservables: YieldType<{
     tableColDef: [],
     medalColumnOptions: [],
     pivotColumnOptions: [],
@@ -16,10 +22,9 @@ export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent
     topPlayerData: ["filters"],
     heatMapData: ["filters", "selectedResultColumn", "selectedPivotColumn"],
     scatterData: ["filters", "selectedResultColumn", "selectedNumericColumn"],
-  },
-  []> {
-  public readonly components: AnyComponentConfiguration[];
-  constructor(args: Omit<OlympicAppConfig, "componentType">) {
+  }>;
+
+  constructor(args: Omit<OlympicAppConfig, ExcludedAttributes>) {
     super();
     Object.assign(this, {...args, componentType: OlympicAppComponent});
   }

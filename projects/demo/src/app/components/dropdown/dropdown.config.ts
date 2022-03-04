@@ -1,9 +1,11 @@
 import {DropdownComponent} from "./dropdown.component";
-import {ComponentConfiguration} from "configuration-driven-core";
+import {ComponentConfiguration, ConsumeType, YieldType} from "configuration-driven-core";
 
 
-export class DropdownConfiguration extends ComponentConfiguration<DropdownComponent, { selection: ["options"] }, ["options"]> {
+export class DropdownConfiguration extends ComponentConfiguration<DropdownComponent> {
   public readonly label: string;
+  public readonly consumingObservables: ConsumeType<["options"]>;
+  public readonly yieldingObservables: YieldType<{ selection: ["options"] }>;
 
   constructor(args: SimpleConfig) {
     super();

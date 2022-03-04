@@ -30,20 +30,23 @@ type ConsumeParamType = string[]
 export type ConsumeType<T extends ConsumeParamType> = {
   [P in StringTupleToStringLiteralUnion<T>]: string
 }
+export type ExcludedAttributes = "componentType" | "getYieldingObservables" | "getConsumingObservables"
 
-
-export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent,
-  CONCRETE_YIELD_PARAM_TYPE extends YieldParamType,
-  CONCRETE_CONSUME_TYPE extends ConsumeParamType> {
+export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent> {
 
   public readonly componentType: Type<COMP_TYPE>;
-
+  //
   public readonly id?: string;
   //
-  public readonly yieldingObservables?: YieldType<CONCRETE_YIELD_PARAM_TYPE>;
   public readonly keepInStore?: string[];
   //
-  public readonly consumingObservables?: ConsumeType<CONCRETE_CONSUME_TYPE>;
-  //
   public readonly store?: StoreConfiguration;
+
+  public getYieldingObservables<CONCRETE_YIELD_PARAM_TYPE extends YieldParamType>(): YieldType<CONCRETE_YIELD_PARAM_TYPE> {
+    return (this as any)['yieldingObservables'];
+  }
+
+  public getConsumingObservables<CONCRETE_CONSUME_TYPE extends ConsumeParamType>(): ConsumeType<CONCRETE_CONSUME_TYPE> {
+    return (this as any)['consumingObservables'];
+  }
 }

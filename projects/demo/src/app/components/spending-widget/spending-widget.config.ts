@@ -1,13 +1,14 @@
-import {ComponentConfiguration, StoreConfiguration} from "configuration-driven-core";
+import {ComponentConfiguration, ConsumeType, StoreConfiguration, YieldType} from "configuration-driven-core";
 import {SpendingWidgetComponent} from "./spending-widget.component";
 import {SpendingHeatMapConfig} from "../spending-heat-map/spending-heat-map.config";
 import {ControlBarConfig} from "../control-bar/control-bar.config";
 import {DropdownConfiguration} from "../dropdown/dropdown.config";
 
-export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent,
-  { xDropdownOptions: [], yDropdownOptions: [], heatMapData: [] }, ['xAxis' | 'yAxis']> {
+export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent> {
   public readonly controlBar: ControlBarConfig;
   public readonly heatMap: SpendingHeatMapConfig;
+  public readonly consumingObservables: ConsumeType<['xAxis', 'yAxis']>;
+  public readonly yieldingObservables: YieldType<{ xDropdownOptions: [], yDropdownOptions: [], heatMapData: [] }>;
 
   constructor() {
     super();

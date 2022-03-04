@@ -1,8 +1,10 @@
-import {ComponentConfiguration} from "configuration-driven-core";
+import {ComponentConfiguration, ConsumeType, YieldType} from "configuration-driven-core";
 import {TypeaheadComponent} from "./typeahead.component";
 
-export class TypeaheadConfiguration extends ComponentConfiguration<TypeaheadComponent, { selection: ["options"] }, ["options"]> {
+export class TypeaheadConfiguration extends ComponentConfiguration<TypeaheadComponent> {
   public readonly label: string;
+  public readonly consumingObservables: ConsumeType<["options"]>;
+  public readonly yieldingObservables: YieldType<{ selection: ["options"] }>;
 
   constructor(args: SimpleConfig) {
     super();

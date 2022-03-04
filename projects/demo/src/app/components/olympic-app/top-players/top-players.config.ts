@@ -1,9 +1,9 @@
-import {ComponentConfiguration, ConsumeType} from "configuration-driven-core";
+import {ComponentConfiguration, ConsumeType, ExcludedAttributes} from "configuration-driven-core";
 import {TopPlayersComponent} from "./top-players.component";
 
-export class TopPlayersConfig extends ComponentConfiguration<TopPlayersComponent, {}, ["data"]> {
+export class TopPlayersConfig extends ComponentConfiguration<TopPlayersComponent> {
   public readonly consumingObservables: ConsumeType<["data"]>;
-  constructor(args: Omit<TopPlayersConfig, "componentType">) {
+  constructor(args: Omit<TopPlayersConfig, ExcludedAttributes>) {
     super();
     Object.assign(this, {...args, componentType: TopPlayersComponent});
   }

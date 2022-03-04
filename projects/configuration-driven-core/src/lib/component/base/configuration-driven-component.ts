@@ -42,7 +42,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     this.keepInStore = this.config.keepInStore ? new Set<string>(this.config.keepInStore) : new Set<string>();
 
     // programmer oriented errors
-    if (this.config.consumingObservables && (!this.obsService || !this.changeDetectionRef)) {
+    if (this.config.getConsumingObservables() && (!this.obsService || !this.changeDetectionRef)) {
       throw new Error("Programmer Error: if you are consuming observables, " +
         "you need to inject DynamicObservableOrchestrationService and ChangeDetectorRef and pass them to ConfigurationDrivenComponent");
     }
@@ -53,9 +53,9 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
     // if the component consumes, it'll tell obsService that it's waiting for the observables.
     // the obsService will run the callback as soon as those observables become available
-    if (this.config.consumingObservables) {
+    if (this.config.getConsumingObservables()) {
       this.obsReady$ = markAsTracked(new BehaviorSubject<boolean>(false), "obs_ready_" + this.getComponentIdentity());
-      this.obsService.waitFor(Object.values(this.config.consumingObservables), () => {
+      this.obsService.waitFor(Object.values(this.config.getConsumingObservables()), () => {
         // This is to be implemented by child component. they can choose whatever way to use these observables
         this.readyToConsumeObservables();
         // set obsReady$ to true, so the interesting part of the page can be shown
@@ -85,7 +85,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     this.destroy$.next();
     this.destroy$.complete();
 
-    if (this.config.yieldingObservables && !this.obsService) {
+    if (this.config.getYieldingObservables() && !this.obsService) {
       throw new Error("Programmer Error: if you are yielding observables, " +
         "you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
     }
@@ -95,8 +95,8 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     }
 
     // if yielded observables, revoke them from DynamicObservableOrchestrationService
-    if (this.config.yieldingObservables) {
-      for (const val of Object.values(this.config.yieldingObservables)) {
+    if (this.config.getYieldingObservables()) {
+      for (const val of Object.values(this.config.getYieldingObservables())) {
         const observableId = val.observableId;
         if (!this.keepInStore.has(observableId)) {
           this.obsService.revokeObservable(observableId);
@@ -154,15 +154,15 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
    * in case some of our observables need to derive from DOM elements
    */
   private yieldObservables(): void {
-    if (this.config.yieldingObservables && !this.obsService) {
+    if (this.config.getYieldingObservables() && !this.obsService) {
       throw new Error("Programmer Error: if you are yielding observables, you need to inject DynamicObservableOrchestrationService and pass it to ConfigurationDrivenComponent");
     }
 
-    if (this.config.yieldingObservables) {
+    if (this.config.getYieldingObservables()) {
       // because all the view and dom's are rendered. So any observable deriving from them should/can be created
       const factories = this.yieldObservablesFactories();
       // for each observable to yield
-      for (const val of Object.values(this.config.yieldingObservables)) {
+      for (const val of Object.values(this.config.getYieldingObservables())) {
         let observableId = val.observableId;
         let dependencies = Object.values(val.dependsOn || {});
         // wait for the dependency observables
