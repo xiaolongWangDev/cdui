@@ -66,13 +66,13 @@ export class OlympicHeatMapComponent extends HeatMapComponent<OlympicHeatMapConf
                 events: {
                   click: function () {
                     let category = (options.yAxis as any).categories[this.y];
-                    let subjectId;
-                    if (yColumn === "sport") {
-                      subjectId = thisComponent.config.consumingObservables.selectedSport
-                    } else if (yColumn === "country") {
-                      subjectId = thisComponent.config.consumingObservables.selectedCountry
-                    }
-                    thisComponent.obsService.getBehaviorSubject(subjectId).next(category);
+                    thisComponent.obsService.getBehaviorSubject(
+                      thisComponent.config.consumingObservables.setFilterEvent
+                    ).next({
+                      filterType: yColumn,
+                      filterValue: category
+                    });
+
                   }
                 }
               }

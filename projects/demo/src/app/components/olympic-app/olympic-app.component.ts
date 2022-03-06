@@ -2,8 +2,8 @@ import {ConfigurationDrivenComponent, DynamicObservableOrchestrationService} fro
 import {ChangeDetectorRef, Component} from "@angular/core";
 import {combineLatest, Observable} from "rxjs";
 import {MockApiService} from "../../service/mock-api.service";
-import {OlympicAppConfig} from "./olympic-app.config";
-import {distinctUntilChanged, mergeMap, shareReplay, tap} from "rxjs/operators";
+import {OlympicAppConfig, SetFilter} from "./olympic-app.config";
+import {distinctUntilChanged, mergeMap, takeUntil} from "rxjs/operators";
 
 
 @Component({
@@ -18,6 +18,22 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
 
   constructor(private mockApiService: MockApiService, obsService: DynamicObservableOrchestrationService, changeDetectionRef: ChangeDetectorRef) {
     super(obsService, changeDetectionRef);
+  }
+
+  protected setLocalData(): void {
+    this.obsService.getBehaviorSubject(this.config.consumingObservables.setFilterEvent)
+      .pipe(takeUntil(this.destroy$)).subscribe((event: SetFilter) => {
+      if (event) {
+        if (event.filterType === "athlete") {
+          this.obsService.getBehaviorSubject(this.config.consumingObservables.selectedAthlete).next(event.filterValue);
+        } else if (event.filterType === "country") {
+          this.obsService.getBehaviorSubject(this.config.consumingObservables.selectedCountry).next(event.filterValue);
+        } else if (event.filterType === "sport") {
+          this.obsService.getBehaviorSubject(this.config.consumingObservables.selectedSport).next(event.filterValue);
+        }
+        this.obsService.getBehaviorSubject(this.config.consumingObservables.activeTab).next(2);
+      }
+    })
   }
 
   protected yieldObservablesFactories(): Record<string, () => Observable<any>> {

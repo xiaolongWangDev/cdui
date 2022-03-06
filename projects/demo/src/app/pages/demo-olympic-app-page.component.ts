@@ -12,7 +12,6 @@ import {TabConfiguration} from "../components/tab/tab.config";
 import {TableConfiguration} from "../components/table/table.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {SplineConfig} from "../components/highcharts/spline/spline.config";
-import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
 import {TopPlayersConfig} from "../components/olympic-app/top-players/top-players.config";
 import {OlympicHeatMapConfig} from "../components/olympic-app/olympic-heat-map/olympic-heat-map.config";
 import {OlympicScatterPlotConfig} from "../components/olympic-app/olympic-scatter-plot/olympic-scatter-plot.config";
@@ -39,9 +38,18 @@ const demo_olympic_app_conf = new PageConfiguration({
           selected_sport: null,
           selected_medal_column: null,
           selected_pivot_column: null,
-          selected_numeric_column: null
+          selected_numeric_column: null,
+          set_filter_event: null,
+          active_tab: 1
         }
       }),
+      consumingObservables: {
+        setFilterEvent: "set_filter_event",
+        selectedAthlete: "selected_athlete",
+        selectedCountry: "selected_country",
+        selectedSport: "selected_sport",
+        activeTab: "active_tab"
+      },
       yieldingObservables: {
         medalColumnOptions: {
           observableId: "medal_column_options"
@@ -140,6 +148,7 @@ const demo_olympic_app_conf = new PageConfiguration({
             })]
         }),
         new TabConfiguration({
+          activeTabObservable: "active_tab",
           tabLabels: ["Overview", "Table"],
           components: [
             new BlockConfiguration({
@@ -195,8 +204,7 @@ const demo_olympic_app_conf = new PageConfiguration({
                         data: "heat_map_data",
                         cellColumn: "selected_medal_column",
                         yColumn: "selected_pivot_column",
-                        selectedCountry: "selected_country",
-                        selectedSport: "selected_sport"
+                        setFilterEvent: "set_filter_event",
                       }
                     }),
                     new OlympicScatterPlotConfig({
@@ -204,8 +212,7 @@ const demo_olympic_app_conf = new PageConfiguration({
                         data: "scatter_data",
                         xColumn: "selected_numeric_column",
                         pivotColumn: "selected_pivot_column",
-                        selectedCountry: "selected_country",
-                        selectedSport: "selected_sport"
+                        setFilterEvent: "set_filter_event",
                       }
                     })
                   ]

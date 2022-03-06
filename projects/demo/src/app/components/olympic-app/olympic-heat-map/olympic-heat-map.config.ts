@@ -4,7 +4,7 @@ import {HeatMapConfig} from "../../highcharts/heatmap/heat-map.config";
 
 export class OlympicHeatMapConfig extends HeatMapConfig {
   public readonly height?: string = "500px"
-  public readonly consumingObservables: ConsumeType<["data", "yColumn", "cellColumn", "selectedCountry", "selectedSport"]>;
+  public readonly consumingObservables: ConsumeType<["data", "yColumn", "cellColumn", "setFilterEvent"]>;
 
   constructor(args: Omit<OlympicHeatMapConfig, ExcludedAttributes>) {
     super(args);

@@ -14,7 +14,6 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
   /**
    *  Indicates whether the component is ready to render the part of the template that's relying on other public
    *  observables which are to be consumed from the outside.
-   *  only set when the component consumes observables
    */
   ready$: BehaviorSubject<boolean>;
   /**
@@ -37,6 +36,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
 
   // config object only becomes available in and after ngOnInit
   ngOnInit() {
+    this.ready$ = markAsTracked(new BehaviorSubject<boolean>(false), "ready_" + this.getComponentIdentity());
     this.destroy$ = markAsTracked(new Subject<void>(), "destroy_" + this.getComponentIdentity());
     // create the set from string array that's on the configuration model or empty if nothing is set
     this.keepInStore = this.config.keepInStore ? new Set<string>(this.config.keepInStore) : new Set<string>();
@@ -54,7 +54,6 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
     // if the component consumes, it'll tell obsService that it's waiting for the observables.
     // the obsService will run the callback as soon as those observables become available
     if (this.config.getConsumingObservables()) {
-      this.ready$ = markAsTracked(new BehaviorSubject<boolean>(false), "ready_" + this.getComponentIdentity());
       this.obsService.waitFor(Object.values(this.config.getConsumingObservables()), () => {
         // This is to be implemented by child component. they can choose whatever way to use these observables
         this.setLocalData();
@@ -65,6 +64,8 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
         // sometimes the view doesn't render on its own
         this.changeDetectionRef.detectChanges();
       }, this.destroy$)
+    } else {
+      this.ready$.next(true);
     }
 
     // if this component enabled the store, register the state behavior subjects

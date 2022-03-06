@@ -84,13 +84,12 @@ export class OlympicScatterPlotComponent extends ScatterComponent<OlympicScatter
                 events: {
                   click: function () {
                     const pivotValue = (this.options as any)['pivot']
-                    let subjectId;
-                    if (pivotColumn === "sport") {
-                      subjectId = thisComponent.config.consumingObservables.selectedSport
-                    } else if (pivotColumn === "country") {
-                      subjectId = thisComponent.config.consumingObservables.selectedCountry
-                    }
-                    thisComponent.obsService.getBehaviorSubject(subjectId).next(pivotValue);
+                    thisComponent.obsService.getBehaviorSubject(
+                      thisComponent.config.consumingObservables.setFilterEvent
+                    ).next({
+                      filterType: pivotColumn,
+                      filterValue: pivotValue
+                    });
                   }
                 }
               }
