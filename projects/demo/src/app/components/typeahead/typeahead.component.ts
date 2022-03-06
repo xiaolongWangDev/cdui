@@ -37,7 +37,7 @@ export class TypeaheadComponent extends ConfigurationDrivenComponent<TypeaheadCo
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
     this.options$ = this.obsService.getObservable(this.config.consumingObservables.options);
     this.search = (text$: Observable<string>) =>
       combineLatest([this.options$, text$]).pipe(

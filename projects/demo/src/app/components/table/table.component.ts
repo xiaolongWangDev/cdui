@@ -46,7 +46,7 @@ export class TableComponent extends ConfigurationDrivenComponent<TableConfigurat
     }
   }
 
-  readyToConsumeObservables() {
+  setLocalData() {
     this.columnDefs$ = this.obsService.getObservable(this.config.consumingObservables.columnDefs);
     this.rowData$ = this.obsService.getObservable(this.config.consumingObservables.rowData);
   }

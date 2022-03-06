@@ -22,8 +22,8 @@ export class SpendingHeatMapComponent extends HeatMapComponent<SpendingHeatMapCo
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
-    super.readyToConsumeObservables();
+  protected setLocalData(): void {
+    super.setLocalData();
     const thisComponent = this;
     this.options$ = markAsTracked(this.options$.pipe(map((options) => {
       return {

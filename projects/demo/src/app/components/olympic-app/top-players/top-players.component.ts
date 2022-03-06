@@ -33,7 +33,7 @@ export class TopPlayersComponent extends ConfigurationDrivenComponent<TopPlayers
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
     this.data$ = this.obsService.getObservable(this.config.consumingObservables.data);
   }
 }

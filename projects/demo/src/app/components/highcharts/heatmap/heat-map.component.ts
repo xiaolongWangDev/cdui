@@ -27,7 +27,7 @@ export class HeatMapComponent<T extends HeatMapConfig> extends BaseChartComponen
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
     this.options$ =
       markAsTracked(
         this.obsService.getObservable(this.config.consumingObservables.data)

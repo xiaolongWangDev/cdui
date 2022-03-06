@@ -29,7 +29,7 @@ export class SplineComponent<T extends SplineConfig> extends BaseChartComponentC
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
     this.options$ =
       markAsTracked(
         this.obsService.getObservable(this.config.consumingObservables.data)

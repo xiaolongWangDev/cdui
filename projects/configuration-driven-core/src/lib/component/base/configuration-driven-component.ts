@@ -57,7 +57,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
       this.ready$ = markAsTracked(new BehaviorSubject<boolean>(false), "ready_" + this.getComponentIdentity());
       this.obsService.waitFor(Object.values(this.config.getConsumingObservables()), () => {
         // This is to be implemented by child component. they can choose whatever way to use these observables
-        this.readyToConsumeObservables();
+        this.setLocalData();
         // set ready$ to true, so the interesting part of the page can be shown
         // (because data are coming in through observables)
         this.ready$.next(true);
@@ -123,7 +123,7 @@ export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponen
    * user can assign, pipe from the public observables just consumed to member attributes
    * so that they can be used in the component/template
    */
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
   }
 
   /**

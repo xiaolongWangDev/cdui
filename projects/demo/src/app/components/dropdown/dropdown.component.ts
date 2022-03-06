@@ -32,7 +32,7 @@ export class DropdownComponent extends ConfigurationDrivenComponent<DropdownConf
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
     const options$ = this.obsService.getObservable(this.config.consumingObservables.options);
     this.model = new StringSingleSelectModel(options$);
   }

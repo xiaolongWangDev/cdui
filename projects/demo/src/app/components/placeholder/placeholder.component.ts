@@ -33,7 +33,7 @@ export class PlaceholderComponent extends ConfigurationDrivenComponent<Placehold
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables(): void {
+  protected setLocalData(): void {
     this.value$ = this.obsService.getObservable(this.config.consumingObservables.value);
   }
 }

@@ -25,7 +25,7 @@ export class StudentComponent extends ConfigurationDrivenComponent<StudentConfig
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables() {
+  protected setLocalData() {
     this.homework$ = this.obsService.getObservable(this.config.consumingObservables.homework);
     this.tuition$ = this.obsService.getObservable(this.config.consumingObservables.tuition);
   }

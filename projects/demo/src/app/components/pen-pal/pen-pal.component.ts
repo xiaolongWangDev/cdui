@@ -33,7 +33,7 @@ export class PenPalComponent extends ConfigurationDrivenComponent<PenPalConfig> 
     super(obsService, changeDetectionRef);
   }
 
-  protected readyToConsumeObservables() {
+  protected setLocalData() {
     this.newLetter$ = this.obsService.getObservable(this.config.consumingObservables.receive);
   }
 
