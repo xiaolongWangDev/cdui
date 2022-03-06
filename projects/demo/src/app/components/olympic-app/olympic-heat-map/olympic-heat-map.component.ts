@@ -4,7 +4,7 @@ import {OlympicHeatMapConfig} from "./olympic-heat-map.config";
 import {HeatMapComponent} from "../../highcharts/heatmap/heat-map.component";
 import {combineLatest, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {Options} from "highcharts";
+import {Options, Tooltip, TooltipFormatterCallbackFunction, TooltipFormatterContextObject} from "highcharts";
 
 @Component({
   selector: "demo-olympic-heat-map",
@@ -48,7 +48,17 @@ export class OlympicHeatMapComponent extends HeatMapComponent<OlympicHeatMapConf
         this.options$]
       ).pipe(map(([yColumn, options]: [string, Options]): Options => {
         return {
-          ...options, plotOptions: {
+          ...options,
+          tooltip: {
+            formatter: function () {
+              const context = this as TooltipFormatterContextObject;
+              const point = context.point;
+              return `Date: ${(options.xAxis as any).categories[point.x]}<br>` +
+                `${thisComponent.capitalizeFirstLetter(yColumn)}: ${(options.yAxis as any).categories[point.y]}<br>` +
+                `Medal: ${point.value}`
+            }
+          },
+          plotOptions: {
             series: {
               cursor: 'pointer',
               point: {
