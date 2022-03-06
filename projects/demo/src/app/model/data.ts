@@ -9,7 +9,7 @@ export class HeatMapData {
 }
 
 export class ScatterData {
-  data: [number, number][];
+  data: ([number, number] | [number, number, string])[];
 
   constructor(args: Readonly<ScatterData>) {
     Object.assign(this, args);

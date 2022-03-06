@@ -21,7 +21,7 @@ export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent
     splineData: ["filters", "selectedResultColumn"],
     topPlayerData: ["filters"],
     heatMapData: ["filters", "selectedResultColumn", "selectedPivotColumn"],
-    scatterData: ["filters", "selectedResultColumn", "selectedNumericColumn"],
+    scatterData: ["filters", "selectedResultColumn", "selectedNumericColumn", "selectedPivotColumn"],
   }>;
 
   constructor(args: Omit<OlympicAppConfig, ExcludedAttributes>) {

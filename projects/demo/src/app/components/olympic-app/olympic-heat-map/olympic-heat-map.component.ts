@@ -4,12 +4,13 @@ import {OlympicHeatMapConfig} from "./olympic-heat-map.config";
 import {HeatMapComponent} from "../../highcharts/heatmap/heat-map.component";
 import {combineLatest, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {Options, Tooltip, TooltipFormatterCallbackFunction, TooltipFormatterContextObject} from "highcharts";
+import {Options, TooltipFormatterContextObject} from "highcharts";
+import {capitalizeFirstLetter} from "../../../helper/Helper";
 
 @Component({
   selector: "demo-olympic-heat-map",
   template: `
-    <div class="card" *ngIf="ready$ |async">
+    <div class="mt-2 card" *ngIf="ready$ |async">
       <div class="card-header">
         {{this.cardTitle$  | async}}
       </div>
@@ -36,7 +37,7 @@ export class OlympicHeatMapComponent extends HeatMapComponent<OlympicHeatMapConf
       this.obsService.getObservable(this.config.consumingObservables.yColumn)
     ]).pipe(
       map(([cellColumn, yColumn]) => {
-        return `${this.capitalizeFirstLetter(cellColumn)} Medal Per ${this.capitalizeFirstLetter(yColumn)}, Date`
+        return `${capitalizeFirstLetter(cellColumn)} Medal Per ${capitalizeFirstLetter(yColumn)}, Date`
       })
     )
 
@@ -54,7 +55,7 @@ export class OlympicHeatMapComponent extends HeatMapComponent<OlympicHeatMapConf
               const context = this as TooltipFormatterContextObject;
               const point = context.point;
               return `Date: ${(options.xAxis as any).categories[point.x]}<br>` +
-                `${thisComponent.capitalizeFirstLetter(yColumn)}: ${(options.yAxis as any).categories[point.y]}<br>` +
+                `${capitalizeFirstLetter(yColumn)}: ${(options.yAxis as any).categories[point.y]}<br>` +
                 `Medal: ${point.value}`
             }
           },
@@ -65,7 +66,6 @@ export class OlympicHeatMapComponent extends HeatMapComponent<OlympicHeatMapConf
                 events: {
                   click: function () {
                     let category = (options.yAxis as any).categories[this.y];
-                    console.log(category);
                     let subjectId;
                     if (yColumn === "sport") {
                       subjectId = thisComponent.config.consumingObservables.selectedSport
@@ -80,9 +80,5 @@ export class OlympicHeatMapComponent extends HeatMapComponent<OlympicHeatMapConf
           }
         }
       }))
-  }
-
-  capitalizeFirstLetter(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 }

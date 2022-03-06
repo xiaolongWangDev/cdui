@@ -111,17 +111,34 @@ export class MockApiService {
     );
   }
 
-  getMedalAndNumber(filters: string[], selectedMedalColumn: string, selectedNumericColumn: string): Observable<ScatterData> {
+  getMedalAndNumberPerPivot(filters: string[],
+                            selectedMedalColumn: string,
+                            selectedNumericColumn: string,
+                            selectedPivotColumn: string): Observable<ScatterData> {
+
+    const perPivotMedals = new Map<string, number[]>()
+    const perPivotNumericValues = new Map<string, number[]>()
     return this.getOlympicData(filters).pipe(
       map(data => {
-        const sorted: [number, number][] = [];
-        let i = 0;
         for (const row of data) {
-          sorted.push([row[selectedNumericColumn], row[selectedMedalColumn]]);
-          if (i++ > 100) break
+          const pivot = row[selectedPivotColumn];
+          if (!perPivotMedals.has(pivot)) {
+            perPivotMedals.set(pivot, []);
+          }
+          if (!perPivotNumericValues.has(pivot)) {
+            perPivotNumericValues.set(pivot, []);
+          }
+          perPivotMedals.get(pivot).push(row[selectedMedalColumn]);
+          perPivotNumericValues.get(pivot).push(row[selectedNumericColumn]);
         }
-        sorted.sort((a, b) => a[0] - b[0]);
-        return new ScatterData({data: sorted})
+
+        const resData: [number, number, string][] = []
+        for (const pivot of perPivotMedals.keys()) {
+          resData.push([this.avg(perPivotNumericValues.get(pivot)), this.avg(perPivotMedals.get(pivot)), pivot])
+        }
+
+        resData.sort((a, b) => a[0] - b[0]);
+        return new ScatterData({data: resData})
       }));
 
   }
@@ -7335,6 +7352,14 @@ export class MockApiService {
     }
 
     return markAsTracked(result, "spending_heat_map_data");
+  }
+
+  private sum(arr: number[]) {
+    return arr.reduce((a, b) => a + b, 0);
+  }
+
+  private avg(arr: number[]) {
+    return this.sum(arr) / arr.length;
   }
 }
 

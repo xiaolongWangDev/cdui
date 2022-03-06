@@ -89,13 +89,15 @@ export class OlympicAppComponent extends ConfigurationDrivenComponent<OlympicApp
       [scatterDataObsId]: () => {
         const selectedResultColumnObsId = this.config.yieldingObservables.scatterData.dependsOn.selectedResultColumn;
         const selectedNumericColumnObsId = this.config.yieldingObservables.scatterData.dependsOn.selectedNumericColumn;
+        const selectedPivotColumnObsId = this.config.yieldingObservables.scatterData.dependsOn.selectedPivotColumn;
         return combineLatest([
           this.obsService.getObservable(filterObsId),
           this.obsService.getObservable(selectedResultColumnObsId),
-          this.obsService.getObservable(selectedNumericColumnObsId)
+          this.obsService.getObservable(selectedNumericColumnObsId),
+          this.obsService.getObservable(selectedPivotColumnObsId)
         ]).pipe(
           mergeMap((args) =>
-            this.mockApiService.getMedalAndNumber(...args)),
+            this.mockApiService.getMedalAndNumberPerPivot(...args)),
         );
       },
     }

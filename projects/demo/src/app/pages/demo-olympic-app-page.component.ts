@@ -15,6 +15,7 @@ import {SplineConfig} from "../components/highcharts/spline/spline.config";
 import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
 import {TopPlayersConfig} from "../components/olympic-app/top-players/top-players.config";
 import {OlympicHeatMapConfig} from "../components/olympic-app/olympic-heat-map/olympic-heat-map.config";
+import {OlympicScatterPlotConfig} from "../components/olympic-app/olympic-scatter-plot/olympic-scatter-plot.config";
 
 @Component({
   template: standard_page_template
@@ -103,7 +104,8 @@ const demo_olympic_app_conf = new PageConfiguration({
           dependsOn: {
             filters: "filters",
             selectedResultColumn: "selected_medal_column",
-            selectedNumericColumn: "selected_numeric_column"
+            selectedNumericColumn: "selected_numeric_column",
+            selectedPivotColumn: "selected_pivot_column"
           }
         }
       },
@@ -197,9 +199,13 @@ const demo_olympic_app_conf = new PageConfiguration({
                         selectedSport: "selected_sport"
                       }
                     }),
-                    new ScatterConfig({
+                    new OlympicScatterPlotConfig({
                       consumingObservables: {
-                        data: "scatter_data"
+                        data: "scatter_data",
+                        xColumn: "selected_numeric_column",
+                        pivotColumn: "selected_pivot_column",
+                        selectedCountry: "selected_country",
+                        selectedSport: "selected_sport"
                       }
                     })
                   ]
