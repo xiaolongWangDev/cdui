@@ -3,7 +3,7 @@ import {TypeaheadComponent} from "./typeahead.component";
 
 export class TypeaheadConfiguration extends ComponentConfiguration<TypeaheadComponent> {
   public readonly label: string;
-  public readonly consumingObservables: ConsumeType<["options"]>;
+  public readonly consumingObservables: ConsumeType<["options", "newSelection"]>;
   public readonly yieldingObservables: YieldType<{ selection: ["options"] }>;
 
   constructor(args: SimpleConfig) {
@@ -11,7 +11,8 @@ export class TypeaheadConfiguration extends ComponentConfiguration<TypeaheadComp
     const config = {
       label: args.label,
       consumingObservables: {
-        options: args.optionsObservable
+        options: args.optionsObservable,
+        newSelection: args.newSelection
       },
       yieldingObservables: {
         selection: {
@@ -31,4 +32,5 @@ type SimpleConfig = {
   optionsObservable: string;
   selectionObservable: string;
   keepInStore: boolean;
+  newSelection?: string;
 }

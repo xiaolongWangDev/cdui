@@ -12,10 +12,9 @@ import {TabConfiguration} from "../components/tab/tab.config";
 import {TableConfiguration} from "../components/table/table.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {SplineConfig} from "../components/highcharts/spline/spline.config";
-import {HeatMapData} from "../model/data";
-import {HeatMapConfig} from "../components/highcharts/heatmap/heat-map.config";
 import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
 import {TopPlayersConfig} from "../components/olympic-app/top-players/top-players.config";
+import {OlympicHeatMapConfig} from "../components/olympic-app/olympic-heat-map/olympic-heat-map.config";
 
 @Component({
   template: standard_page_template
@@ -120,19 +119,22 @@ const demo_olympic_app_conf = new PageConfiguration({
               label: "Athlete",
               optionsObservable: "athlete_options",
               selectionObservable: "selected_athlete",
-              keepInStore: true
+              keepInStore: true,
+              newSelection: "selected_athlete"
             }),
             new TypeaheadConfiguration({
               label: "Country",
               optionsObservable: "country_options",
               selectionObservable: "selected_country",
-              keepInStore: true
+              keepInStore: true,
+              newSelection: "selected_country"
             }),
             new TypeaheadConfiguration({
               label: "Sport",
               optionsObservable: "sport_options",
               selectionObservable: "selected_sport",
-              keepInStore: true
+              keepInStore: true,
+              newSelection: "selected_sport"
             })]
         }),
         new TabConfiguration({
@@ -185,9 +187,14 @@ const demo_olympic_app_conf = new PageConfiguration({
                 new RowConfiguration({
                   colWidth: [6, 6],
                   components: [
-                    new HeatMapConfig({
+                    new OlympicHeatMapConfig({
+                      height: "500px",
                       consumingObservables: {
-                        data: "heat_map_data"
+                        data: "heat_map_data",
+                        cellColumn: "selected_medal_column",
+                        yColumn: "selected_pivot_column",
+                        selectedCountry: "selected_country",
+                        selectedSport: "selected_sport"
                       }
                     }),
                     new ScatterConfig({

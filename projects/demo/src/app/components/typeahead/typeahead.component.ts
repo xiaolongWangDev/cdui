@@ -5,7 +5,7 @@ import {
 } from "configuration-driven-core";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {BehaviorSubject, combineLatest, Observable, OperatorFunction} from "rxjs";
-import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, filter, map, takeUntil} from "rxjs/operators";
 import {TypeaheadConfiguration} from "./typeahead.config";
 
 @Component({
@@ -53,6 +53,18 @@ export class TypeaheadComponent extends ConfigurationDrivenComponent<TypeaheadCo
         }
         return false;
       })), "typeahead_invalid_input_flag")
+
+    // if configured, selection can be changed from outside
+    if (this.config.consumingObservables.newSelection) {
+      this.obsService.getObservable(this.config.consumingObservables.newSelection)
+        .pipe(distinctUntilChanged(),
+          takeUntil(this.destroy$),
+          filter(newSelection => newSelection !== this.model$.getValue()))
+        .subscribe(newSelection => {
+          this.model$.next(newSelection)
+        })
+
+    }
   }
 
   protected yieldObservablesFactories(): Record<string, () => Observable<any>> {

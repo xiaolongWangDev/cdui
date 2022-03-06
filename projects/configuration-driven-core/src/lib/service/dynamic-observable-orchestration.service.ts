@@ -28,12 +28,16 @@ export class DynamicObservableOrchestrationService {
     if (refs && refs.length) {
       const readyEvents: ReplaySubject<void>[] = [];
       for (const key of refs.map(refToKey)) {
-        this.createEventIfNotExist(key);
-        readyEvents.push(this.observableReadyEvents.get(key));
+        if(key) {
+          this.createEventIfNotExist(key);
+          readyEvents.push(this.observableReadyEvents.get(key));
+        }
       }
-      combineLatest(readyEvents).pipe(takeUntil(noLongerNeeded)).subscribe(() => {
-        callback();
-      });
+      if(readyEvents.length){
+        combineLatest(readyEvents).pipe(takeUntil(noLongerNeeded)).subscribe(() => {
+          callback();
+        });
+      }
     } else {
       callback();
     }
