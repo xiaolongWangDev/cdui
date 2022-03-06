@@ -4,17 +4,17 @@ import {
   markAsTracked
 } from "configuration-driven-core";
 import {ChangeDetectorRef, Component} from "@angular/core";
-import {OlympicDataFetcherConfig} from "./olympic-data-fetcher.config";
 import {Observable} from "rxjs";
 import {MockApiService} from "../../service/mock-api.service";
+import {TableDataFetcherConfig} from "./table-data-fetcher.config";
 
 
 @Component({
-  selector: "demo-olympic-data-fetcher",
+  selector: "demo-table-data-fetcher",
   template: `
   `
 })
-export class OlympicDataFetcherComponent extends ConfigurationDrivenComponent<OlympicDataFetcherConfig> {
+export class TableDataFetcherComponent extends ConfigurationDrivenComponent<TableDataFetcherConfig> {
 
   constructor(private mockApiService: MockApiService, obsService: DynamicObservableOrchestrationService, changeDetectionRef: ChangeDetectorRef) {
     super(obsService, changeDetectionRef);

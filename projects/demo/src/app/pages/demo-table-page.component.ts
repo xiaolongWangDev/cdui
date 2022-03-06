@@ -3,10 +3,10 @@ import {PageConfiguration} from "../components/page/page.config";
 import {StoreConfiguration} from "configuration-driven-core";
 import {TableConfiguration} from "../components/table/table.config";
 import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
-import {OlympicDataFetcherConfig} from "../components/olympic-data-fetcher/olympic-data-fetcher.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
 import {standard_page_template} from "../components/page/page.component";
+import {TableDataFetcherConfig} from "../components/table-data-fetcher/table-data-fetcher.config";
 
 @Component({
   template: standard_page_template
@@ -45,7 +45,7 @@ const demo_table_conf = new PageConfiguration({
         }
       }),
       components: [
-        new OlympicDataFetcherConfig({
+        new TableDataFetcherConfig({
           yieldingObservables: {
             data: {
               observableId: "demo_row_data"

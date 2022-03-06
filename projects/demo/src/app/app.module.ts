@@ -32,7 +32,6 @@ import {AgGridModule} from "ag-grid-angular";
 import {TableComponent} from "./components/table/table.component";
 import {DemoTablePageComponent} from "./pages/demo-table-page.component";
 import {HttpClientModule} from "@angular/common/http";
-import {OlympicDataFetcherComponent} from "./components/olympic-data-fetcher/olympic-data-fetcher.component";
 import {AlertComponent} from "./components/alert/alert.component";
 import {BlockComponent} from "./components/block/block.component";
 import {DropdownComponent} from "./components/dropdown/dropdown.component";
@@ -52,6 +51,7 @@ import {OlympicHeatMapComponent} from "./components/olympic-app/olympic-heat-map
 import {
   OlympicScatterPlotComponent
 } from "./components/olympic-app/olympic-scatter-plot/olympic-scatter-plot.component";
+import {TableDataFetcherComponent} from "./components/table-data-fetcher/table-data-fetcher.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -81,9 +81,9 @@ const pages = [
     HeatMapComponent,
     PageComponent,
     TabComponent,
+    TableDataFetcherComponent,
     TableComponent,
     TypeaheadComponent,
-    OlympicDataFetcherComponent,
     PlaceholderComponent,
     ToggleComponent,
     ToggleTargetDirective,
