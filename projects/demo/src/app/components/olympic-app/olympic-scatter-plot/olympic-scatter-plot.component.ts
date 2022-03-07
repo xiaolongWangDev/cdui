@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {map} from "rxjs/operators";
-import {DynamicObservableOrchestrationService} from "configuration-driven-core";
+import {DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
 import {OlympicScatterPlotConfig} from "./olympic-scatter-plot.config";
 import {ScatterComponent} from "../../highcharts/scatter/scatter.component";
 import {combineLatest, Observable} from "rxjs";
@@ -43,64 +43,66 @@ export class OlympicScatterPlotComponent extends ScatterComponent<OlympicScatter
     const thisComponent = this;
 
     this.options$ =
-      combineLatest([
-        this.obsService.getObservable(this.config.consumingObservables.data),
-        this.obsService.getObservable(this.config.consumingObservables.xColumn),
-        this.obsService.getObservable(this.config.consumingObservables.pivotColumn)
-        ]
-      ).pipe(map(([dataModel, xColumn, pivotColumn]: [ScatterData, string, string]): Options => {
-        return {
-          chart: {
-            type: 'scatter',
-          },
-          title: {
-            text: undefined
-          },
-          xAxis: {
-            title: {
-              text: capitalizeFirstLetter(xColumn) + "(Avg)",
+      markAsTracked(
+        combineLatest([
+            this.obsService.getObservable(this.config.consumingObservables.data),
+            this.obsService.getObservable(this.config.consumingObservables.xColumn),
+            this.obsService.getObservable(this.config.consumingObservables.pivotColumn)
+          ]
+        ).pipe(map(([dataModel, xColumn, pivotColumn]: [ScatterData, string, string]): Options => {
+          return {
+            chart: {
+              type: 'scatter',
             },
-          },
-          yAxis: {
             title: {
-              text: "Medal(Avg)",
+              text: undefined
             },
-          },
-          legend: {
-            enabled: false
-          },
-          tooltip: {
-            formatter: function () {
-              const context = this as TooltipFormatterContextObject;
-              const point = context.point;
-              const pivot = (point.options as any)['pivot'];
-              return `${pivot} <br>Medals: ${numberFormat(point.y, 2)} <br>${capitalizeFirstLetter(xColumn)}: ${numberFormat(point.x, 2)}`
-            }
-          },
-          plotOptions: {
-            series: {
-              cursor: 'pointer',
-              point: {
-                events: {
-                  click: function () {
-                    const pivotValue = (this.options as any)['pivot']
-                    thisComponent.obsService.getBehaviorSubject(
-                      thisComponent.config.consumingObservables.setFilterEvent
-                    ).next({
-                      filterType: pivotColumn,
-                      filterValue: pivotValue
-                    });
+            xAxis: {
+              title: {
+                text: capitalizeFirstLetter(xColumn) + "(Avg)",
+              },
+            },
+            yAxis: {
+              title: {
+                text: "Medal(Avg)",
+              },
+            },
+            legend: {
+              enabled: false
+            },
+            tooltip: {
+              formatter: function () {
+                const context = this as TooltipFormatterContextObject;
+                const point = context.point;
+                const pivot = (point.options as any)['pivot'];
+                return `${pivot} <br>Medals: ${numberFormat(point.y, 2)} <br>${capitalizeFirstLetter(xColumn)}: ${numberFormat(point.x, 2)}`
+              }
+            },
+            plotOptions: {
+              series: {
+                cursor: 'pointer',
+                point: {
+                  events: {
+                    click: function () {
+                      const pivotValue = (this.options as any)['pivot']
+                      thisComponent.obsService.getBehaviorSubject(
+                        thisComponent.config.consumingObservables.setFilterEvent
+                      ).next({
+                        filterType: pivotColumn,
+                        filterValue: pivotValue
+                      });
+                    }
                   }
                 }
               }
-            }
-          },
-          series: [{
-            data: dataModel.data,
-            keys: ["x", "y", "pivot"]
-          } as SeriesScatterOptions]
-        }
-      }))
+            },
+            series: [{
+              data: dataModel.data,
+              keys: ["x", "y", "pivot"]
+            } as SeriesScatterOptions]
+          }
+        })),
+        "olympic_scatter_options")
 
   }
 }

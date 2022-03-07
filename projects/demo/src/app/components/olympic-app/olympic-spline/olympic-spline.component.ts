@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
-import {DynamicObservableOrchestrationService} from "configuration-driven-core";
+import {DynamicObservableOrchestrationService, markAsTracked} from "configuration-driven-core";
 import {combineLatest, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Options, TooltipFormatterContextObject} from "highcharts";
@@ -39,7 +39,7 @@ export class OlympicSplineComponent extends SplineComponent<OlympicSplineConfig>
       })
     )
 
-    this.options$ = this.options$
+    this.options$ = markAsTracked(this.options$
       .pipe(map((options: Options): Options => {
         return {
           ...options,
@@ -63,6 +63,6 @@ export class OlympicSplineComponent extends SplineComponent<OlympicSplineConfig>
             selected: 5
           },
         }
-      }))
+      })), "olympic_spline_options")
   }
 }
