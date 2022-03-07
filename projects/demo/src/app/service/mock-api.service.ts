@@ -7290,11 +7290,11 @@ export class MockApiService {
   }
 
   getNumericColumns(): Observable<string[]> {
-    return of(["age", "year"]);
+    return of(["age", "gold", "silver", "bronze"]);
   }
 
   getPivotColumns(): Observable<string[]> {
-    return of(["sport", "country"]);
+    return of(["sport", "country", "athlete"]);
   }
 
   getMedalColumns(): Observable<string[]> {
