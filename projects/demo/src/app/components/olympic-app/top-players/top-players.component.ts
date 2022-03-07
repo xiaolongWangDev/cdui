@@ -8,11 +8,11 @@ import {PlayerData} from "../../../model/data";
 @Component({
   selector: "demo-top-players",
   template: `
-    <div class="card">
+    <div class="card mt-2">
       <div class="card-header">
         Top Athletes
       </div>
-      <ul class="list-group" *ngIf="ready$ |async">
+      <ul class="list-group" *ngIf="ready$ |async" [style]="'height: ' + config.height">
         <li *ngFor="let row of data$ | async" class="list-group-item">
           <div class="row">
             <div class="col-6">{{row.name}}</div>

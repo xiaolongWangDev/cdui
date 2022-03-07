@@ -11,10 +11,10 @@ import {TypeaheadConfiguration} from "../components/typeahead/typeahead.config";
 import {TabConfiguration} from "../components/tab/tab.config";
 import {TableConfiguration} from "../components/table/table.config";
 import {BlockConfiguration} from "../components/block/block.config";
-import {SplineConfig} from "../components/highcharts/spline/spline.config";
 import {TopPlayersConfig} from "../components/olympic-app/top-players/top-players.config";
 import {OlympicHeatMapConfig} from "../components/olympic-app/olympic-heat-map/olympic-heat-map.config";
 import {OlympicScatterPlotConfig} from "../components/olympic-app/olympic-scatter-plot/olympic-scatter-plot.config";
+import {OlympicSplineConfig} from "../components/olympic-app/olympic-spline/olympic-spline.config";
 
 @Component({
   template: standard_page_template
@@ -183,12 +183,15 @@ const demo_olympic_app_conf = new PageConfiguration({
                 new RowConfiguration({
                   colWidth: [8, 4],
                   components: [
-                    new SplineConfig({
+                    new OlympicSplineConfig({
+                      height: "600px",
                       consumingObservables: {
-                        data: "spline_data"
+                        data: "spline_data",
+                        yColumn: "selected_medal_column",
                       }
                     }),
                     new TopPlayersConfig({
+                      height: "600px",
                       consumingObservables: {
                         data: "top_player_data"
                       }
@@ -199,7 +202,6 @@ const demo_olympic_app_conf = new PageConfiguration({
                   colWidth: [6, 6],
                   components: [
                     new OlympicHeatMapConfig({
-                      height: "500px",
                       consumingObservables: {
                         data: "heat_map_data",
                         cellColumn: "selected_medal_column",

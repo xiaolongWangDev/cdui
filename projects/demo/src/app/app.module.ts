@@ -52,6 +52,7 @@ import {
   OlympicScatterPlotComponent
 } from "./components/olympic-app/olympic-scatter-plot/olympic-scatter-plot.component";
 import {TableDataFetcherComponent} from "./components/table-data-fetcher/table-data-fetcher.component";
+import {OlympicSplineComponent} from "./components/olympic-app/olympic-spline/olympic-spline.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -96,6 +97,7 @@ const pages = [
     ControlBarComponent,
     SpendingHeatMapComponent,
     OlympicAppComponent,
+    OlympicSplineComponent,
     OlympicHeatMapComponent,
     OlympicScatterPlotComponent,
     TopPlayersComponent,
