@@ -58,6 +58,7 @@ import 'prismjs/components/prism-yaml';
 import 'prismjs/components/prism-scss';
 import {PrismComponent} from "./components/prism/prism.component";
 import {ModelPartOnePageComponent} from "./pages/model-part-one-page.component";
+import {ModelPartTwoPageComponent} from "./pages/model-part-two-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -73,7 +74,8 @@ const pages = [
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent,
   DemoOlympicAppPageComponent,
-  ModelPartOnePageComponent
+  ModelPartOnePageComponent,
+  ModelPartTwoPageComponent
 ]
 
 @NgModule({

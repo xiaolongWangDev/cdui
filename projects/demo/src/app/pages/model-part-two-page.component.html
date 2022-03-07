@@ -1,0 +1,57 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Configuration Model and Component Model: Part 2</h1>
+  <h3>Component Model</h3>
+  <p>All CD component classes extend the <b>ConfigurationDrivenComponent</b> class. It defines standard fields,
+    and carries out works in difference lifecycle hooks that are common to all. We will break it down in this article.
+  </p>
+  <pre prism class="dark" language="javascript" [code]="cdcClassCode"></pre>
+  <p>The following is an example of a CD component. And yes, it is the corresponding component class of the
+    configuration model we shown in the last article.</p>
+  <pre prism class="dark" language="javascript" [code]="penPalClassCode"></pre>
+  <p>As you can see, a CD component is not as scary as the <b>ConfigurationDrivenComponent</b> because most of
+    the work is already taken care of.</p>
+  <h3>A Simple Component</h3>
+  <p>Let's start from the simple class. The constructor takes 2 injected services. The obsService is required
+    if your component yields. Both of them are required if your component consumes.
+  </p>
+  <p><b>setLocalData</b> is a hook which triggers when CD framework finds all observables declared in
+    <b>consumeObservables</b> are created and published to <b>DynamicObservableOrchestrationService</b>.
+    This is the time the component can create <b>local</b> observables that derive from them, or simply
+    just same them to fields so that they can be used in the template. You get a public observable by calling
+    <b>this.obsService.getObservable</b>. If you know it is a behavior subject, you can call
+    <b>this.obsService.getBehaviourSubject</b> instead. A local <b>ready$</b> will be set to true, after
+    setLocalData is run. You typically use that in the template to hide the part that uses the local observables
+    until they become ready.
+  </p>
+  <p><b>yieldObservablesFactories</b> is a hook which triggers in the afterViewInit lifecycle. There you need to
+    return a map that holds a callback function for each declared observable to yield. The callback will be run
+    when the framework finds all dependency observables are created and published to
+    <b>DynamicObservableOrchestrationService</b>. The callback could then use the dependencies in any ways and
+    return a new observable object which will eventually become public. Depending on how we flagged the
+    observable to yield in <b>keepInStore</b> configuration field, either the observable will be directly added to
+    <b>DynamicObservableOrchestrationService</b>, or it'll then write its emissions to a public behavior subject
+    which is declared in a store somewhere else in the app instead. The reasoning will be explained in the articles
+    talking about Observables.
+  </p>
+  <p>What is that odd <b>markAsTracked</b> thing? Good eye. This is actually a helper function that only need
+    to exist in a demo environment. Basically, it helps us to quickly find objects in a memory snapshot. When
+    writing the framework, one of the concerns is whether it will leaks memory, given it heavily uses observables
+    and manages them dynamically. Throughout the demo app, whenever we create observables/subjects, we will wrap
+    this function around them, so that they are tracked and we have good proof whether they cumulate over time.
+    To some extend, we can spot memory leak by finding and counting just Observable, Subject, and BehaviourSubject
+    in the memory snapshot. But then our objects are mixed with those created by 3rd party libraries and
+    3rd party's code aren't perfect all the time.
+  </p>
+  <h3>The ConfigurationDrivenComponent</h3>
+  <p>Now that we are comfortable with the easy-peasy, let's look under the hood. </p>
+  <p>The first member attribute you see is <b>@Input() config: CONF_TYPE;</b>. It holds the corresponding
+  configuration model object. Therefore, throughout your code in the component, you will be getting information form
+    it all the time. Note, it is the one and only input field a CD component has.</p>
+  <p><b>ready$</b>, we've covered it earlier. One thing to point out is if the component does not consume
+  any observable, this will be set to true right away.</p>
+  <p><b>destroy$</b>, a subject that's set in the ngDestroy lifecycle. This is used to auto-unsubscribe from
+  observables we manually subscribed in the component code when the component destroys. We still need to remember
+  to use takeUntil though.</p>
+  <p><b>keepInStore</b>, derives from the keepInStore field values of its configuration model. Here's how it's
+    different: It's a Set so that checking is faster. It is always initialized.</p>
+</div>
