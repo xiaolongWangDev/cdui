@@ -20,12 +20,12 @@ export class IntroductionPageComponent {
         <p>As the name implies, the CD framework takes configuration, and let it drive the creation, composition and interaction of dynamically created components.</p>
         <p>By providing only one configuration object from the top level, a tree of Angular components will be generated. Observables are used to direct the dataflow.</p>
         <h3>Why</h3>
-        <p>The CD framework makes the relocation/swapping of widgets really quick and easy, which is good for prototyping or requirements/feedbacks gathering demos.</p>
+        <p>The CD framework makes the relocation/swapping of widgets really quick and easy, which is good for prototyping or demos for requirements/feedbacks gathering.</p>
         <p>It also enables you to allow your user to customize their pages. They could change the pages to the way most useful to themselves.</p>
 
         <h3>Easy to create ~~ Easy to adopt</h3>
         <p>The framework did not and does not intent to write its own components' library,
-        as already available from frameworks like: Bootstrap, Angular material.
+        that are already made available from frameworks like: Bootstrap, Angular material.
         Instead, as long as a component is well written, it's easy to make it configuration driven.</p>
         <p>This application chose to "CD-ify" selected components from Bootstrap, HighCharts and AG grid
         in order to have just enough to build the application itself.</p>

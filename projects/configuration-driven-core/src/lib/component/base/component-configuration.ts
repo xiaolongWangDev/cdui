@@ -34,12 +34,14 @@ export type ExcludedAttributes = "componentType" | "getYieldingObservables" | "g
 
 export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent> {
 
+  // what component am I going to create
   public readonly componentType: Type<COMP_TYPE>;
-  //
+  // give an id so that the created component can be identified
   public readonly id?: string;
-  //
+  // which observables that I yield actually need to be kept in a store instead of locally
   public readonly keepInStore?: string[];
-  //
+  // all component could declare a store which can keep random state information,
+  // not like a store service, the lifespan of the store is as long as the declaring component.
   public readonly store?: StoreConfiguration;
 
   public getYieldingObservables<CONCRETE_YIELD_PARAM_TYPE extends YieldParamType>(): YieldType<CONCRETE_YIELD_PARAM_TYPE> {

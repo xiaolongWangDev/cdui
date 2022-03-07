@@ -13,10 +13,13 @@ import {DemoTablePageComponent} from "./pages/demo-table-page.component";
 import {DemoTabPageComponent} from "./pages/demo-tab-page.component";
 import {DemoTypeaheadPageComponent} from "./pages/demo-typeahead-page.component";
 import {DemoOlympicAppPageComponent} from "./pages/demo-olympic-app-page.component";
+import {ModelPartOnePageComponent} from "./pages/model-part-one-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
   {path: "introduction", component: IntroductionPageComponent},
+  {path: "model_part_one", component: ModelPartOnePageComponent},
+  {path: "model_part_two", component: ModelPartOnePageComponent},
   {path: "demo_grid_system", component: DemoGridSystemPageComponent},
   {path: "demo_dropdown", component: DemoDropdownPageComponent},
   {path: "demo_heat_map", component: DemoHeatMapPageComponent},

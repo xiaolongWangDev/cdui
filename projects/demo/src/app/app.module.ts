@@ -53,6 +53,11 @@ import {
 } from "./components/olympic-app/olympic-scatter-plot/olympic-scatter-plot.component";
 import {TableDataFetcherComponent} from "./components/table-data-fetcher/table-data-fetcher.component";
 import {OlympicSplineComponent} from "./components/olympic-app/olympic-spline/olympic-spline.component";
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-scss';
+import {PrismComponent} from "./components/prism/prism.component";
+import {ModelPartOnePageComponent} from "./pages/model-part-one-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -67,7 +72,8 @@ const pages = [
   DemoSpendingWidgetPageComponent,
   DemoObsCreatedByAncestorPageComponent,
   DemoObsCreatedByNonAncestorPageComponent,
-  DemoOlympicAppPageComponent
+  DemoOlympicAppPageComponent,
+  ModelPartOnePageComponent
 ]
 
 @NgModule({
@@ -101,6 +107,7 @@ const pages = [
     OlympicHeatMapComponent,
     OlympicScatterPlotComponent,
     TopPlayersComponent,
+    PrismComponent,
     ...pages
   ],
   imports: [
@@ -112,7 +119,6 @@ const pages = [
     NgbModule,
     HighchartsChartModule,
     AgGridModule,
-    ConfigurationDrivenCoreModule,
   ],
   providers: [
     DynamicObservableOrchestrationService,
