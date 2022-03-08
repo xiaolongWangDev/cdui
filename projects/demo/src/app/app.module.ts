@@ -60,6 +60,7 @@ import {PrismComponent} from "./components/prism/prism.component";
 import {ModelPartOnePageComponent} from "./pages/model-part-one-page.component";
 import {ModelPartTwoPageComponent} from "./pages/model-part-two-page.component";
 import {StorePageComponent} from "./pages/store-page.component";
+import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -77,7 +78,8 @@ const pages = [
   DemoOlympicAppPageComponent,
   ModelPartOnePageComponent,
   ModelPartTwoPageComponent,
-  StorePageComponent
+  StorePageComponent,
+  DynamicComponentPageComponent
 ]
 
 @NgModule({

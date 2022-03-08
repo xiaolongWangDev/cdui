@@ -1,0 +1,26 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Dynamic Component</h1>
+  <p>From time to time, you might have the need to create arbitrary components.
+  For example, when you have a container component, like a Row, a Block that should be able to host
+  any other component so that your app will be rather flexible. You can achieve that by use the
+  [cdDynamic] directive.</p>
+  <p>Let's take BlockComponent for example. In its configuration model, it has an field <b>components</b>
+  that holds a list of random configuration objects. It loops through them, and dynamically creates
+  a component for each according to the configuration object.</p>
+  <pre prism class="dark" language="javascript" [code]="blockClassCode"></pre>
+  <p>Very easy eh? Let's look at how it's done next.</p>
+  <pre prism class="dark" language="javascript" [code]="classCode"></pre>
+  <p>You might be wondering, why I wrote it this way instead of following the official example?
+  (<a href="https://angular.io/guide/dynamic-component-loader">https://angular.io/guide/dynamic-component-loader</a>)
+    Well the official example requires all the placeholders need to exist at the time of rendering. It won't
+    handle a late component or a conditional component. Think a tab for example: at any given time, only one
+    tab page will be shown otherwise it won't exist in the DOM. However, when the DOM of a placeholder element
+    finally be added(because user clicked a different tab), the component swap logic won't be run again.
+    In my solution, however, it takes care of those scenarios.
+  </p>
+  <p>The line <b>@Input() cdDynamic: AnyComponentConfiguration;</b> takes in the configuration object.
+    The rest of the idea is similar to Angular's guide though. The directive gets injected a reference of
+    its host element, and when the right lifecycle comes, it'll create the configuration's associated component
+    inside the host element. Set the configuration. Then trigger a change detection.
+    When the directive is to be destroyed, we will destroy the dynamically created component as well.</p>
+</div>
