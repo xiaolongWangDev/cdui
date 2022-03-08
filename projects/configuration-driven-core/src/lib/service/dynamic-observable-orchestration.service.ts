@@ -1,17 +1,8 @@
 import {Injectable} from "@angular/core";
 import {ObservableReference} from "../model/types";
 import {BehaviorSubject, combineLatest, Observable, ReplaySubject, Subject} from "rxjs";
-import * as uuid from 'uuid';
 import {takeUntil} from "rxjs/operators";
 import {markAsTracked} from "../Helper";
-
-export class ObservableReadyListener {
-  public readonly id: string;
-
-  constructor(public readonly observableIds: string[], public readonly callback: () => void) {
-    this.id = uuid.v4();
-  }
-}
 
 type StringOrObservableReference = string | ObservableReference;
 

@@ -61,6 +61,7 @@ import {ModelPartOnePageComponent} from "./pages/model-part-one-page.component";
 import {ModelPartTwoPageComponent} from "./pages/model-part-two-page.component";
 import {StorePageComponent} from "./pages/store-page.component";
 import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.component";
+import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestration-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -79,7 +80,8 @@ const pages = [
   ModelPartOnePageComponent,
   ModelPartTwoPageComponent,
   StorePageComponent,
-  DynamicComponentPageComponent
+  DynamicComponentPageComponent,
+  ObservableOrchestrationPageComponent
 ]
 
 @NgModule({

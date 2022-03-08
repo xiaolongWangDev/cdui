@@ -17,6 +17,7 @@ import {ModelPartOnePageComponent} from "./pages/model-part-one-page.component";
 import {ModelPartTwoPageComponent} from "./pages/model-part-two-page.component";
 import {StorePageComponent} from "./pages/store-page.component";
 import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.component";
+import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestration-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
@@ -25,6 +26,7 @@ const routes: Route[] = [
   {path: "model_part_two", component: ModelPartTwoPageComponent},
   {path: "store", component: StorePageComponent},
   {path: "dynamic_component", component: DynamicComponentPageComponent},
+  {path: "observable_orchestration", component: ObservableOrchestrationPageComponent},
   {path: "demo_grid_system", component: DemoGridSystemPageComponent},
   {path: "demo_dropdown", component: DemoDropdownPageComponent},
   {path: "demo_heat_map", component: DemoHeatMapPageComponent},

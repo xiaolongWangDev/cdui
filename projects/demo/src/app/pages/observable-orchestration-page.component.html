@@ -1,0 +1,61 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Observable Orchestration</h1>
+  <p>The CD framework uses observables to connect components. Observables can be used as
+  the vessel of data and it can be used to deliver events. </p>
+  <p>The problem and the feature of a configuration driven system is that nothing is set in stone.
+  This is specially true for public observables. Let me take a sidetrack here, in the CD framework,
+  we only really care about public observables. The opposite of that are the inner/private
+  observables which only exist in and are only used by their host component. They are boring, and
+  we won't mention them again. Just you remember, whenever we say observable, we mean a public one.</p>
+  <p>Get back to the previous point. The public observables are not hard coded into any component.
+  Ideally, if a component want to use an observable, it only need to declare what its role is and then
+  any suitable observable should be able to be wired in. For example, I have a <b>StudentComponent</b>.
+  A student need to do homework, and he need to pay tuition. There we find our two role: <b>homework</b>
+  and <b>tuition</b>. Where do those values come from is not known at the time of writing the class.
+    At configuration time, we will fill in that information.
+  </p>
+  <pre prism class="dark" language="javascript" [code]="studentConfigInstanceCode"></pre>
+  <p>Alice gets the homework from Tom and tuition amount from George,
+    while another student Donald can get the homework from Jack. The string value used in those
+    places are call <b>Observable ID</b>. It is the unique identifier for the observable throughout
+    the application. The distinction between role(or local name, called in some places) and observable
+    ID is important for a new user of the CD framework.
+  </p>
+  <p>Now we have the moving parts. We need to do at least 2 things to make them useful. First, any
+  component should be able to create new public observables regardless of where it is. Second, any
+  component should be able to get a public observable by ID from regardless of where it is. We learned
+  in previous article that observables are created and used in used component's life cycle hooks.
+  There's no guarantee that observable needed by component A is created by component B by the time
+  A needs it. Therefore, there's the need of orchestration.</p>
+  <h3>Orchestration Service</h3>
+  <p>This is the only service in CD framework. It's need by any component that deals with public
+  observables.</p>
+  <p>There are two maps, the service is maintaining. The <b>observablesMap</b> one is easy to understand.
+  It keeps the reference to all valid observables. Key is the observable ID from the configuration object.
+  The <b>observableReadyEvents</b> keeps the "readiness" of the public observables, namely whether the
+    observable has been added/registered to the service. It holds a ReplaySubject for each observable ID
+    so that late subscribers still receive "the ready signal".
+  </p>
+  <pre prism class="dark" language="javascript" [code]="classCode"></pre>
+  <p>The <b>waitFor()</b> method is used by components that want to use some observable(s).
+    For each waited observable, we will create an entry in <b>observableReadyEvents</b> if not exists.
+    When all those subjects triggered, the callback will be run. We pass in the component's destroy$
+    subject and use takeUntil to handle cases when the component got destroyed before its waiting
+    observables become available.
+  </p>
+  <p><b>addObservable()</b>. This takes in an observable ID and an observable. It adds an entry to the
+    <b>observablesMap</b>. Then add an entry in <b>observableReadyEvents</b> if not already exists. (depending on
+    which component got rendered first, the entry could be added either in waitFor() or addObservable()).
+    Then the corresponding "ready subject" will emit. Note that we check and forbid the registration of
+    already added observables. This should never happen and having the check gives us peace of mind.
+  </p>
+  <p><b>getObservable()</b> retrieve the observable by ID</p>
+  <p><b>getBehaviorSubject()</b> retrieve the observable by ID. Then make sure it's a behaviour subject.</p>
+  <p><b>revokeObservable()</b> removes the corresponding entry from  <b>observableReadyEvents</b>. then
+  remove the observable entry from <b>observablesMap</b>.</p>
+
+  <p>In child component class, you would probably only need to use getObservable(), or
+    getBehaviorSubject() since the waitFor(), addObservable() and revokeObservable() are already dealt with
+    in the super. </p>
+
+</div>
