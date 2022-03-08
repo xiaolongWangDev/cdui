@@ -45,13 +45,57 @@
   <h3>The ConfigurationDrivenComponent</h3>
   <p>Now that we are comfortable with the easy-peasy, let's look under the hood. </p>
   <p>The first member attribute you see is <b>@Input() config: CONF_TYPE;</b>. It holds the corresponding
-  configuration model object. Therefore, throughout your code in the component, you will be getting information form
+    configuration model object. Therefore, throughout your code in the component, you will be getting information form
     it all the time. Note, it is the one and only input field a CD component has.</p>
   <p><b>ready$</b>, we've covered it earlier. One thing to point out is if the component does not consume
-  any observable, this will be set to true right away.</p>
+    any observable, this will be set to true right away.</p>
   <p><b>destroy$</b>, a subject that's set in the ngDestroy lifecycle. This is used to auto-unsubscribe from
-  observables we manually subscribed in the component code when the component destroys. We still need to remember
-  to use takeUntil though.</p>
+    observables we manually subscribed in the component code when the component destroys. We still need to remember
+    to use takeUntil though.</p>
   <p><b>keepInStore</b>, derives from the keepInStore field values of its configuration model. Here's how it's
-    different: It's a Set so that checking is faster. It is always initialized.</p>
+    different: 1) It's a Set so that checking is faster. 2) It is always initialized.</p>
+
+  <p><b>ngOnInit()</b>. In this angular lifecycle hook, we do the following:</p>
+  <ul>
+    <li>initialize the 3 fields: ready$, destroy$ and keepInStore</li>
+    <li>If the component consumes, register a callback with the <b>DynamicObservableOrchestrationService</b>,
+      in the callback, we will give the "conductor stick" to the child class's setLocalData() where
+      it can do anything. Then the ready$ will be set to true. And a change detection is triggered manually.
+    </li>
+    <li>If the component has an immediate store, we will create one behavior subject for each declared "state"
+      and set the initial values accordingly.
+    </li>
+  </ul>
+
+  <p><b>ngAfterViewInit()</b>. In this angular lifecycle hook, we will yield observables if it's configured to.
+    Why here and not in ngOnInit()? It's because some of the observables may rely on input from DOM element
+    which won't be made available to the component until this stage.
+  </p>
+  <p>We will get a map of functions which is again to be implemented by the child class. I'd like to call those
+    factory functions, but really they are just callbacks which does not create the observable right away.
+    So for each observable to yield, we wait for their depending observables to become ready and then call the
+    its factory function to get an observable instance.
+    Depending on the whether the observable should be kept in a store(the information is in keepInStore),
+    the yield observable will be used differently.
+    If it's not in keepInStore, then it's a simple case. The observable is just given to
+    <b>DynamicObservableOrchestrationService</b> and becomes a public observable.
+    Otherwise, we will wait for an behavior subject with the same observable name to become available in
+    <b>DynamicObservableOrchestrationService</b> and then subscribe our yield observable right on the spot,
+    and feed the emission values to the public behavior subject. You will see why we need this complication
+    after reading the articles about observables best practice.
+  </p>
+  <p><b>ngOnDestroy()</b>. In this angular lifecycle hook, we do 2 things:</p>
+  <ul>
+    <li>emit destroy$ subject so that all manually subscriptions can be unsubscribed.</li>
+    <li>revoke any observables that are created by this component. There are 2 kinds, if you remember,
+      the ones we yielded, and the ones(behavior subjected) we created for the store.
+    </li>
+    <li>besides, the child class can implement a destroyExtra() method to provide extra behaviour.</li>
+    <li>last and the least, the use of <b>setNullAttributes(this)</b> is to counter a devtools bug.
+      We won't need it in production.</li>
+  </ul>
+  <p><b>getComponentIdentity()</b>. When we want to identify the component, the sub class can choose to
+  override this method. By default, it's using the component class name. So it's not unique.
+  If a id is set on the configuration model object, that'll be used instead. The uniqueness needs to be
+  guaranteed by the configuration author.</p>
 </div>
