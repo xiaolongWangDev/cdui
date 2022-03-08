@@ -1,0 +1,22 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Store</h1>
+  <h3>Store, but not a store service</h3>
+  <p>The store in CD framework is NOT a store service.
+    Traditional store service keeps the states forever, while "store" in CD framework only
+    lives the same lifespan as its host component. The states become available after the
+    host component is created and disappear after the component being destroyed. If you think
+    about it, store service is nice, but really, we rarely actually need a piece of information
+    to live forever. Beyond certain scope, the states will become invalid and you'll have to
+    manually wipe/clear them if you are using a service. On the other hand, if your whole application
+    is built with CD framework, putting the states in the store of the root component is equivalent
+    to saying "they live forever".
+  </p>
+  <pre prism class="dark" language="javascript" [code]="storeClassCode"></pre>
+  <p>Here's the configuration model for a store and it's really simple. And you can tell what it
+    is doing. If you remember article Model: Part 1, every configuration model has an optional
+    <b>store</b> field. </p>
+  <p>The following is an example of a store instance. And let me emphasis,
+    it can be added to any configuration model. So, you can happily place your states at the
+  most appropriate level. </p>
+  <pre prism class="dark" language="javascript" [code]="storeInstanceCode"></pre>
+</div>
