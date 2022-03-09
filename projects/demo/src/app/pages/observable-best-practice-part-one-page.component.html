@@ -1,0 +1,40 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Observable Best Practice: Part 1</h1>
+
+  <p>In this series, we are going to talk about the general rules when you are playing with observables in
+  CD framework.</p>
+  <p>Here are the 3 questions to ask when you add a new observable:</p>
+  <ul>
+    <li>Which component creates it?</li>
+    <li>Which component uses it?</li>
+    <li>Which component sets its value?</li>
+  </ul>
+  <p>The creator of the observable is responsible for an observables' registration and revocation
+    (with the DynamicObservableOrchestrationService). Therefore, the observables' lifespan is as
+  long as the creator.</p>
+  <p>The user will use the observables value. This could be via <b>consumeObservables()</b> or
+  being <b>dependsOn()</b> by an when <b>yieldingObservables()</b>.
+  </p>
+  <p>The setter sometimes can just be the same as the creator. And other times, it'll be
+  a different component. We will actually use 2 examples to demonstrate. The first we are about to
+  see in this article.</p>
+  <h3>A is B's Ancestor</h3>
+  <p>In the DOM tree, if component A is the ancestor of component B, A can just yield an observable without
+    thinking about any store, and component B can safely use it.
+    This means B is the user while A is both the creator and setter.</p>
+  <p>When we say <b>safe</b>, we really mean that once a component starts using an observable, the
+  observable should not be revoked or become invalid. This requires the observable must live no shorter
+  than its users.</p>
+  <p>The reason this ancestor pattern is safe is that, the ancestor always lives longer than its descendants.</p>
+  <p>The following is a small demo app that consists of 1 headmaster, 2 teachers, and 6 students.
+  The headmaster and the teachers yields observables and the students consume them.
+    The hierarchy relation is apparent.
+  </p>
+  <hr>
+  <demo-toggle>
+    <ng-template demo-toggle-target>
+      <demo-headmaster [config]="config"></demo-headmaster>
+    </ng-template>
+  </demo-toggle>
+
+</div>

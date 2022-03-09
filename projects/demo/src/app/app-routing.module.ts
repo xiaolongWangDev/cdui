@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {Route, RouterModule} from "@angular/router";
 import {IntroductionPageComponent} from "./pages/introduction-page.component";
-import {DemoObsCreatedByAncestorPageComponent} from "./pages/demo-obs-created-by-ancestor-page.component";
 import {DemoObsCreatedByNonAncestorPageComponent} from "./pages/demo-obs-created-by-non-ancestor-page.component";
 import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.component";
 import {DemoDropdownPageComponent} from "./pages/demo-dropdown-page.component";
@@ -18,6 +17,7 @@ import {ModelPartTwoPageComponent} from "./pages/model-part-two-page.component";
 import {StorePageComponent} from "./pages/store-page.component";
 import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.component";
 import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestration-page.component";
+import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-best-practice-part-one-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
@@ -36,7 +36,7 @@ const routes: Route[] = [
   {path: "demo_table", component: DemoTablePageComponent},
   {path: "demo_typeahead", component: DemoTypeaheadPageComponent},
   {path: "demo_spending_widget", component: DemoSpendingWidgetPageComponent},
-  {path: "demo_obs_created_by_ancestor", component: DemoObsCreatedByAncestorPageComponent},
+  {path: "observable_best_practice_part_one", component: ObservableBestPracticePartOnePageComponent},
   {path: "demo_obs_created_by_non_ancestor", component: DemoObsCreatedByNonAncestorPageComponent},
   {path: "demo_olympic_app", component: DemoOlympicAppPageComponent}
 ]
