@@ -62,6 +62,7 @@ import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.comp
 import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestration-page.component";
 import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-best-practice-part-one-page.component";
 import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-best-practice-part-two-page.component";
+import {CodeCardComponent} from "./components/prism/code-card.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -116,6 +117,7 @@ const pages = [
     OlympicScatterPlotComponent,
     TopPlayersComponent,
     PrismComponent,
+    CodeCardComponent,
     ...pages
   ],
   imports: [

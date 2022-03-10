@@ -14,7 +14,7 @@
   and <b>tuition</b>. Where do those values come from is not known at the time of writing the class.
     At configuration time, we will fill in that information.
   </p>
-  <pre prism class="dark" language="javascript" [code]="studentConfigInstanceCode"></pre>
+  <code-card [code]="studentConfigInstanceCode"></code-card>
   <p>Alice gets the homework from Tom and tuition amount from George,
     while another student Donald can get the homework from Jack. The string value used in those
     places are call <b>Observable ID</b>. It is the unique identifier for the observable throughout
@@ -36,7 +36,7 @@
     observable has been added/registered to the service. It holds a ReplaySubject for each observable ID
     so that late subscribers still receive "the ready signal".
   </p>
-  <pre prism class="dark" language="javascript" [code]="classCode"></pre>
+  <code-card [code]="classCode"></code-card>
   <p>The <b>waitFor()</b> method is used by components that want to use some observable(s).
     For each waited observable, we will create an entry in <b>observableReadyEvents</b> if not exists.
     When all those subjects triggered, the callback will be run. We pass in the component's destroy$

@@ -7,9 +7,9 @@
   <p>Let's take BlockComponent for example. In its configuration model, it has an field <b>components</b>
   that holds a list of random configuration objects. It loops through them, and dynamically creates
   a component for each according to the configuration object.</p>
-  <pre prism class="dark" language="javascript" [code]="blockClassCode"></pre>
+  <code-card [code]="blockClassCode"></code-card>
   <p>Very easy eh? Let's look at how it's done next.</p>
-  <pre prism class="dark" language="javascript" [code]="classCode"></pre>
+  <code-card [code]="classCode"></code-card>
   <p>You might be wondering, why I wrote it this way instead of following the official example?
   (<a href="https://angular.io/guide/dynamic-component-loader">https://angular.io/guide/dynamic-component-loader</a>)
     Well the official example requires all the placeholders need to exist at the time of rendering. It won't
