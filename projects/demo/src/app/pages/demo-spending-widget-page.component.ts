@@ -1,18 +1,88 @@
 import {Component} from '@angular/core';
-import {PageConfiguration} from "../components/page/page.config";
 import {SpendingWidgetConfig} from "../components/spending-widget/spending-widget.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
-import {standard_page_template} from "../components/page/page.component";
+import {BlockConfiguration} from "../components/block/block.config";
 
 @Component({
-  template: standard_page_template
+  template: `
+    <div class="mt-2 ml-5 mr-5 mb-2">
+      <h1>Widget</h1>
+      <demo-toggle>
+        <ng-template demo-toggle-target>
+          <demo-block [config]="config"></demo-block>
+          <hr>
+          <code-card [code]="configCode"></code-card>
+          <code-card [code]="configModelCode"></code-card>
+        </ng-template>
+      </demo-toggle>
+    </div>
+  `
 })
 export class DemoSpendingWidgetPageComponent {
   config = demo_spending_widget_conf;
+  configCode = `new SpendingWidgetConfig()`
+  configModelCode =
+`export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent> {
+  public readonly controlBar: ControlBarConfig;
+  public readonly heatMap: SpendingHeatMapConfig;
+  public readonly consumingObservables: ConsumeType<['xAxis', 'yAxis']>;
+  public readonly yieldingObservables: YieldType<{ xDropdownOptions: [], yDropdownOptions: [], heatMapData: [] }>;
+
+  constructor() {
+    super();
+    Object.assign(this, {...DEFAULT_CONFIG_TEMPLATE, componentType: SpendingWidgetComponent});
+  }
 }
 
-const demo_spending_widget_conf = new PageConfiguration({
-  title: "Widget",
+// observable IDs
+const SPENDING_X_AXIS = "spending_x_axis";
+const SPENDING_Y_AXIS = "spending_y_axis";
+const SPENDING_X_DROPDOWN_OPTIONS = "spending_x_dropdown_options";
+const SPENDING_Y_DROPDOWN_OPTIONS = "spending_y_dropdown_options";
+const SPENDING_HEAT_MAP_DATA = "spending_heat_map_data";
+
+const DEFAULT_CONFIG_TEMPLATE = {
+  store: new StoreConfiguration({
+    states: {
+      [SPENDING_X_AXIS]: null,
+      [SPENDING_Y_AXIS]: null
+    },
+  }),
+  consumingObservables: {
+    xAxis: SPENDING_X_AXIS,
+    yAxis: SPENDING_Y_AXIS,
+  },
+  yieldingObservables: {
+    xDropdownOptions: {observableId: SPENDING_X_DROPDOWN_OPTIONS},
+    yDropdownOptions: {observableId: SPENDING_Y_DROPDOWN_OPTIONS},
+    heatMapData: {observableId: SPENDING_HEAT_MAP_DATA}
+  },
+  controlBar: new ControlBarConfig({
+    xAxisColumnsDropdownConfig: new DropdownConfiguration({
+      label: "on x axis:",
+      optionsObservable: SPENDING_X_DROPDOWN_OPTIONS,
+      selectionObservable: SPENDING_X_AXIS,
+      keepInStore: true
+    }),
+    yAxisColumnsDropdownConfig: new DropdownConfiguration({
+      label: "on y axis:",
+      optionsObservable: SPENDING_Y_DROPDOWN_OPTIONS,
+      selectionObservable: SPENDING_Y_AXIS,
+      keepInStore: true
+    }),
+  }),
+  heatMap: new SpendingHeatMapConfig({
+    title: "Spending",
+    xTittle: "Time",
+    yTittle: "Category",
+    consumingObservables: {
+      data: SPENDING_HEAT_MAP_DATA
+    }
+  })
+}`
+}
+
+const demo_spending_widget_conf = new BlockConfiguration({
   components: [
     new AlertConfiguration({
       type: "success",
@@ -27,7 +97,7 @@ can be hidden from the end programmer/configurator.
 <p>The SpendingHeatMapComponent itself shows how easy it is to extend existing CD component and add new features.
 </p>
 <p>
-A very brief note on the data flow: service -> dropdown options -> dropdown selections -> service -> heatmap data
+A very brief note on the data flow: mock api service -> dropdown options -> dropdown selections -> mock api service -> heatmap data
 </p>
 <p>You probably noticed short delays when the dropdown and the heatmap is populating.
  This is set up intentional in the mock data service to mimic retrieving data from a server. </p>
