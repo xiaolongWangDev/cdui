@@ -13,7 +13,6 @@ import {IntroductionPageComponent} from "./pages/introduction-page.component";
 import {PageComponent} from "./components/page/page.component";
 import {PenPalComponent} from "./components/pen-pal/pen-pal.component";
 import {PostOfficeComponent} from "./components/post-office/post-office.component";
-import {DemoObsCreatedByNonAncestorPageComponent} from "./pages/demo-obs-created-by-non-ancestor-page.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {PlaceholderComponent} from "./components/placeholder/placeholder.component";
 import {DemoGridSystemPageComponent} from "./pages/demo-grid-system-page.component";
@@ -62,6 +61,7 @@ import {StorePageComponent} from "./pages/store-page.component";
 import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.component";
 import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestration-page.component";
 import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-best-practice-part-one-page.component";
+import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-best-practice-part-two-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -75,7 +75,7 @@ const pages = [
   DemoTypeaheadPageComponent,
   DemoSpendingWidgetPageComponent,
   ObservableBestPracticePartOnePageComponent,
-  DemoObsCreatedByNonAncestorPageComponent,
+  ObservableBestPracticePartTwoPageComponent,
   DemoOlympicAppPageComponent,
   ModelPartOnePageComponent,
   ModelPartTwoPageComponent,

@@ -1,0 +1,46 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Observable Best Practice: Part 2</h1>
+  <p>Welcome back. In this article, we will cover the next pattern, which is also the more widely used one.</p>
+  <h3>Non ancestor-descendent relation</h3>
+  <p>In the dream world, our system should allow an observable relation to be established between any two
+  components. Well, very likely, one won't be the other's ancestor. We cannot assume one will live longer
+  than the other. So it's not safe to let either of them <b>create</b> the observable. So there's the need
+  for a middle man, a broker, someone that lives longer than both. You might already figured it out ---
+    An common ancestor component will suffice. Let name them, the common ancestor A, the user B, and the
+  setter C. Here's how the process should go: when A initialize, A creates a <b>behavior subject</b> and
+  register it to DynamicObservableOrchestrationService. When B initializes, it know it needs the observable,
+  it just ask DynamicObservableOrchestrationService. The <b>behavior subject</b> is already there, the "consumer"
+    link is established. When C it knows it needs to yield an observable, but then it notice in its configuration
+    says keep this observable in store. So C will not try to register its observable to
+    DynamicObservableOrchestrationService, but instead, it'll ask for the <b>behavior subject</b> and
+    pump the local observables' emissions into it. When A needs to die, it'll revoke the <b>behavior subject</b>,
+    but it's fine since B and C should already be dead.
+  </p>
+  <p>
+    We borrowed a popular jargon to the CD framework for the role A is playing. We says A hosts a <b>store</b> --- a map
+    that holds the latest states for each key. The keys in our case are observable id, and the latest states are kept
+    by the behavior subjects. We already talked about the Store in previous article, so you should be familiar with the
+    what and how. Now you see the why.
+  </p>
+  <p>Like before, an live example is prepared to demo this relation. The post office is A. Then
+  there are 2 pen pal components. Each of them is both B and C at the same time(just to make the story
+    interesting) because they receive letters from and writes letters to each other.
+    Two public observables (behavior subject is a specialized observable) are created,
+    each representing the latest letter from each person. </p>
+  <p>We can simulate the total removal from the world of one person by clicking the button above it.
+  We can click again to bring it back. You can try: remove someone, then let the other send a new letter.
+    Then bring him back. You'll find he still gets the latest letter. This is all owing to our trusted
+  post office component.</p>
+  <hr>
+  <h3>Penpal Demo</h3>
+  <demo-toggle>
+    <ng-template demo-toggle-target>
+      <demo-post-office [config]="config"></demo-post-office>
+    </ng-template>
+  </demo-toggle>
+
+  <hr>
+  <h3>The Configuration</h3>
+  <pre prism class="dark" language="javascript" [code]="configCode"></pre>
+
+</div>
