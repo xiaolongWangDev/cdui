@@ -2,7 +2,8 @@ import {
   AnyComponentConfiguration,
   ComponentConfiguration,
   ConsumeType,
-  ExcludedAttributes, YieldType
+  ExcludedAttributes,
+  YieldType
 } from "configuration-driven-core";
 import {TabComponent} from "./tab.component";
 
@@ -15,17 +16,19 @@ export class TabConfiguration extends ComponentConfiguration<TabComponent> {
 
   constructor(args: SimpleConfig) {
     super();
-    const config = {
+    const config: Omit<TabConfiguration, ExcludedAttributes> = {
       tabLabels: args.tabLabels,
       components: args.components,
       ...(args.activeTabObservable && {
         consumingObservables: {
-          activeTab: args.activeTabObservable
+          activeTab: args.activeTabObservable,
         },
         yieldingObservables: {
-          activeTab: args.activeTabObservable
+          activeTab: {
+            observableId: args.activeTabObservable
+          }
         },
-        keepInStore: ["activeTab"]
+        keepInStore: [args.activeTabObservable]
       })
     }
 

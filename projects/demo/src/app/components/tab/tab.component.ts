@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {AnyComponentConfiguration, ConfigurationDrivenComponent, markAsTracked,} from "configuration-driven-core";
 import {TabConfiguration} from "./tab.config";
 import {BehaviorSubject, Observable} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {distinctUntilChanged, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: "demo-tab",
@@ -33,13 +33,17 @@ export class TabComponent extends ConfigurationDrivenComponent<TabConfiguration>
     if (this.config.consumingObservables.activeTab !== undefined) {
       this.obsService.getObservable(this.config.consumingObservables.activeTab)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(val => this.activeTab$.next(val));
+        .subscribe(val => {
+          if (val !== this.activeTab$.getValue()) {
+            this.activeTab$.next(val)
+          }
+        });
     }
   }
 
   protected yieldObservablesFactories(): Record<string, () => Observable<any>> {
     return {
-      [this.config.yieldingObservables.activeTab.observableId]: () => this.activeTab$
+      [this.config.yieldingObservables.activeTab.observableId]: () => this.activeTab$.pipe(distinctUntilChanged())
     }
   }
 }
