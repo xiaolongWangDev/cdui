@@ -8,5 +8,6 @@ export * from './lib/component/base/component-configuration';
 export * from './lib/component/store/store.config';
 export * from './lib/directive/dynamic-directive';
 export * from './lib/service/dynamic-observable-orchestration.service';
+export * from './lib/service/construction.service';
 export * from './lib/configuration-driven-core.module';
 export * from './lib/Helper'

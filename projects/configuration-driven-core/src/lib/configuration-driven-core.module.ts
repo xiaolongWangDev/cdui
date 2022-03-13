@@ -2,6 +2,7 @@ import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {DynamicDirective} from "./directive/dynamic-directive";
 import {DynamicObservableOrchestrationService} from "./service/dynamic-observable-orchestration.service";
+import {ConstructionService} from "./service/construction.service";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ export class ConfigurationDrivenCoreModule {
   static forRoot(): ModuleWithProviders<ConfigurationDrivenCoreModule> {
     return {
       ngModule: ConfigurationDrivenCoreModule,
-      providers: [DynamicObservableOrchestrationService]
+      providers: [DynamicObservableOrchestrationService, ConstructionService]
     };
   }
 }

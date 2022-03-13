@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {StoreConfiguration} from "configuration-driven-core";
 import {AlertConfiguration} from "../components/alert/alert.config";
 import {ScatterConfig} from "../components/highcharts/scatter/scatter.config";
 import {BlockConfiguration} from "../components/block/block.config";
 import {ScatterData} from "../model/data";
+import {ConstructionService} from "configuration-driven-core";
 
 @Component({
   template: `
@@ -19,61 +19,79 @@ import {ScatterData} from "../model/data";
     </div>
   `
 })
-export class DemoScatterPageComponent {
-  config = demo_scatter_conf;
-  configCode =
-`new BlockConfiguration({
-  store: new StoreConfiguration({
-    states: {
-      "scatter_data": new ScatterData({
-        data: [[12, 30.1], [32, 12], [24, 55], [55, 0.44],
-          [98, 123], [0, 4], [45, 32], [2, 7.5],
-          [65, 41], [234, 24], [36, 99], [34, 9],
-        ]
-      })
+export class DemoScatterPageComponent {raw: any;
+  config: BlockConfiguration;
+  configCode: string;
+
+  constructor(private constructionService: ConstructionService) {
+    this.raw = {
+      _type: "BlockConfiguration",
+      components: [
+        {
+          _type: "AlertConfiguration",
+          type: "success",
+          htmlContent: `<p>This is a wrapper of Highcharts chart</p>`
+        }, {
+  _type: "BlockConfiguration",
+          store: {
+            _type: "StoreConfiguration",
+            states: {
+              "scatter_data": {
+                _type: "ScatterData",
+                data: [[12, 30.1], [32, 12], [24, 55], [55, 0.44],
+                  [98, 123], [0, 4], [45, 32], [2, 7.5],
+                  [65, 41], [234, 24], [36, 99], [34, 9],
+                ]
+              }
+            }
+          },
+          components: [
+            {
+              _type: "ScatterConfig",
+              title: "Another mysterious chart",
+              xTittle: "bar",
+              yTittle: "foo",
+              consumingObservables: {
+                data: "scatter_data"
+              }
+            },
+          ]
+        }]
     }
-  }),
-  components: [
-    new ScatterConfig({
-      title: "Another mysterious chart",
-      xTittle: "bar",
-      yTittle: "foo",
-      consumingObservables: {
-        data: "scatter_data"
-      }
-    }),
-  ]
-})`
+    this.config = constructionService.constructFrom(this.raw)
+    this.configCode = JSON.stringify(this.raw, null, "  ")
+  }
+
 }
 
-const demo_scatter_conf = new BlockConfiguration({
-  components: [
-    new AlertConfiguration({
-      type: "success",
-      htmlContent: `<p>This is a wrapper of Highcharts chart</p>`
-    }), new BlockConfiguration({
-      store: new StoreConfiguration({
-        states: {
-          "scatter_data": new ScatterData({
-            data: [[12, 30.1], [32, 12], [24, 55], [55, 0.44],
-              [98, 123], [0, 4], [45, 32], [2, 7.5],
-              [65, 41], [234, 24], [36, 99], [34, 9],
-            ]
-          })
-        }
-      }),
-      components: [
-        new ScatterConfig({
-          title: "Another mysterious chart",
-          xTittle: "bar",
-          yTittle: "foo",
-          consumingObservables: {
-            data: "scatter_data"
-          }
-        }),
-      ]
-    })]
-});
+// const demo_scatter_conf = new BlockConfiguration({
+//   components: [
+//     new AlertConfiguration({
+//       type: "success",
+//       htmlContent: `<p>This is a wrapper of Highcharts chart</p>`
+//     }), new BlockConfiguration({
+//       store: new StoreConfiguration({
+//         states: {
+//           "scatter_data": new ScatterData({
+//             data: [[12, 30.1], [32, 12], [24, 55], [55, 0.44],
+//               [98, 123], [0, 4], [45, 32], [2, 7.5],
+//               [65, 41], [234, 24], [36, 99], [34, 9],
+//             ]
+//           })
+//         }
+//       }),
+//       components: [
+//         new ScatterConfig({
+//           title: "Another mysterious chart",
+//           xTittle: "bar",
+//           yTittle: "foo",
+//           consumingObservables: {
+//             data: "scatter_data"
+//           }
+//         }),
+//       ]
+//     })]
+// });
 
 
 

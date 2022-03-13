@@ -3,7 +3,7 @@ import {PlaceholderConfig} from "../components/placeholder/placeholder.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
 import {TypeaheadConfiguration} from "../components/typeahead/typeahead.config";
 import {BlockConfiguration} from "../components/block/block.config";
-import {StoreConfiguration} from "configuration-driven-core";
+import {ConstructionService} from "configuration-driven-core";
 
 @Component({
   template: `
@@ -20,39 +20,18 @@ import {StoreConfiguration} from "configuration-driven-core";
   `
 })
 export class DemoTypeaheadPageComponent {
-  config = demo_typeahead_conf;
-  configCode =
-    `new BlockConfiguration({
-    store: new StoreConfiguration({
-      states: {
-        "selected_car": null,
-        "cars": ["audi", "bmw", "chevy", "dodge"]
-      }
-    }),
-    components: [
-      new TypeaheadConfiguration({
-          label: "Car brands:",
-          keepInStore: true,
-          optionsObservable: "cars",
-          selectionObservable: "selected_car"
-        }
-      ),
-      new PlaceholderConfig({
-        text: "I drive: ",
-        consumingObservables: {
-          value: "selected_car",
-        }
-      })
-    ]
-  }
-)`
-}
+  raw: any;
+  config: BlockConfiguration;
+  configCode: string;
 
-const demo_typeahead_conf = new BlockConfiguration({
-  components: [
-    new AlertConfiguration({
-      type: "success",
-      htmlContent: `
+  constructor(private constructionService: ConstructionService) {
+    this.raw = {
+      _type: "BlockConfiguration",
+      components: [
+        {
+          _type: "AlertConfiguration",
+          type: "success",
+          htmlContent: `
         <p>Based on ng-bootstrap typeahead component.</p>
         <p>It's very similar to the dropdown component.
         But it's added the capability to accept selected value
@@ -62,33 +41,81 @@ const demo_typeahead_conf = new BlockConfiguration({
         is (not) used.
         </p>
 `
-    }),
-    new BlockConfiguration({
-        store: new StoreConfiguration({
-          states: {
-            "selected_car": null,
-            "cars": ["audi", "bmw", "chevy", "dodge"]
-          }
-        }),
-        components: [
-          new TypeaheadConfiguration({
+        },
+        {
+          _type: "BlockConfiguration",
+          store: {
+            _type: "StoreConfiguration",
+            states: {
+              "selected_car": null,
+              "cars": ["audi", "bmw", "chevy", "dodge"]
+            }
+          },
+          components: [
+            {
+              _type: "TypeaheadConfiguration",
               label: "Car brands:",
               keepInStore: true,
               optionsObservable: "cars",
               selectionObservable: "selected_car"
+            },
+            {
+              _type: "PlaceholderConfig",
+              text: "I drive: ",
+              consumingObservables: {
+                value: "selected_car",
+              }
             }
-          ),
-          new PlaceholderConfig({
-            text: "I drive: ",
-            consumingObservables: {
-              value: "selected_car",
-            }
-          })
-        ]
-      }
-    ),
-  ]
-});
+          ]
+        }
+      ]
+    }
+    this.config = constructionService.constructFrom(this.raw)
+    this.configCode = JSON.stringify(this.raw, null, "  ")
+  }
+}
+
+// const demo_typeahead_conf = new BlockConfiguration({
+//   components: [
+//     new AlertConfiguration({
+//       type: "success",
+//       htmlContent: `
+//         <p>Based on ng-bootstrap typeahead component.</p>
+//         <p>It's very similar to the dropdown component.
+//         But it's added the capability to accept selected value
+//         from the outside. (to support chart click driven filter change
+//         in the Olympic App). Read the class for the detail.
+//         It also demos how "optional" observable (the newSelection field)
+//         is (not) used.
+//         </p>
+// `
+//     }),
+//     new BlockConfiguration({
+//         store: new StoreConfiguration({
+//           states: {
+//             "selected_car": null,
+//             "cars": ["audi", "bmw", "chevy", "dodge"]
+//           }
+//         }),
+//         components: [
+//           new TypeaheadConfiguration({
+//               label: "Car brands:",
+//               keepInStore: true,
+//               optionsObservable: "cars",
+//               selectionObservable: "selected_car"
+//             }
+//           ),
+//           new PlaceholderConfig({
+//             text: "I drive: ",
+//             consumingObservables: {
+//               value: "selected_car",
+//             }
+//           })
+//         ]
+//       }
+//     ),
+//   ]
+// });
 
 
 

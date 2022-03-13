@@ -63,6 +63,7 @@ import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestra
 import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-best-practice-part-one-page.component";
 import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-best-practice-part-two-page.component";
 import {CodeCardComponent} from "./components/prism/code-card.component";
+import {ConstructionService} from "../../../configuration-driven-core/src/lib/service/construction.service";
 
 const pages = [
   IntroductionPageComponent,
@@ -132,7 +133,8 @@ const pages = [
   ],
   providers: [
     DynamicObservableOrchestrationService,
-    MockApiService
+    ConstructionService,
+    MockApiService,
   ],
   exports: [
     PlaceholderComponent

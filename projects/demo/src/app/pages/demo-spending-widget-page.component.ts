@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {SpendingWidgetConfig} from "../components/spending-widget/spending-widget.config";
 import {AlertConfiguration} from "../components/alert/alert.config";
 import {BlockConfiguration} from "../components/block/block.config";
+import {ConstructionService} from "configuration-driven-core";
 
 @Component({
   template: `
@@ -19,10 +20,45 @@ import {BlockConfiguration} from "../components/block/block.config";
   `
 })
 export class DemoSpendingWidgetPageComponent {
-  config = demo_spending_widget_conf;
-  configCode = `new SpendingWidgetConfig()`
+  raw: any;
+  config: BlockConfiguration;
+  configCode: string;
+
+  constructor(private constructionService: ConstructionService) {
+    this.raw = {
+      _type: "BlockConfiguration",
+      components: [
+        {
+          _type: "AlertConfiguration",
+          type: "success",
+          htmlContent: `
+<p>The page demos the use of self-contained widget components.</p>
+<p>The component does not rely on external observables. As a result, it requires zero configuration from the outside.
+This is how we'd keep the configuration manageable - By creating self-contained widget units, redundant configuration details
+can be hidden from the end programmer/configurator.
+</p>
+<p>Inside, it still uses configuration driven components and wire them together by observables.</p>
+<p>In this example, the SpendingWidgetComponent consists of a ControlBarComponent and a SpendingHeatMapComponent.</p>
+<p>The SpendingHeatMapComponent itself shows how easy it is to extend existing CD component and add new features.
+</p>
+<p>
+A very brief note on the data flow: mock api service -> dropdown options -> dropdown selections -> mock api service -> heatmap data
+</p>
+<p>You probably noticed short delays when the dropdown and the heatmap is populating.
+ This is set up intentional in the mock data service to mimic retrieving data from a server. </p>
+`
+        },
+        {
+          _type: "SpendingWidgetConfig"
+        }]
+    }
+    this.config = constructionService.constructFrom(this.raw)
+    this.configCode = JSON.stringify(this.raw, null, "  ")
+  }
+
+
   configModelCode =
-`export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent> {
+    `export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent> {
   public readonly controlBar: ControlBarConfig;
   public readonly heatMap: SpendingHeatMapConfig;
   public readonly consumingObservables: ConsumeType<['xAxis', 'yAxis']>;
@@ -82,29 +118,29 @@ const DEFAULT_CONFIG_TEMPLATE = {
 }`
 }
 
-const demo_spending_widget_conf = new BlockConfiguration({
-  components: [
-    new AlertConfiguration({
-      type: "success",
-      htmlContent: `
-<p>The page demos the use of self-contained widget components.</p>
-<p>The component does not rely on external observables. As a result, it requires zero configuration from the outside.
-This is how we'd keep the configuration manageable - By creating self-contained widget units, redundant configuration details
-can be hidden from the end programmer/configurator.
-</p>
-<p>Inside, it still uses configuration driven components and wire them together by observables.</p>
-<p>In this example, the SpendingWidgetComponent consists of a ControlBarComponent and a SpendingHeatMapComponent.</p>
-<p>The SpendingHeatMapComponent itself shows how easy it is to extend existing CD component and add new features.
-</p>
-<p>
-A very brief note on the data flow: mock api service -> dropdown options -> dropdown selections -> mock api service -> heatmap data
-</p>
-<p>You probably noticed short delays when the dropdown and the heatmap is populating.
- This is set up intentional in the mock data service to mimic retrieving data from a server. </p>
-`
-    }),
-    new SpendingWidgetConfig()]
-});
+// const demo_spending_widget_conf = new BlockConfiguration({
+//   components: [
+//     new AlertConfiguration({
+//       type: "success",
+//       htmlContent: `
+// <p>The page demos the use of self-contained widget components.</p>
+// <p>The component does not rely on external observables. As a result, it requires zero configuration from the outside.
+// This is how we'd keep the configuration manageable - By creating self-contained widget units, redundant configuration details
+// can be hidden from the end programmer/configurator.
+// </p>
+// <p>Inside, it still uses configuration driven components and wire them together by observables.</p>
+// <p>In this example, the SpendingWidgetComponent consists of a ControlBarComponent and a SpendingHeatMapComponent.</p>
+// <p>The SpendingHeatMapComponent itself shows how easy it is to extend existing CD component and add new features.
+// </p>
+// <p>
+// A very brief note on the data flow: mock api service -> dropdown options -> dropdown selections -> mock api service -> heatmap data
+// </p>
+// <p>You probably noticed short delays when the dropdown and the heatmap is populating.
+//  This is set up intentional in the mock data service to mimic retrieving data from a server. </p>
+// `
+//     }),
+//     new SpendingWidgetConfig()]
+// });
 
 
 
