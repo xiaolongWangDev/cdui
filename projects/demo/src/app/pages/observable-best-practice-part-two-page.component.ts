@@ -41,7 +41,6 @@ export class ObservableBestPracticePartTwoPageComponent {
         }
       },
       store: {
-        _type: "StoreConfiguration",
         states: {"alice_mail": "", "bob_mail": ""}
       }
     }
@@ -50,35 +49,4 @@ export class ObservableBestPracticePartTwoPageComponent {
     this.configCode = JSON.stringify(this.raw, null, "  ")
   }
 }
-
-// const observable_best_practice_part_two_page_conf = new PostOfficeConfig({
-//   palA: new PenPalConfig({
-//     name: "Alice",
-//     yieldingObservables: {
-//       sendOut: {
-//         observableId: "alice_mail"
-//       },
-//     },
-//     keepInStore: ["alice_mail"],
-//     consumingObservables: {
-//       receive: "bob_mail"
-//     }
-//   }),
-//   palB: new PenPalConfig({
-//     name: "Bob",
-//     yieldingObservables: {
-//       sendOut: {
-//         observableId: "bob_mail"
-//       },
-//     },
-//     keepInStore: ["bob_mail"],
-//     consumingObservables: {
-//       receive: "alice_mail"
-//     }
-//   }),
-//   store: new StoreConfiguration({
-//     states: {"alice_mail": "", "bob_mail": ""}
-//   })
-// })
-
 

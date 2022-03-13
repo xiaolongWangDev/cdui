@@ -19,7 +19,8 @@ import {ConstructionService} from "configuration-driven-core";
     </div>
   `
 })
-export class DemoScatterPageComponent {raw: any;
+export class DemoScatterPageComponent {
+  raw: any;
   config: BlockConfiguration;
   configCode: string;
 
@@ -32,9 +33,8 @@ export class DemoScatterPageComponent {raw: any;
           type: "success",
           htmlContent: `<p>This is a wrapper of Highcharts chart</p>`
         }, {
-  _type: "BlockConfiguration",
+          _type: "BlockConfiguration",
           store: {
-            _type: "StoreConfiguration",
             states: {
               "scatter_data": {
                 _type: "ScatterData",
@@ -63,35 +63,6 @@ export class DemoScatterPageComponent {raw: any;
   }
 
 }
-
-// const demo_scatter_conf = new BlockConfiguration({
-//   components: [
-//     new AlertConfiguration({
-//       type: "success",
-//       htmlContent: `<p>This is a wrapper of Highcharts chart</p>`
-//     }), new BlockConfiguration({
-//       store: new StoreConfiguration({
-//         states: {
-//           "scatter_data": new ScatterData({
-//             data: [[12, 30.1], [32, 12], [24, 55], [55, 0.44],
-//               [98, 123], [0, 4], [45, 32], [2, 7.5],
-//               [65, 41], [234, 24], [36, 99], [34, 9],
-//             ]
-//           })
-//         }
-//       }),
-//       components: [
-//         new ScatterConfig({
-//           title: "Another mysterious chart",
-//           xTittle: "bar",
-//           yTittle: "foo",
-//           consumingObservables: {
-//             data: "scatter_data"
-//           }
-//         }),
-//       ]
-//     })]
-// });
 
 
 

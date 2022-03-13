@@ -1,6 +1,5 @@
 import {AnyComponentConfiguration} from "../model/types";
 import {Injectable} from "@angular/core";
-import {StoreConfiguration} from "../component/store/store.config";
 
 type ConstructableJson = { _type: string, [field: string]: any };
 
@@ -9,11 +8,10 @@ export class ConstructionService {
   private readonly typeMap: Map<string, (args: any) => AnyComponentConfiguration> = new Map<string, (args: any) => AnyComponentConfiguration>();
 
   constructor() {
-    this.typeMap.set("StoreConfiguration", args => new StoreConfiguration(args));
   }
 
-  registerType(type: string, creator: (args: any) => AnyComponentConfiguration){
-    if(this.typeMap.has(type)){
+  registerType(type: string, creator: (args: any) => AnyComponentConfiguration) {
+    if (this.typeMap.has(type)) {
       throw new Error(`${type} is already registered. Check for naming collision or bad code.`);
     }
     this.typeMap.set(type, creator);
@@ -31,7 +29,7 @@ export class ConstructionService {
       } else if (Array.isArray(fieldValue)) {
         const newArray = [];
         for (const arrayValue of fieldValue) {
-          if(arrayValue._type) {
+          if (arrayValue._type) {
             newArray.push(this.constructFrom(arrayValue));
           } else {
             newArray.push(arrayValue);

@@ -5,16 +5,11 @@ import {Component} from '@angular/core';
 })
 export class StorePageComponent {
   storeClassCode=
-`export class StoreConfiguration extends ComponentConfiguration<null> {
-  public readonly states: Record<string, any>;
-
-  constructor(args: Omit<StoreConfiguration, ExcludedAttributes>) {
-    super();
-    Object.assign(this, {...args, componentType: null});
-  }
+`export interface StoreConfiguration {
+  readonly states: Record<string, unknown>;
 }`
   storeInstanceCode=
-`store: new StoreConfiguration({
+`store: {
   states: {"alice_mail": "", "bob_mail": ""}
-})`
+}`
 }

@@ -17,19 +17,19 @@ export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetC
 }
 
 // observable IDs
-const SPENDING_X_AXIS = "spending_x_axis";
-const SPENDING_Y_AXIS = "spending_y_axis";
+const SPENDING_X_AXIS: string = "spending_x_axis";
+const SPENDING_Y_AXIS: string = "spending_y_axis";
 const SPENDING_X_DROPDOWN_OPTIONS = "spending_x_dropdown_options";
 const SPENDING_Y_DROPDOWN_OPTIONS = "spending_y_dropdown_options";
 const SPENDING_HEAT_MAP_DATA = "spending_heat_map_data";
 
 const DEFAULT_CONFIG_TEMPLATE = {
-  store: new StoreConfiguration({
+  store: {
     states: {
       [SPENDING_X_AXIS]: null,
       [SPENDING_Y_AXIS]: null
-    },
-  }),
+    }
+  } as StoreConfiguration,
   consumingObservables: {
     xAxis: SPENDING_X_AXIS,
     yAxis: SPENDING_Y_AXIS,

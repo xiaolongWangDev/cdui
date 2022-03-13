@@ -61,25 +61,4 @@ export class DemoTabPageComponent {
   }
 }
 
-// const demo_tab_conf = new BlockConfiguration({
-//   components: [
-//     new AlertConfiguration({
-//       type: "success",
-//       htmlContent: `
-//         <p>Based on ng-bootstrap nav component.</p>
-//         <p>Each tab content should be a dynamic CD component.
-//         In this case, they are PlaceholderComponent.</p>
-//         <p>The use case here is the drive we implemented a
-//         better version of [cdDynamic]
-//         </p>`
-//     }), new TabConfiguration({
-//       tabLabels: ["Tab X", "Tab Y", "Tab Z"],
-//       components: [
-//         new PlaceholderConfig({text: "Foo"}),
-//         new PlaceholderConfig({text: "Bar"}),
-//         new PlaceholderConfig({text: "FooBar"})]
-//     })]
-// });
-
-
 

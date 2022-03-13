@@ -11,3 +11,7 @@ export class ObservableReference {
 }
 
 export type ValueOrObservableReference = any | ObservableReference;
+
+export interface StoreConfiguration {
+  readonly states: Record<string, unknown>;
+}

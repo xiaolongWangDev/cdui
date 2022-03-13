@@ -45,7 +45,6 @@ export class DemoTypeaheadPageComponent {
         {
           _type: "BlockConfiguration",
           store: {
-            _type: "StoreConfiguration",
             states: {
               "selected_car": null,
               "cars": ["audi", "bmw", "chevy", "dodge"]
@@ -74,48 +73,5 @@ export class DemoTypeaheadPageComponent {
     this.configCode = JSON.stringify(this.raw, null, "  ")
   }
 }
-
-// const demo_typeahead_conf = new BlockConfiguration({
-//   components: [
-//     new AlertConfiguration({
-//       type: "success",
-//       htmlContent: `
-//         <p>Based on ng-bootstrap typeahead component.</p>
-//         <p>It's very similar to the dropdown component.
-//         But it's added the capability to accept selected value
-//         from the outside. (to support chart click driven filter change
-//         in the Olympic App). Read the class for the detail.
-//         It also demos how "optional" observable (the newSelection field)
-//         is (not) used.
-//         </p>
-// `
-//     }),
-//     new BlockConfiguration({
-//         store: new StoreConfiguration({
-//           states: {
-//             "selected_car": null,
-//             "cars": ["audi", "bmw", "chevy", "dodge"]
-//           }
-//         }),
-//         components: [
-//           new TypeaheadConfiguration({
-//               label: "Car brands:",
-//               keepInStore: true,
-//               optionsObservable: "cars",
-//               selectionObservable: "selected_car"
-//             }
-//           ),
-//           new PlaceholderConfig({
-//             text: "I drive: ",
-//             consumingObservables: {
-//               value: "selected_car",
-//             }
-//           })
-//         ]
-//       }
-//     ),
-//   ]
-// });
-
 
 

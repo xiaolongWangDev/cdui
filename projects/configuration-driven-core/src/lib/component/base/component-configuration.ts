@@ -1,6 +1,5 @@
 import {Type} from "@angular/core";
-import {AnyConfigurationDrivenComponent} from "../../model/types";
-import {StoreConfiguration} from "../store/store.config";
+import {AnyConfigurationDrivenComponent, StoreConfiguration} from "../../model/types";
 
 type NonEmptyStringArray = [string, ...string[]]
 

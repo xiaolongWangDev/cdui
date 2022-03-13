@@ -45,7 +45,6 @@ export class DemoOlympicAppPageComponent {
         {
           _type: "OlympicAppConfig",
           store: {
-            _type: "StoreConfiguration",
             states: {
               selected_athlete: null,
               selected_country: null,

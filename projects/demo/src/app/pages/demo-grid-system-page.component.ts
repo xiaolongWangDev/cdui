@@ -89,38 +89,5 @@ export class DemoGridSystemPageComponent {
     this.config = constructionService.constructFrom(this.raw)
     this.configCode = JSON.stringify(this.raw, null, "  ")
   }
-
 }
-
-// const demo_grid_system_conf = new BlockConfiguration({
-//   components: [
-//     new AlertConfiguration({
-//       type: "success",
-//       htmlContent: `
-//               <p>Block and Row components</p>
-//                <p>Using the RowComponent, you can have up to 12 columns in a row. The width are customization.
-//                In each column, you can put any configuration driven component.</p>
-//               <p>The BlockComponent can hold numbers any of configuration driven components. They will extend vertically.</p>
-//               `
-//     }),
-//     new BlockConfiguration({
-//       components: [
-//         new RowConfiguration({
-//           colWidth: [3, 3, 3, 3],
-//           components: [new PlaceholderConfig({text: "(1,1)"}),
-//             new PlaceholderConfig({text: "(1,2)"}),
-//             new PlaceholderConfig({text: "(1,3)"}),
-//             new PlaceholderConfig({text: "(1,4)"})]
-//         }),
-//         new RowConfiguration({
-//           colWidth: [3, 3, 3, 3],
-//           components: [new PlaceholderConfig({text: "(2,1)"}),
-//             new PlaceholderConfig({text: "(2,2)"}),
-//             new PlaceholderConfig({text: "(2,3)"}),
-//             new PlaceholderConfig({text: "(2,4)"})]
-//         })
-//       ]
-//     })]
-// });
-
 
