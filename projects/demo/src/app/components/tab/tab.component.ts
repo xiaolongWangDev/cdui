@@ -34,9 +34,7 @@ export class TabComponent extends ConfigurationDrivenComponent<TabConfiguration>
       this.obsService.getObservable(this.config.consumingObservables.activeTab)
         .pipe(takeUntil(this.destroy$))
         .subscribe(val => {
-          if (val !== this.activeTab$.getValue()) {
-            this.activeTab$.next(val)
-          }
+          this.activeTab$.next(val)
         });
     }
   }
