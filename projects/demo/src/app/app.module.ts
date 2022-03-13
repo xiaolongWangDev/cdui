@@ -64,6 +64,7 @@ import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-bes
 import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-best-practice-part-two-page.component";
 import {CodeCardComponent} from "./components/prism/code-card.component";
 import {ConstructionService} from "../../../configuration-driven-core/src/lib/service/construction.service";
+import {FromJsonPageComponent} from "./pages/from-json-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -81,6 +82,7 @@ const pages = [
   DemoOlympicAppPageComponent,
   ModelPartOnePageComponent,
   ModelPartTwoPageComponent,
+  FromJsonPageComponent,
   StorePageComponent,
   DynamicComponentPageComponent,
   ObservableOrchestrationPageComponent

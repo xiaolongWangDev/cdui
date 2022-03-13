@@ -1,0 +1,19 @@
+<div class="mt-2 ml-5 mr-5 mb-2">
+  <h1>Constructing from JSON</h1>
+  <p>Previously we learned that the CD components take configuration object which are instances
+  of our configuration model classes. In realworld application, the class constructor calls
+  (e.g. <b>new PenPalConfig()</b>) aren't ideal because most of the time, we want to use pure JSON
+    so that the configuration can be serialized and deserialized from.
+  </p>
+  <p><b>ConstructionService</b> is to help with that. It takes raw JSON and returns an object with
+  corresponding parts replaced with model class instance. The JSON need to have <b>_type</b> fields
+  to indicate the class that the JSON should be converted to. Here is an example of the raw JSON:</p>
+  <code-card title="Raw JSON" [code]="schoolRawCode"></code-card>
+  <p>And here's the constructed object:</p>
+  <code-card title="Constructed" [code]="schoolUseClassesCode"></code-card>
+  <h3>Type registration</h3>
+  <p>When you write your own components and want them to be constructable from JSON, you need
+  to register them to the <b>ConstructionService</b>. And obviously, make sure the registration
+    is done before trying to deserialize. </p>
+  <code-card title="Register" [code]="registerCode"></code-card>
+</div>

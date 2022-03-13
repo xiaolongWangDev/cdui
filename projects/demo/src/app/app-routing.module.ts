@@ -18,12 +18,14 @@ import {DynamicComponentPageComponent} from "./pages/dynamic-component-page.comp
 import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestration-page.component";
 import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-best-practice-part-one-page.component";
 import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-best-practice-part-two-page.component";
+import {FromJsonPageComponent} from "./pages/from-json-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
   {path: "introduction", component: IntroductionPageComponent},
   {path: "model_part_one", component: ModelPartOnePageComponent},
   {path: "model_part_two", component: ModelPartTwoPageComponent},
+  {path: "from_json", component: FromJsonPageComponent},
   {path: "store", component: StorePageComponent},
   {path: "dynamic_component", component: DynamicComponentPageComponent},
   {path: "observable_orchestration", component: ObservableOrchestrationPageComponent},

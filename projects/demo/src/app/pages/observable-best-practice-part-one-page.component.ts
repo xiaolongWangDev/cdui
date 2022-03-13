@@ -8,75 +8,79 @@ import {ConstructionService} from "configuration-driven-core";
   templateUrl: "observable-best-practice-part-one-page.component.html"
 })
 export class ObservableBestPracticePartOnePageComponent {
+  raw: any;
   config: HeadmasterConfiguration;
   configCode: string;
 
   constructor(private constructionService: ConstructionService) {
-    this.config = constructionService.constructFrom({
-      _type: "HeadmasterConfiguration",
-      name: "George", yieldingObservables: {
-        tuition: {
-          observableId: "tuition_amount_from_George"
-        }
-      },
-      manages: [
-        {
-          _type: "TeacherConfiguration",
-          name: "Tom", yieldingObservables: {
-            homework: {
-              observableId: "homework_from_tom"
-            }
-          },
-          teaches: [
-            {
-              _type: "StudentConfiguration",
-              name: "Alice",
-              consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
-            },
-            {
-              _type: "StudentConfiguration",
-              name: "Bob",
-              consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
-            },
-            {
-              _type: "StudentConfiguration",
-              name: "Charlie",
-              consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
-            },
-          ]
-        },
-        {
-          _type: "TeacherConfiguration",
-          name: "Jack", yieldingObservables: {
-            homework: {
-              observableId: "homework_from_jack"
-            }
-          },
-          teaches: [
-            {
-              _type: "StudentConfiguration",
-              name: "Donald",
-              consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
-            },
-            {
-              _type: "StudentConfiguration",
-              name: "Edward",
-              consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
-            },
-            {
-              _type: "StudentConfiguration",
-              name: "Frank",
-              consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
-            },
-          ]
-        },
-      ]
-    })
-    this.configCode = JSON.stringify(this.config,null, "  ")
+    this.raw = schoolRaw;
+    this.config = constructionService.constructFrom(this.raw)
+    this.configCode = JSON.stringify(this.raw,null, "  ")
   }
 }
 
-// const useConstruction = new HeadmasterConfiguration({
+export const schoolRaw = {
+  _type: "HeadmasterConfiguration",
+  name: "George", yieldingObservables: {
+    tuition: {
+      observableId: "tuition_amount_from_George"
+    }
+  },
+  manages: [
+    {
+      _type: "TeacherConfiguration",
+      name: "Tom", yieldingObservables: {
+        homework: {
+          observableId: "homework_from_tom"
+        }
+      },
+      teaches: [
+        {
+          _type: "StudentConfiguration",
+          name: "Alice",
+          consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
+        },
+        {
+          _type: "StudentConfiguration",
+          name: "Bob",
+          consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
+        },
+        {
+          _type: "StudentConfiguration",
+          name: "Charlie",
+          consumingObservables: {homework: "homework_from_tom", tuition: "tuition_amount_from_George"}
+        },
+      ]
+    },
+    {
+      _type: "TeacherConfiguration",
+      name: "Jack", yieldingObservables: {
+        homework: {
+          observableId: "homework_from_jack"
+        }
+      },
+      teaches: [
+        {
+          _type: "StudentConfiguration",
+          name: "Donald",
+          consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
+        },
+        {
+          _type: "StudentConfiguration",
+          name: "Edward",
+          consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
+        },
+        {
+          _type: "StudentConfiguration",
+          name: "Frank",
+          consumingObservables: {homework: "homework_from_jack", tuition: "tuition_amount_from_George"}
+        },
+      ]
+    },
+  ]
+}
+
+// export const schoolUseClasses = new HeadmasterConfiguration({
 //     name: "George", yieldingObservables: {
 //       tuition: {
 //         observableId: "tuition_amount_from_George"
