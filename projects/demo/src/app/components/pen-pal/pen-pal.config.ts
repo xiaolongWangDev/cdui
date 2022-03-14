@@ -1,7 +1,7 @@
 import {ComponentConfiguration, ConsumeType, YieldType, ExcludedAttributes} from "configuration-driven-core";
 import {PenPalComponent} from "./pen-pal.component";
 
-export class PenPalConfig extends ComponentConfiguration<PenPalComponent> {
+export class PenPalConfig extends ComponentConfiguration {
   public readonly name: string;
   public readonly consumingObservables: ConsumeType<["receive"]>;
   public readonly yieldingObservables: YieldType<{ sendOut: [] }>;

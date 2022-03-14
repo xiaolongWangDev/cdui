@@ -2,7 +2,7 @@ import {TeacherComponent} from "./teacher.component";
 import {StudentConfiguration} from "../student/student.config";
 import {ComponentConfiguration, ExcludedAttributes, YieldType} from "configuration-driven-core";
 
-export class TeacherConfiguration extends ComponentConfiguration<TeacherComponent> {
+export class TeacherConfiguration extends ComponentConfiguration {
   public readonly name: string;
   public readonly teaches: StudentConfiguration[];
   public readonly yieldingObservables: YieldType<{ homework: [] }>;

@@ -2,7 +2,7 @@ import {ComponentConfiguration, ConsumeType, ExcludedAttributes} from "configura
 import {HeatMapComponent} from "./heat-map.component";
 
 
-export class HeatMapConfig extends ComponentConfiguration<HeatMapComponent<any>> {
+export class HeatMapConfig extends ComponentConfiguration {
   title?: string;
   xTittle?: string;
   yTittle?: string;

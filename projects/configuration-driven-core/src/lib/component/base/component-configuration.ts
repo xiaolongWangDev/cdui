@@ -31,10 +31,10 @@ export type ConsumeType<T extends ConsumeParamType> = {
 }
 export type ExcludedAttributes = "componentType" | "getYieldingObservables" | "getConsumingObservables"
 
-export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent> {
+export class ComponentConfiguration {
 
   // what component am I going to create
-  public readonly componentType: Type<COMP_TYPE>;
+  public readonly componentType: Type<AnyConfigurationDrivenComponent>;
   // give an id so that the created component can be identified
   public readonly id?: string;
   // which observables that I yield actually need to be kept in a store instead of locally

@@ -2,7 +2,7 @@ import {ComponentConfiguration, YieldType, ExcludedAttributes} from "configurati
 import {HeadmasterComponent} from "./headmaster.component";
 import {TeacherConfiguration} from "../teacher/teacher.config";
 
-export class HeadmasterConfiguration extends ComponentConfiguration<HeadmasterComponent> {
+export class HeadmasterConfiguration extends ComponentConfiguration {
   public readonly name: string;
   public readonly manages: TeacherConfiguration[];
   public readonly yieldingObservables: YieldType<{ tuition: [] }>;

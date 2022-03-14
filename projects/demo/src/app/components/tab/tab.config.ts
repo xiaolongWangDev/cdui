@@ -1,5 +1,4 @@
 import {
-  AnyComponentConfiguration,
   ComponentConfiguration,
   ConsumeType,
   ExcludedAttributes,
@@ -8,9 +7,9 @@ import {
 import {TabComponent} from "./tab.component";
 
 
-export class TabConfiguration extends ComponentConfiguration<TabComponent> {
+export class TabConfiguration extends ComponentConfiguration {
   public readonly tabLabels: string[];
-  public readonly components: AnyComponentConfiguration[];
+  public readonly components: ComponentConfiguration[];
   public readonly consumingObservables: ConsumeType<["activeTab"]>;
   public readonly yieldingObservables: YieldType<{ activeTab: [] }>;
 
@@ -41,7 +40,7 @@ export class TabConfiguration extends ComponentConfiguration<TabComponent> {
 
 type SimpleConfig = {
   tabLabels: string[];
-  components: AnyComponentConfiguration[];
+  components: ComponentConfiguration[];
   activeTabObservable?: string;
 }
 

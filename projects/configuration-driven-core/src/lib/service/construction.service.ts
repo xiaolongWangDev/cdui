@@ -1,16 +1,16 @@
-import {AnyComponentConfiguration} from "../model/types";
 import {Injectable} from "@angular/core";
+import {ComponentConfiguration} from "../component/base/component-configuration";
 
 type ConstructableJson = { _type: string, [field: string]: any };
 
 @Injectable()
 export class ConstructionService {
-  private readonly typeMap: Map<string, (args: any) => AnyComponentConfiguration> = new Map<string, (args: any) => AnyComponentConfiguration>();
+  private readonly typeMap: Map<string, (args: any) => ComponentConfiguration> = new Map<string, (args: any) => ComponentConfiguration>();
 
   constructor() {
   }
 
-  registerType(type: string, creator: (args: any) => AnyComponentConfiguration) {
+  registerType(type: string, creator: (args: any) => ComponentConfiguration) {
     if (this.typeMap.has(type)) {
       throw new Error(`${type} is already registered. Check for naming collision or bad code.`);
     }

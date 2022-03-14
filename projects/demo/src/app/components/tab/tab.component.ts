@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {AnyComponentConfiguration, ConfigurationDrivenComponent, markAsTracked,} from "configuration-driven-core";
+import {ConfigurationDrivenComponent, markAsTracked} from "configuration-driven-core";
 import {TabConfiguration} from "./tab.config";
 import {BehaviorSubject, Observable} from "rxjs";
 import {distinctUntilChanged, takeUntil} from "rxjs/operators";
@@ -24,10 +24,6 @@ import {distinctUntilChanged, takeUntil} from "rxjs/operators";
 })
 export class TabComponent extends ConfigurationDrivenComponent<TabConfiguration> {
   activeTab$: BehaviorSubject<string | number> = markAsTracked(new BehaviorSubject<string | number>(1), "active_tab_TabComponent");
-
-  protected getConfigurations(): AnyComponentConfiguration[] {
-    return this.config.components;
-  }
 
   protected setLocalData(): void {
     if (this.config.consumingObservables.activeTab !== undefined) {

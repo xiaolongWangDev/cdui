@@ -4,7 +4,7 @@ import {SpendingHeatMapConfig} from "../spending-heat-map/spending-heat-map.conf
 import {ControlBarConfig} from "../control-bar/control-bar.config";
 import {DropdownConfiguration} from "../dropdown/dropdown.config";
 
-export class SpendingWidgetConfig extends ComponentConfiguration<SpendingWidgetComponent> {
+export class SpendingWidgetConfig extends ComponentConfiguration {
   public readonly controlBar: ControlBarConfig;
   public readonly heatMap: SpendingHeatMapConfig;
   public readonly consumingObservables: ConsumeType<['xAxis', 'yAxis']>;

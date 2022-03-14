@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component} from "@angular/core";
 import {Observable} from "rxjs";
 import {Options} from "highcharts";
 import {
-  AnyComponentConfiguration,
+  ComponentConfiguration,
   ConfigurationDrivenComponent,
   DynamicObservableOrchestrationService
 } from "configuration-driven-core";
@@ -11,7 +11,7 @@ import {configuredHighchartsLibrary} from "../../model/highcharts-import";
 @Component({
   template: ``
 })
-export abstract class BaseChartComponentComponent<CONF_TYPE extends AnyComponentConfiguration>
+export abstract class BaseChartComponentComponent<CONF_TYPE extends ComponentConfiguration>
   extends ConfigurationDrivenComponent<CONF_TYPE> {
   highchartsLibrary = configuredHighchartsLibrary;
   options$: Observable<Options>;

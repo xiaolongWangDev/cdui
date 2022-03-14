@@ -7,10 +7,10 @@ import {AlertConfiguration} from "../components/alert/alert.config";
 })
 export class ModelPartOnePageComponent {
   componentConfigurationCode =
-`export class ComponentConfiguration<COMP_TYPE extends AnyConfigurationDrivenComponent> {
+`export class ComponentConfiguration {
 
   // what component am I going to create
-  public readonly componentType: Type<COMP_TYPE>;
+  public readonly componentType: Type<AnyConfigurationDrivenComponent>;
   // give an id so that the created component can be identified
   public readonly id?: string;
   // which observables that I yield actually need to be kept in a store instead of locally
@@ -26,10 +26,11 @@ export class ModelPartOnePageComponent {
   public getConsumingObservables<CONCRETE_CONSUME_TYPE extends ConsumeParamType>(): ConsumeType<CONCRETE_CONSUME_TYPE> {
     return (this as any)['consumingObservables'];
   }
-}`
+}
+`
 
   penPalCode =
-`export class PenPalConfig extends ComponentConfiguration<PenPalComponent> {
+`export class PenPalConfig extends ComponentConfiguration {
   public readonly name: string;
   public readonly consumingObservables: ConsumeType<["receive"]>;
   public readonly yieldingObservables: YieldType<{ sendOut: [] }>;
@@ -38,7 +39,8 @@ export class ModelPartOnePageComponent {
     super();
     Object.assign(this, {...args, componentType: PenPalComponent});
   }
-}`
+}
+`
 
   penPalInstanceCode =
 `new PenPalConfig({

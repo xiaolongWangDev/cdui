@@ -1,10 +1,10 @@
-import {AnyComponentConfiguration, ComponentConfiguration, ExcludedAttributes} from "configuration-driven-core";
+import {ComponentConfiguration, ExcludedAttributes} from "configuration-driven-core";
 import {RowComponent} from "./row.component";
 
 
-export class RowConfiguration extends ComponentConfiguration<RowComponent> {
+export class RowConfiguration extends ComponentConfiguration {
   public readonly colWidth: number[];
-  public readonly components: AnyComponentConfiguration[];
+  public readonly components: ComponentConfiguration[];
   constructor(args: Omit<RowConfiguration, ExcludedAttributes>) {
     super();
     Object.assign(this, {...args, componentType: RowComponent});

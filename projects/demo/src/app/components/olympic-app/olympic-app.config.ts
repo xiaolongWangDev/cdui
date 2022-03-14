@@ -1,13 +1,12 @@
 import {
-  AnyComponentConfiguration,
   ComponentConfiguration, ConsumeType,
   ExcludedAttributes,
   YieldType
 } from "configuration-driven-core";
 import {OlympicAppComponent} from "./olympic-app.component";
 
-export class OlympicAppConfig extends ComponentConfiguration<OlympicAppComponent> {
-  public readonly components: AnyComponentConfiguration[];
+export class OlympicAppConfig extends ComponentConfiguration {
+  public readonly components: ComponentConfiguration[];
   public readonly consumingObservables: ConsumeType<[
     "setFilterEvent", "selectedAthlete", "selectedCountry", "selectedSport", "activeTab"]>;
   public readonly yieldingObservables: YieldType<{

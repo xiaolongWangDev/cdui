@@ -2,7 +2,7 @@ import {ComponentConfiguration, ExcludedAttributes} from "configuration-driven-c
 import {ControlBarComponent} from "./control-bar.component";
 import {DropdownConfiguration} from "../dropdown/dropdown.config";
 
-export class ControlBarConfig extends ComponentConfiguration<ControlBarComponent> {
+export class ControlBarConfig extends ComponentConfiguration {
   public readonly xAxisColumnsDropdownConfig: DropdownConfiguration;
   public readonly yAxisColumnsDropdownConfig: DropdownConfiguration;
 

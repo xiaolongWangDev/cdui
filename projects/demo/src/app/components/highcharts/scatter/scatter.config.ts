@@ -2,7 +2,7 @@ import {ComponentConfiguration, ConsumeType, ExcludedAttributes} from "configura
 import {ScatterComponent} from "./scatter.component";
 
 
-export class ScatterConfig extends ComponentConfiguration<ScatterComponent<any>> {
+export class ScatterConfig extends ComponentConfiguration {
   title?: string;
   xTittle?: string;
   yTittle?: string;

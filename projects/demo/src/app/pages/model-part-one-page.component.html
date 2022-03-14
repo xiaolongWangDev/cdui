@@ -11,26 +11,26 @@
     Other than those, there are: <b>componentType</b>, <b>id</b>, <b>keepInStore</b>,
     and <b>store</b> fields, which all play important roles.</p>
   <p>The base class of all configuration models is shown in the following: </p>
-  <code-card [code]="componentConfigurationCode"></code-card>
+  <code-card title="The Base Class" [code]="componentConfigurationCode"></code-card>
   <p>The following example config has static input field <b>name</b>, consumes an observable with a
     local name <b>receive</b>, and yields an observable with a local name <b>sendOut</b>
     which has no dependencies (<b>[]</b>)
   </p>
-  <code-card [code]="penPalCode"></code-card>
+  <code-card title="An Example Configuration Class" [code]="penPalCode"></code-card>
   <p>A working instance of the same model looks like the following. You may notice <b>alice_mail</b> and
     <b>bob_mail</b>, they are observable IDs, which is what we use to refer to observables across the framework.
     Here you need to distinguish the concept of a local name and an observable ID. A local name defines the
     role of a piece of data locally. For example, <b>receive</b>. An observable ID defines what data is used
     for that role. For example, <b>alice_mail</b>. What roles a component needs is determined at the time
     the code is written. While what data is fed to the component is determined at the time when a configuration
-    (json) is given. You may also have spotted <b>keepInStore</b>, we've cover that in another
+    (json) is given. You may also have spotted <b>keepInStore</b>, we'll cover that in another
     <a routerLink="/demo_obs_created_by_non_ancestor">article</a>.
   </p>
-  <code-card [code]="penPalInstanceCode"></code-card>
+  <code-card title="A penpal configuration object" [code]="penPalInstanceCode"></code-card>
   <p>If you have really sharp eyes, you may find that the structure of the yield* and the consume* fields
     in the configuration model are different from that in the instance. And you open the
     <b>component-configuration.ts</b> file you will see quite a few eye-hurting type definitions, which aims to
-    help remove boilerplate but instead only ask for minimum required info. Don't be blown away,
+    help remove boilerplate and only ask for minimum required info instead. Don't be blown away,
     this is how it work in human language: for <b>ConsumeType</b>, it takes an array of strings, which are local
     names. For example: <b>["receive"]</b>. This will In the end generate a type whose keys are the local names,
     and the types are all strings. For example <b>&#123;receive: string&#125;</b>
@@ -41,8 +41,8 @@
     This will In the end generate a type whose keys are again the local names, and the type is an object that
     in turn as an <b>observableId</b> field, and might have a <b>dependsOn</b> field. For example:
   </p>
-  <code-card [code]="simpleYieldCode"></code-card>
-  <code-card [code]="fullYieldCode"></code-card>
+  <code-card title="consumeObservables configuration example" [code]="simpleYieldCode"></code-card>
+  <code-card title="yieldObservables configuration example" [code]="fullYieldCode"></code-card>
   <p>Why bother typing it so strictly? 1) it regulars input at write time. 2) it help autocomplete.
     3) we may do validation at runtime</p>
 </div>

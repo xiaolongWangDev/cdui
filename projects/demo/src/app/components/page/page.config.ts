@@ -1,10 +1,10 @@
 import {PageComponent} from "./page.component";
-import {AnyComponentConfiguration, ComponentConfiguration, ExcludedAttributes} from "configuration-driven-core";
+import {ComponentConfiguration, ExcludedAttributes} from "configuration-driven-core";
 
 
-export class PageConfiguration extends ComponentConfiguration<PageComponent> {
+export class PageConfiguration extends ComponentConfiguration {
   public readonly title: string;
-  public readonly components: AnyComponentConfiguration[];
+  public readonly components: ComponentConfiguration[];
 
   constructor(args: Omit<PageConfiguration, ExcludedAttributes>) {
     super();

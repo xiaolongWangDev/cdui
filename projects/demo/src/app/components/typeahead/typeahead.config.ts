@@ -1,7 +1,7 @@
 import {ComponentConfiguration, ConsumeType, YieldType} from "configuration-driven-core";
 import {TypeaheadComponent} from "./typeahead.component";
 
-export class TypeaheadConfiguration extends ComponentConfiguration<TypeaheadComponent> {
+export class TypeaheadConfiguration extends ComponentConfiguration {
   public readonly label: string;
   public readonly consumingObservables: ConsumeType<["options", "newSelection"]>;
   public readonly yieldingObservables: YieldType<{ selection: ["options"] }>;

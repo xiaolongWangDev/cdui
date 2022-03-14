@@ -1,12 +1,12 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from "@angular/core";
-import {AnyComponentConfiguration} from "../../model/types";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {markAsTracked, setNullAttributes} from "../../Helper";
 import {takeUntil} from "rxjs/operators";
 import {DynamicObservableOrchestrationService} from "../../service/dynamic-observable-orchestration.service";
+import {ComponentConfiguration} from "./component-configuration";
 
 @Component({template: ``})
-export abstract class ConfigurationDrivenComponent<CONF_TYPE extends AnyComponentConfiguration> implements OnInit, AfterViewInit, OnDestroy {
+export abstract class ConfigurationDrivenComponent<CONF_TYPE extends ComponentConfiguration> implements OnInit, AfterViewInit, OnDestroy {
   /**
    *  The configuration model that's driving the component
    */

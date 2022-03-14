@@ -2,7 +2,7 @@ import {ComponentConfiguration, ConsumeType, ExcludedAttributes} from "configura
 import {SplineComponent} from "./spline.component";
 
 
-export class SplineConfig extends ComponentConfiguration<SplineComponent<any>> {
+export class SplineConfig extends ComponentConfiguration {
   title?: string;
   xTittle?: string;
   yTittle?: string;
