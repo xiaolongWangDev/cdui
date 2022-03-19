@@ -6,6 +6,7 @@ import {Component, Input} from '@angular/core';
     <div class="card mt-2">
       <div class="card-header" (click)="collapse.toggle()" style="text-align: center">
         {{title}} - Click header to toggle
+        <button class="btn-primary" (click)="copyCode($event);">Copy</button>
       </div>
       <div  #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
         <pre prism class="dark mb-0" [language]="language" [code]="code"></pre>
@@ -18,4 +19,9 @@ export class CodeCardComponent {
   @Input() title: string = "Code Snippet";
   @Input() language: string = "javascript";
   isCollapsed = false;
+
+  copyCode($event: any){
+    navigator.clipboard.writeText(this.code);
+    $event.stopPropagation()
+  }
 }
