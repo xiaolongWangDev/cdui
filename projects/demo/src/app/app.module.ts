@@ -65,6 +65,8 @@ import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-bes
 import {CodeCardComponent} from "./components/prism/code-card.component";
 import {ConstructionService} from "../../../configuration-driven-core/src/lib/service/construction.service";
 import {FromJsonPageComponent} from "./pages/from-json-page.component";
+import {JsonEditorComponent} from "./components/json-editor/json-editor.component";
+import {JsonLiveEditPageComponent} from "./pages/json-live-edit-page.component";
 
 const pages = [
   IntroductionPageComponent,
@@ -85,7 +87,8 @@ const pages = [
   FromJsonPageComponent,
   StorePageComponent,
   DynamicComponentPageComponent,
-  ObservableOrchestrationPageComponent
+  ObservableOrchestrationPageComponent,
+  JsonLiveEditPageComponent
 ]
 
 @NgModule({
@@ -121,6 +124,7 @@ const pages = [
     TopPlayersComponent,
     PrismComponent,
     CodeCardComponent,
+    JsonEditorComponent,
     ...pages
   ],
   imports: [

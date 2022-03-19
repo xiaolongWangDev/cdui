@@ -19,6 +19,7 @@ import {ObservableOrchestrationPageComponent} from "./pages/observable-orchestra
 import {ObservableBestPracticePartOnePageComponent} from "./pages/observable-best-practice-part-one-page.component";
 import {ObservableBestPracticePartTwoPageComponent} from "./pages/observable-best-practice-part-two-page.component";
 import {FromJsonPageComponent} from "./pages/from-json-page.component";
+import {JsonLiveEditPageComponent} from "./pages/json-live-edit-page.component";
 
 const routes: Route[] = [
   {path: '', redirectTo: 'introduction', pathMatch: 'full'},
@@ -40,7 +41,8 @@ const routes: Route[] = [
   {path: "demo_spending_widget", component: DemoSpendingWidgetPageComponent},
   {path: "observable_best_practice_part_one", component: ObservableBestPracticePartOnePageComponent},
   {path: "observable_best_practice_part_two", component: ObservableBestPracticePartTwoPageComponent},
-  {path: "demo_olympic_app", component: DemoOlympicAppPageComponent}
+  {path: "demo_olympic_app", component: DemoOlympicAppPageComponent},
+  {path: "json_live_edit", component: JsonLiveEditPageComponent},
 ]
 
 @NgModule({
