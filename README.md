@@ -1,27 +1,21 @@
-# ConfigurationDriven
+# CDUI - configuration driven UI
+A small library to provide the building blocks to make well-written Angular components configuration driven.
+With this, one can configure how components are organized and how data flow are wired between them. 
+It could be used to build dynamic pages where a user can customize the layout of widget or make a widget to take data from different other widgets.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.1.
+The configuration-driven-core module is all that you need.
+The demo module creates an Angular app using CDUI. Part of it host the documentation about the internal and the best practices for CDUI.
+And another major part of the demo app is an "Olympic App" page which demonstrates how a more sophisticated and realistic web app can be 
+fabricated by CDUI. And there's a recently-added live editor page where you can experiment random ideas which existing components.
 
-## Development server
+This is a hobby project and passion driven. There's a lot more we can add (for example, runtime validator). But I'm holding my horses on this project for now.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Some day, I'll run a live instance on my web server.  
 
-## Code scaffolding
+For the moment, if you want to play with it:
+1. check it out
+2. npm ci
+3. npm run watch (this just gets the core module built as a lib), after it's up, you can be killed
+4. npm run start
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
